@@ -1,0 +1,92 @@
+{
+  "actions": {
+    "save": "Salvar",
+    "close": "fechar",
+    "update": "Atualizar",
+    "download": "Download",
+    "upload": "Upload",
+    "favorite": "Favoritar",
+    "delete": "Delete",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "search": "Pesquisar...",
+    "addToCart": "Adicionar ao Carrinho",
+    "viewMore": "Ver mais",
+    "viewLess": "Ver menos",
+    "checkout": "Finalizar compra",
+    "proceed": "Proseguir",
+    "goBack": "Voltar",
+    "pdfVersion": "Versão em pdf",
+    "register": "Cadastre-se",
+    "toEnter": "Entrar",
+    "yes": "Sim",
+    "no": "Não",
+    "ok": "Ok",
+    "edit": "Editar",
+    "loadMore": "Mostrar mais",
+    "loading": "Carregando...",
+    "apply": "Aplicar",
+    "send": "Enviar"
+  },
+  "empty_results": {
+    "ops": "Ops!",
+    "searchClipsDescription": "Não encontramos nenhum clipe com essas características."
+  },
+  "licensing_information": {
+    "title": "Licenças",
+    "introduction": "A Munu licencia dois tipos de conteúdo, editorial e comercial. Veja abaixo a diferença entre eles e como fazer o cadastramento correto do seu clipe.",
+    "commercialTitle": "Comercial",
+    "commercialDescription": "O conteúdo comercial pode ser usado para comercializar, monetizar, vender, promover e anunciar um produto, empresa ou serviço. Para o conteúdo comercial, é necessária a permissão dos proprietários do imóvel, dos artistas e das pessoas reconhecíveis na imagem, enviados pela plataforma de forma bem simples, através de um modelo de autorização, que você pode baixar no campo “autorizações”.",
+    "editorialTitle": "Editorial",
+    "editorialDescription": "O editorial é o oposto do comercial, pois o conteúdo editorial não pode ser usado para vender, promover ou monetizar uma empresa, produto ou serviço.  Pode conter logotipos, nomes de empresa e pessoas reconhecíveis sem autorizações de modelo. Jornais e canais de TV podem utilizar esse conteúdo, por exemplo."
+  },
+  "cart": {
+    "total": "Total",
+    "cartItens": "{{n}} clipes adicionados",
+    "emptyCart": "Ops...\nnenhum clipe\nno carrinho",
+    "search": "Comece a pesquisar agora",
+    "itemRemovedFromCart": "Item removido do carrinho",
+    "failedToRemoveItemFromCart": "Falha ao remover Item do carrinho",
+    "itemAddedToCart": "Item adicionado ao carrinho",
+    "failedToAddItemToCart": "Falha ao adicionar Item ao carrinho",
+    "existingItem": "Este item já está no carrinho"
+  },
+  "footer": {
+    "helpTitle": "Precisa de ajuda?",
+    "helpDescription": "Não encontrou o clipe que procurava, encontrou algum problema?\nMande uma mensagem e deixa a gente te ajudar.",
+    "helpButtonLabel": "Fale conosco",
+    "infoTitle": "AJUDA E INFORMAÇÕES",
+    "infoProjects": "Meus Projetos",
+    "infoAccount": "Minha conta",
+    "infoFAQ": "FAQs",
+    "infoHelp": "Precisa de ajuda?",
+    "aboutTitle": "SOBRE A BAMBOO",
+    "aboutWhoWeAre": "Quem somos",
+    "aboutJobs": "Jobs",
+    "licensingTitle": "LICENCIAR UMA IMAGEM",
+    "licensingPlaylist": "Playlists",
+    "licensingSearch": "Pesquisar",
+    "instagram": "Instagram"
+  },
+  "logoutText": "Sentiremos sua falta.\nDeseja mesmo sair?",
+  "paymentStatus": {
+    "paid": "pago",
+    "rejected": "rejeitado",
+    "refused": "recusado",
+    "refunded": "estornado",
+    "pending": "pendente",
+    "authorized": "autorizado",
+    "canceled": "cancelado",
+    "waiting": "aguardando",
+    "processing": "em processamento",
+    "failure": "erro na transação"
+  },
+  "failedToDownload": "Falha ao fazer download",
+  "maxLimitReached": "Limite de downloads atingido",
+  "failedToLoad": "Falha ao carregar informações",
+  "seo": {
+    "description": "Banco de videos feito por Filmmakers brasileiros para brasileiros, conteúdos divididos em playlist e os melhores videos."
+  }
+}

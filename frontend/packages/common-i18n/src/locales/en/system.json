@@ -1,0 +1,10 @@
+{
+  "notFound": {
+    "title": "404 - Página não encontrada"
+  },
+  "page": {
+    "title": "Ops...",
+    "description": "Não temos nada por aqui.",
+    "buttonLabel": "Busque clipes"
+  }
+}

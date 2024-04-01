@@ -1,0 +1,37 @@
+{
+  "page": {
+    "title": "Playlists - BambooStock",
+    "playlistTitle": "{{name}} - BambooStock",
+    "emptyTitle": "Página não encontrada"
+  },
+  "bread_crumbs": {
+    "home": "Home",
+    "playlists": "Playlists",
+    "playlist": "{{name}}"
+  },
+  "body": {
+    "title": "Playlists",
+    "profileTitle": "Playlist",
+    "description": "Clipes selecionados a dedo pelo nosso time de curadores pra facilitar ainda mais sua pesquisa. Navegue por moods, sensações e motivações."
+  },
+  "empty_screen": {
+    "title": "Ops...",
+    "description": "Não temos nada por aqui.",
+    "buttonLabel": "Busque clipes"
+  },
+  "header_card": {
+    "pageName": "Playlist",
+    "buttonLabel": "Explore os clipes"
+  },
+  "filter_drawer": {
+    "title": "Filtros",
+    "description": "Busque e refine ainda mais sua pesquisa a qualquer momento",
+    "clearFilter": "Limpar Filtro",
+    "closeButton": "Fechar"
+  },
+  "seo": {
+    "estimatedTime": "Est. tempo de leitura",
+    "33Mins": "33 minutos",
+    "emptyTitle": "Página não encontrada"
+  }
+}

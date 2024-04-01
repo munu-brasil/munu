@@ -1,0 +1,46 @@
+{
+  "page": {
+    "title": "Munu Stock",
+    "bread_crumbs": {
+      "home": "Home"
+    },
+    "body": {
+      "videoCardSearch": {
+        "title": "Finalmente um\nbanco de imagens\nverdadeiramente\nBrasileiro",
+        "welcome": "Bem vindo à munu stock : )",
+        "inputPlaceholder": "Pesquisar...",
+        "searchSample": "Experimente pesquisar: “Academia” “Férias” “Bahia“"
+      },
+      "playlistSection": {
+        "title": "Playlists",
+        "shortTitle": "Selecionamos os melhores clipes",
+        "shortDescription": "Economize tempo na\nsua busca e encontre tudo\nnum só lugar",
+        "description": "Coleções de clipes selecionados à dedo pra facilitar sua pesquisa",
+        "descriptionLink": "categorias",
+        "exploreColection": "Explore a coleção"
+      },
+      "filmmakersSummary": {
+        "sectionTitle": "Filmmaker",
+        "title": "100% dos nossos filmmakers são brasileiros. Explore centenas de clipes",
+        "shortTitle": "Nosso time\n de filmmakers\n é 100% brasileiro",
+        "description": "Com uma curadoria impecável, e imagens cinematográficas, representamos os mais talentosos filmmakers brasileiros. Comece a ter orgulho das suas produções com banco de imagens, com a segurança de que todas as imagens são de criadores nacionais.",
+        "buttonLabel": "Comece a pesquisar",
+        "filmmakerClips": "{{n}} clipes"
+      },
+      "Newsletter": {
+        "titlePrimary": "Seus filmes\ncom cara de Brasil",
+        "titleSecondary": "Assine nossa newsletter\ne receba clipes e novos\nlançamentos",
+        "shortTitleSecondary": "Receba clipes\ne novidades do\nmundo filmmaker",
+        "descriptionPrimary": "Tenha orgulho das suas produções\ncom banco de imagens",
+        "descriptionSecondary": "Coleções, playlists e sugestões de novos clipes\nsempre fresquinhos no seu email",
+        "warning": "Prometemos não enviar spams : )",
+        "successfulRegistration": "E-mail cadastrado com sucesso!",
+        "failedToRegistration": "Falha ao cadastrar e-mail"
+      }
+    },
+    "seo": {
+      "estimatedTime": "Est. tempo de leitura",
+      "16Mins": "16 minutos"
+    }
+  }
+}

@@ -1,0 +1,162 @@
+{
+  "page": {
+    "profile_title": "Dashboard - User - BambooStock",
+    "favorite_title": "Favoritos - User - BambooStock",
+    "downloads_title": "Licenças - User - BambooStock",
+    "sales_title": "Vendas - User - BambooStock",
+    "help_title": "Ajuda - User - BambooStock",
+    "upload_title": "Upload + User - BambooStock",
+    "clips_title": "Meus Clips - User - BambooStock"
+  },
+  "bread_crumbs": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "favorite": "Favoritos",
+    "controlPanel": "Painel de controle",
+    "downloads": "Downloads",
+    "sales": "Vendas",
+    "upload": "Upload +",
+    "clips": "Meus Clips",
+    "bulkEdit": "Edição em massa"
+  },
+  "dashboard": {
+    "welcomeText": "Oi,",
+    "welcomeDescription": "A partir do painel de controle, você pode ver suas vendas recentes,\nsubir e editar novos clipes e também editar seu perfil.",
+    "myClips": "Meus Clipes",
+    "myClipsDescription": "Aqui você encontra todos os seus clipes. Edite descrições, tags e releases de forma simples e rápida",
+    "mySales": "Vendas no mês",
+    "mySalesDescription": "Valor total dos seus clipes licenciados até\nagora",
+    "mySalesValue": "{{value}}",
+    "upload": "Upload",
+    "uploadDescription": "Carregue seus clipes de forma simples e rápida e depois edite títulos, descrições e tags",
+    "myViewsCount": "{{Value}}",
+    "myViews": "Visualizações\ndo perfil",
+    "myLicencesCount": "{{Value}}",
+    "myLicences": "Clipes\nLicenceados",
+    "needHelp": "Precisa de ajuda?",
+    "needHelpDescription": "Acesse a página de perguntas frequentes",
+    "exportTitle": "Como exportar seus clipes",
+    "tutorialExport": "Dúvidas em como exportar seus clipes?\nPreparamos um guia para você não ter nenhuma dúvida",
+    "howToExportIn4k": "Como exportar em 4K",
+    "howToExportInHD": "Como exportar em Full HD",
+    "licencesTitle": "Licenciamentos nos últimos meses",
+    "licencesDescription": "Veja todos os clipes que foram licenciados recentemente"
+  },
+  "upload": {
+    "uploadTitle": "Upload +",
+    "uploadDescription": "Faço o carregamento de todos os seus clipes através da ferramenta de upload.\nQuando o upload estiver completo, você será redirecionado à página Meus Clipes.",
+    "empty_upload_list_title": "Carregue seus clipes de uma única vez",
+    "empty_upload_list_description": "Clique aqui ou arraste 1 ou mais videos. Logo após você poderá adicionar titulos e tags.",
+    "tutorial_title": "Como exportar seus clipes",
+    "tutorial_description": "Criamos dois tutoriais bem fáceis pra\nvocê exportar a partir do",
+    "premiere": "Premiere",
+    "howToExportIn4k": "Como exportar em 4K",
+    "howToExportInHD": "Como exportar em Full HD"
+  },
+  "alert": {
+    "file_exceeds_maximum_size": "O Arquivo {{file.name}} ultrapassa o tamanho máximo de {{maxSize}}MB",
+    "invalid_file": "Arquivo {{file.name}} é invalido",
+    "uploadFail": "Falha no upload do arquivo {{file.name}}.",
+    "uploadRunning": "O Upload dos vídeos ainda não foi concluído.\nDeseja mesmo sair?",
+    "mobileDeviceAlert": "Ops...\nEssa página só pode ser visualizada no Desktop.",
+    "unsavedChanges": "Você tem alterações não salvas, tem certeza que deseja sair?"
+  },
+  "button": {
+    "send": "Enviar"
+  },
+  "body": {
+    "changePassword": "Alterar senha?",
+    "personalData": "Dados pessoais",
+    "changePasswordMessage": "A partir do painel de controle de sua conta, você pode ver suas compras recentes.\ngerenciar seus endereço de faturamento, e editar sua senha e detalhes da conta.",
+    "invalidImageFile": "Arquivo inválido.\nTente uma imagem tipo .jpg, .jpeg  ou .png."
+  },
+  "favorite": {
+    "myFavorites": "Meus Favoritos",
+    "description": "A partir do painel de controle de sua conta, você pode ver suas compras recentes,\ngerenciar seus endereço de faturamento, e editar sua senha e detalhes da conta.",
+    "emptyList": "Não encontramos nenhum clipe salvo como favorito."
+  },
+  "help": {
+    "helpTitle": "Precisa de um Help?",
+    "helpDescription": "A partir do painel de controle de sua conta, você pode ver suas compras recentes,\ngerenciar seu endereço de faturamento, e editar sua senha e detalhes da conta.",
+    "titleCard1": "Sim, brasileiros",
+    "descriptionCard1": "clipes foram licenciados agora por você",
+    "titleCard2": "FAQ",
+    "descriptionCard2": "Leia sobre as dúvidas mais frequentes de outros filmmakers.",
+    "titleCard3": "Notas fiscais",
+    "descriptionCard3": "clipes foram licenciados agora por você",
+    "titleCard4": "Perdeu sua senha?",
+    "descriptionCard4": "Leia sobre as dúvidas mais frequentes de outros filmmakers."
+  },
+  "downloads": {
+    "downloadTitle": "Meus Downloads",
+    "downloadDescription": "A partir do painel de controle de sua conta, você pode ver suas compras recentes,\ngerenciar seus endereço de faturamento, e editar sua senha e detalhes da conta.",
+    "emptyDownloads": "Ops... nenhum download por aqui",
+    "search": "Comece a pesquisar agora",
+    "tableColumns": {
+      "description": "Descrição",
+      "id": "ID",
+      "License": "Licença",
+      "downloads": "Downloads",
+      "count": "{{downloadCount.current}} de {{downloadCount.max}}",
+      "paymentStatus": "Status do pedido: {{status}}"
+    },
+    "failedToDownload": "Falha ao fazer download"
+  },
+  "filmmaker": {
+    "marketplaceTitle": "Dados Bancários",
+    "marketplaceDescription": "As informações abaixo serão usadas para o pagamento referente a suas vendas.",
+    "descriptionPlaceholder": "Escreva um breve texto se apresentando.",
+    "saveDescription": "Salvar descrição",
+    "billingData": "Dados de faturamento"
+  },
+  "filmmakerSalse": {
+    "salseTitle": "Suas Vendas",
+    "salseDescription": "Tenha o controle de todos os seus clipes que foram licenciados\ne seu lucro em cada um deles",
+    "emptySales": "Ops... nenhum download por aqui",
+    "startUpload": "Comece a subir seus clipes"
+  },
+  "clips": {
+    "clipsTitle": "Meus Clips",
+    "editSelectedItems": "Editar itens selecionados",
+    "clipsDescription": "Edite seus clipes, inserindo títulos, descrições, tags, localidade.\nQuando finalizar, envie para aprovação. O status do seu clipe mudará.",
+    "emptyTitle": "Sem titulo ...",
+    "tableColumns": {
+      "time": "Tempo",
+      "editVideo": "Editar video",
+      "approval": "Aprovação"
+    },
+    "form": {
+      "bulkEdit": "Edição em massa",
+      "selectAll": "Selecionar todos",
+      "address": "Localidade",
+      "searchAddress": "Pesquisar endereço...",
+      "title": "Titulo",
+      "describe": "Descreva seu clipe aqui...",
+      "tags": "Tags (apertar enter para separar)",
+      "category": "Categoria",
+      "main": "Principal",
+      "secondary": "Secundaria",
+      "license": "Tipo de licença",
+      "select": "selecione",
+      "authorization": "Enviar autorizações",
+      "downloadPropertyTemplate": "Baixar modelo de locação",
+      "downloadActorTemplate": "Baixar modelo de ator",
+      "propertyAuthorization": "Autorização locação",
+      "ActorAuthorization": "Autorização ator",
+      "submitButton": "Salvar e fechar"
+    },
+    "emptyItems": "Nenhum item encontrado",
+    "titleRemoveItem": "Remover clip",
+    "confirmRemoval": "Tem certeza que deseja remover esse clip?",
+    "successfullyRemoved": "Clip removido com sucesso!",
+    "failedToRemove": "Falha ao remover clip!",
+    "sendForApproval": "Enviar p/ aprovação",
+    "approvalFailure": "Falha ao enviar para aprovação!",
+    "submittedForApproval": "Clip enviado para aprovação!",
+    "pendingClipData": "Dados do clip pendentes",
+    "pendingTitleAlert": "Antes de enviar para aprovação é necessário adicionar um título ao seu Clip.",
+    "emptyProducts": "Ops, você não possui nenhum clip ainda.",
+    "productsUpdatedSuccess": "Produtos atualizados com sucesso!",
+    "failedToUpdateProduct": "Falha ao atualizar {{title}}"
+  }
+}

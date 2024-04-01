@@ -1,0 +1,9 @@
+{
+    "newCard": "Novo cartão de crédito",
+    "cardName": "Cartão terminado em {{name}}",
+    "cardExpiringAt": "Válido até {{date}}",
+    "disableCard": "Desabilitar cartão",
+    "confirmDisable": "Tem certeza que gostaria de remover o cartão?",
+    "successDisable": "Removido com sucesso",
+    "errorDisable": "Falha ao remover cartão"
+}

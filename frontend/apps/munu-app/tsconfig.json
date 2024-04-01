@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
+    "incremental": true,
+    "paths": {
+      "@munu/ui-lib/*": ["../../../packages/ui-lib/src/*"],
+      "@munu/ui-lib": ["../../../packages/ui-lib/src/index"],
+      "@munu/core-lib/*": ["../../../packages/core-lib/src/*"],
+      "@munu/core-lib": ["../../../packages/core-lib/src/index"],
+      "@munu/ts-utils": ["../../../packages/ts-utils/src/index"],
+      "@/themes/*": ["./themes/*"],
+      "@/lib/*": ["./lib/*"],
+      "@/components/*": ["./components/*"],
+      "@/containers/*": ["./containers/*"]
+    }
+  },
+  "exclude": ["**/node_modules", "**/.*/", "dist"],
+  "include": ["**/*.js", "**/*.ts", "**/*.tsx"]
+}

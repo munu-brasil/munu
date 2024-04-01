@@ -1,0 +1,30 @@
+{
+  "page": {
+    "profileTitle": "{{name}} - BambooStock",
+    "emptyTitle": "Página não encontrada"
+  },
+  "bread_crumbs": {
+    "home": "Home",
+    "collections": "Pesquisas",
+    "collection": "{{name}}"
+  },
+  "body": {
+    "title": "Pesquisas",
+    "profileTitle": "Pesquisas"
+  },
+  "empty_screen": {
+    "title": "Ops...",
+    "description": "Não temos nada por aqui.",
+    "buttonLabel": "Busque clipes"
+  },
+  "header_card": {
+    "pageName": "Pesquisa",
+    "buttonLabel": "Explore os clipes"
+  },
+  "filter_drawer": {
+    "title": "Filtros",
+    "description": "Busque e refine ainda mais sua pesquisa a qualquer momento",
+    "clearFilter": "Limpar Filtro",
+    "closeButton": "Fechar"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "page": {
+    "title": "Preços - BambooStock"
+  },
+  "body": {
+    "title": "Playlists",
+    "brazilianTalent": "Valorizando\no talento brasileiro:\nnossos filmmakers.",
+    "paragraph01": "A Munu Stock é uma plataforma colaborativa que reúne os melhores filmmakers do Brasil. E para ter esses profissionais sempre por perto, trabalhamos as divisões de royalties de forma bem diferente dos outros bancos de imagem. Ao licenciar um vídeo na Munu, você se torna parte desse movimento que está transformando a cultura filmmaker no Brasil.",
+    "clipValue": "Visualizando\no valor do clipe",
+    "step01": "1 . Escolha o formato",
+    "step01Description": "Disponibilizamos nossas cenas nas resoluções Full HD (1920×1080) e 4K (3840×2160). E lembrando que caso você licencie um vídeo em 4K, você também terá a opção de baixar a versão dele em HD pelo dashboard.",
+    "step02": "2 . Selecione a distribuição",
+    "step02Description": "Aqui você irá selecionar o tipo de mídia onde o seu filme será veiculado. Você pode escolher cinema, digital ou “all media”, que é a opção que contempla TV e todos os outros formatos (inclusive as opções anteriores).",
+    "step03": "3 . Defina o tamanho da empresa",
+    "step03Description": "Nesse campo você deve selecionar o tamanho da empresa para qual o vídeo está sendo licenciado, baseado no número de funcionários. Lembrando que se você fizer parte de uma produtora de vídeo ou uma agência, você deverá selecionar a opção de acordo com o tamanho do seu cliente.",
+    "step04": "4 . Adicione ao carrinho",
+    "step04Description": "Com as opções anteriores selecionadas, o valor final do licenciamento escolhido irá aparecer na tela. Caso você queira alterar algum dos campos, o valor se atualiza automaticamente. Com tudo selecionado, é só adicionar ao carrinho e seguir para o checkout 🙂",
+    "accessQuestions": "Acesse as Perguntas Frequentes",
+    "discount": "Mas rola pelo menos um descontinho?",
+    "discountDescription": "Com certeza! Caso você queira licenciar um número maior de imagens, entre em contato com a gente. Nós podemos oferecer um pacote de acordo com a sua demanda. Quem não gosta de um desconto, certo?",
+    "subscriptionPlan": "Existe um plano mensal ou de assinatura?",
+    "subscriptionPlanDescription": "No momento não. Nossas cenas são licenciadas individualmente porquê dessa forma conseguimos comissionar nossos filmmakers de forma justa. Assim garantimos que eles continuem produzindo o material com a qualidade que você só encontra aqui."
+  },
+  "seo": {
+    "name": "Preços"
+  }
+}

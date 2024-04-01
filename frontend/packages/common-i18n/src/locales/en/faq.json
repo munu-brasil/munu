@@ -1,0 +1,22 @@
+{
+  "page": {
+    "title": "Faq - BambooStock"
+  },
+  "body": {
+    "question01": "Posso baixar um clipe para testar na minha edição?",
+    "response01": "Claro! Disponibilizamos clipes com qualidade FullHD e com marca d'água para que você\nuse em seus filmes e suas apresentações. Os clipes de pré-visualização vão com o ID no\nnome, que te ajudará a identificar ele no no site na hora de finalizar sua compra",
+    "question02": "Todas as imagens são Royalty Free?",
+    "response02": "Sim! Todas as imagens são disponibilizadas sob uso perpétuo para uso digital e broadcast,\nrespeitando as licenças disponíveis. Para mais informações, leia nossos Termos de Uso.",
+    "question03": "Quais os tipos de licenças estão disponíveis?",
+    "response03": "Disponibilizamos dois tipos de licenças: Comerciais e Editoriais. As imagens comerciais\npossuem autorizações de modelo e de locações, o que permite que você use-as em seus\ncomerciais e filmes que envolvam ganhos comerciais. Já as imagens editoriais só poderão\nser usadas onde não estejam envolvidos fins comerciais  ou ganhos, como conteúdos\njornalísticos, documentais e apresentações pois elas não possuem autorizações de\nmodelos e de locações. Para mais informações, leia nossos Termos de Uso",
+    "question04": "Que formatos estão disponíveis?",
+    "response04": "Nos esforçamos ao máximo para trazer imagens com a mais alta qualidade disponível. Por\nenquanto nossos clipes são disponibilizados em dois formatos: 4K (3840x2160) e FullHD\n1920x1080, ambos em H.264 com bitRate máximo de 30.000 kb/ps",
+    "question05": "Todos os clipes são nacionais?",
+    "response05": "Nossos clipes são do mundo inteiro, mas criados exclusivamente por brasileiros apenas.\nNós representamos os mais talentosos filmmakers do Brasil, naturais e naturalizados.\nGarantindo assim, que o tempo de tela de banco de imagens nos seus filmes, seja maior.",
+    "question06": "Os downloads são ilimitados?",
+    "response06": "Sim, mas nosso site esta programado para permitir até 10 downloads do mesmo clipe. Se\nvocê precisar baixa-lo mais do que isso, entre em contato conosco."
+  },
+  "seo": {
+    "name": "Faq"
+  }
+}

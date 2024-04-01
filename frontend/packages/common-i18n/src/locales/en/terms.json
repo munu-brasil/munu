@@ -1,0 +1,14 @@
+{
+  "page": {
+    "title": "{{name}} - BambooStock",
+    "emptyTitle": "Página não encontrada"
+  },
+  "seo": {
+    "name": "Termos e Condições"
+  },
+  "empty_screen": {
+    "title": "Ops...",
+    "description": "Não temos nada por aqui.",
+    "buttonLabel": "Busque clipes"
+  }
+}

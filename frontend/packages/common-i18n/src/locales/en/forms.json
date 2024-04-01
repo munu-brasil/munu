@@ -1,0 +1,72 @@
+{
+    "commonLabels":{
+        "optional":"opcional",
+        "privacyWarning":"Os seus dados pessoais serão utilizados para processar a sua compra, apoiar a sua experiência em todo este site e para outros fins descritos na nossa",
+        "privacyPolicy": "política de privacidade",
+        "readingTerms": "Eu li e aceito o(s)",
+        "terms": "termos de uso e política de privacidade",
+        "errOnlyNumbers": "Apenas números são aceitos",
+        "savedSuccessfully": "Salvo com sucesso",
+        "failedToSave": "Falha ao salvar alterações"
+    },
+    "userForm":{
+        "name": "Nome",
+        "surname": "Sobrenome",
+        "displayName": "Nome de exibição",
+        "email": "Endereço de e-mail",
+        "documentType": "Tipo de documento",
+        "documentNumber": "Número do documento",
+        "rg": "RG",
+        "cpf": "CPF",
+        "telephone": "Telefone",
+        "cellPhone": "Celular",
+        "companyName": "Nome da empresa",
+        "personalData": "Dados pessoais",
+        "dob":"Data de aniversário",
+        "save":"Salvar Alterações"
+    },
+    "addressForm":{
+        "country": "País",
+        "zipCode": "CEP",
+        "address": "Endereço",
+        "number": "Número",
+        "complement": "Complemento",
+        "example": "Apartamento, suite, unidade, etc.",
+        "city": "Cidade",
+        "state": "Estado",
+        "neighborhood": "Bairro",
+        "street": "Rua"
+    },
+    "projectForm":{
+        "projectName": "Nome do projeto",
+        "orderOfService": "Ordem de Serviço"
+    },
+    "paymentForm":{
+        "creditCardData": "Dados do cartão",
+        "creditCard": "Cartão de credito",
+        "ticket":"Boleto",
+        "name": "Nome impresso no cartão",
+        "validity": "Validade (MM/AA)",
+        "cardCode": "Código do cartão",
+        "longCardCode": "Digite o código de verificação no verso do seu cartão de crédito",
+        "numberOfInstallments": "Quantidade de parcelas",
+        "invalidCode": "Código inválido",
+        "invalidDate":"Data inválida",
+        "invalidNumber":"Número inválido",
+        "cardNumber":"Número do cartão",
+        "minimalCodeCharacterError":"O código de verificação deve conter no mínimo 3 dígitos"
+    },
+    "marketplaceRecipient":{
+        "holderName": "Nome / Empresa",
+        "bankType": "Tipo de conta",
+        "bankCode": "Código de banco",
+        "bankAgency": "Agência",
+        "bankAgencyDigit": "Digito verificador",
+        "bankAccount": "Número da conta",
+        "bankAccountDigit": "Digito verificador",
+        "bankDocumentType": "Tipo de documento",
+        "bankDocumentNumber": "Número do documento",
+        "bankAccountHolderName": "Nome do titular da conta",
+        "pixKey": "Chave PIX"
+    }
+}

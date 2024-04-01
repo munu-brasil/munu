@@ -1,0 +1,31 @@
+{
+  "page": {
+    "title": "Busca Clipes - BambooStock",
+    "filter": {
+      "input_placeholder": "Buscar"
+    },
+    "bread_crumbs": {
+      "home": "Home",
+      "search": "Busca"
+    },
+    "sort_and_order": {
+      "relevance": "Relevante",
+      "alphabetical_asc": "A - Z",
+      "alphabetical_desc": "Z - A",
+      "createdAt_asc": "Antigos",
+      "createdAt_desc": "Novos"
+    },
+    "filter_drawer": {
+      "title": "Filtros",
+      "description": "Busque e refine ainda mais sua pesquisa a qualquer momento",
+      "clearFilter": "Limpar Filtro",
+      "closeButton": "Fechar"
+    },
+    "suggested_clips": {
+      "ops": "Ops!",
+      "seeMore": "Veja mais resultados",
+      "suggestionTitle": "Não encontramos nenhum clipe com essas características.",
+      "suggestionDescription": "Mas separamos algumas coisas que podem te interessar"
+    }
+  }
+}

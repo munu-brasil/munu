@@ -1,0 +1,25 @@
+{
+  "page": {
+    "title": "Sou Filmmaker - BambooStock",
+    "body": {
+      "title": "Oi, Filmmaker!",
+      "description": "Ficamos muito feliz com seu interesse em ser um de nossos filmmakers. Nos conte um pouco mais sobre você e nos envio seus melhores trabalhos para entendermos qual seu perfil. Entraremos em contato assim que assistirmos tudo 🙂"
+    },
+    "form": {
+      "name": "Nome",
+      "surname": "Sobrenome",
+      "nationality": "Nacionalidade",
+      "state": "UF",
+      "phone": "Telefone",
+      "email": "Email",
+      "website": "Website",
+      "socialMedia": "Seu @ Instagram",
+      "showcase": "Link do seu melhor projeto",
+      "requestFailure": "Falha ao enviar solicitação",
+      "requestSuccess": "Solicitação enviada com sucesso"
+    },
+    "seo": {
+      "name": "Sou Filmmaker"
+    }
+  }
+}

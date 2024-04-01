@@ -1,0 +1,32 @@
+{
+  "page": {
+    "title": "jobs - BambooStock",
+    "body": {
+      "title": "Jobs",
+      "openPositions": "Nosso time está crescendo e estamos à procura de pessoas talentosas em São Paulo para integrar nossa equipe. As posições abertas são:",
+      "position01": "• Assistente de produção",
+      "position02": "• Social Content Producer",
+      "theseVacancies": "Estas vagas",
+      "areNotRemote": "não são remotas",
+      "placeOfResidence": ", por isso, é importante você residir em São Paulo, ok?"
+    },
+    "form": {
+      "name": "Nome",
+      "surname": "Sobrenome",
+      "city": "Cidade",
+      "state": "UF",
+      "email": "Email",
+      "phone": "Telefone",
+      "socialMedia": "Seu @ Instagram",
+      "curriculum": "Anexe seu currículo (12mb max) ou digite o link",
+      "submitButton": "Quero trabalhar com vocês 🙂",
+      "requestFailure": "Falha ao enviar currículo",
+      "requestSuccess": "Currículo enviado com sucesso",
+      "removeFile": "Remover arquivo",
+      "fileExceedsMaximumSize": "O Arquivo {{file.name}} ultrapassa o tamanho máximo de {{maxSize}}MB"
+    },
+    "seo": {
+      "name": "Job"
+    }
+  }
+}

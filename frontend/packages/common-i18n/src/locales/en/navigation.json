@@ -1,0 +1,59 @@
+{
+  "topNav": {
+    "home": "Home",
+    "discover": "Como funciona?",
+    "search": "Pesquisar",
+    "playlists": "Playlists",
+    "blog": "Blog",
+    "faq": "Faq",
+    "myAccount": "Minha conta",
+    "myfavorites": "Meus favoritos",
+    "cart": "Carrinho",
+    "prices": "Preços",
+    "studios": "Studios"
+  },
+  "menu": {
+    "profile": "Perfil",
+    "downloads": "Downloads",
+    "help": "Ajuda",
+    "favorites": "Favoritos",
+    "start": "Início",
+    "myClips": "Meus Clipes",
+    "upload": "Upload +",
+    "sales": "Vendas"
+  },
+  "authForm": {
+    "title": "Faça seu login",
+    "description": "Se você já faz parte da família, acesse com uma das opções abaixo:",
+    "email_username": "Digite seu e-mail...",
+    "remember_me": "Lembre-me",
+    "forgot_password": "Esqueceu sua senha?",
+    "signin_submit": "Entrar",
+    "password": "Digite sua senha...",
+    "onboarding_title": "Crie sua conta",
+    "onboarding_description": "Ainda não tem uma conta?",
+    "onboarding_confirm_password": "Senha novamente...",
+    "onboarding_user_name": "Digite seu nome...",
+    "onboarding_reading_terms": "Eu li e aceito os ",
+    "onboarding_terms": "termos de uso e política de privacidade",
+    "onboarding_submit": "Criar minha conta",
+    "onboarding_email_error": "E-mail inválido",
+    "onboarding_password_error": "A senha deve conter no mínimo 8 caracteres e ao menos uma letra e um número",
+    "create_account": "Criar agora",
+    "no_account": "Não tem uma conta?",
+    "has_account": "Já tenho uma conta",
+    "generic_login_error": "Falha ao realizar login",
+    "user_already_exists": "Já existe um usuário com este e-mail",
+    "generic_onboarding_error": "Falha ao criar conta",
+    "user_doesnt_exist": "Usuário não encontrado",
+    "signing_method_or": "ou",
+    "continue_with": "Continuar com"
+  },
+  "terms": {
+    "terms_and_conditions": "Termos e condições",
+    "welcome": "Estamos muito felizes em receber você na Munu :)",
+    "accept_the_terms_below": "Aceite os termos abaixo para continuar navegando em nossa plataforma.",
+    "read_and_accept": "Eu li e aceito:",
+    "accept_terms": "Aceitar termos"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "page": {
+    "title": "{{name}}, Autor em BambooStock",
+    "titleTypeform": "Filmmaker - BambooStock",
+    "bread_crumbs": {
+      "filmmaker": "{{name}}"
+    },
+    "empty_screen": {
+      "title": "Ops...",
+      "description": "Não temos nada por aqui.",
+      "buttonLabel": "Busque clipes"
+    },
+    "header_card": {
+      "buttonLabel": "Explore meus clipes"
+    }
+  }
+}

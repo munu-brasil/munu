@@ -1,0 +1,63 @@
+name: CI-munu-app
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+    paths:
+      - 'apps/munu-app/**'
+      - 'package.json'
+      - '*.lock'
+      - '.yarnrc.yml'
+      - 'tsconfig.base.json'
+      - '.prettier*'
+      - '.github/**'
+
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+    paths:
+      - 'apps/munu-app/**'
+      - 'package.json'
+      - '*.lock'
+      - '.yarnrc.yml'
+      - 'tsconfig.base.json'
+      - '.prettier*'
+      - '.github/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: apps/munu-app
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 📥 Monorepo install
+        uses: ./.github/actions/yarn-nm-install
+
+      - name: 🕵️ Typecheck
+        run: yarn typecheck
+
+      - name: 🔬 Linter
+        run: yarn lint
+
+      - name: 🧪 Unit tests
+        run: yarn test-unit --runInBand --color
+
+      - name: 🏗 Build munu-app
+        run: yarn build

@@ -1,0 +1,32 @@
+{
+  "page": {
+    "title": "{{name}} - BambooStock",
+    "emptyTitle": "Página não encontrada",
+    "bread_crumbs": {
+      "home": "Home"
+    },
+    "body": {
+      "clipSectionTitle": "Clipes relacionados",
+      "viewMoreText": "Ver todas as imagens",
+      "filter_drawer": {
+        "title": "Filtros",
+        "description": "Busque e refine ainda mais sua pesquisa a qualquer momento",
+        "clearFilter": "Limpar Filtro",
+        "closeButton": "Fechar"
+      },
+      "form_fields": {
+        "format": "Formato",
+        "duration": "Duração",
+        "framerate": "Framerate",
+        "licensing": "Licenciamento",
+        "licensingTypes": "Editorial, Comercial",
+        "totalPrice": "Subtotal"
+      }
+    },
+    "empty_screen": {
+      "title": "Ops...",
+      "description": "Não temos nada por aqui.",
+      "buttonLabel": "Busque clipes"
+    }
+  }
+}

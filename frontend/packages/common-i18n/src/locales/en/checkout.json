@@ -1,0 +1,52 @@
+{
+  "page": {
+    "title": "Checkout - BambooStock",
+    "bread_crumbs": {
+      "home": "Home",
+      "checkout": "Checkout"
+    },
+    "body": {
+      "title": "Finalizar sua compra",
+      "title_sucess": "Oba, tudo certo na sua compra!",
+      "title_failure": "Falha ao finalizar sua compra",
+      "successfullyPurchased": "Compra finalizada com sucesso",
+      "orderNum": "Nº do pedido",
+      "orderDate": "Data do pedido",
+      "paymentFailure": "Sua transação FALHOU",
+      "paymentFailureDescription": "Caso tenha alguma dúvida referente a transação, entre com contato conosco",
+      "clipAvailable": "Seu clip já está disponível para download",
+      "receiptEmail": "Você receberá um e-mail com seu recibo e os links para download",
+      "paymentMethod": "Pago com",
+      "email": "E-mail",
+      "tryAgain": "TENTAR NOVAMENTE",
+      "meansOfPayment": "Selecione o meio de pagamento",
+      "paymentSummary": "Resumo do pagamento",
+      "confirmPaymentOf": "Confirmar pagamento de {{total}}",
+      "alertTitle": "Cupons removidos do carrinho",
+      "alertBody": "Os cupons abaixo foram removidos do seu carrinho por invalidez",
+      "cancel": "Cancelar",
+      "continue": "Continuar compra",
+      "failedToValidate": "Falha ao validar carrinho",
+      "pixPaymentDescription": "Caso tenha escolhido pagar utilizando boleto ou PIX, realize o pagamento escaneando o QR Code ou copie o código PIX abaixo",
+      "paymentWithBoleto": "Realize o pagamento do boleto.",
+      "accessTheBoleto": "Clique aqui para acessar o boleto",
+      "awaitingPayment": "Aguardando seu pagamento",
+      "creditCard": "Cartão de crédito",
+      "boleto": "Boleto",
+      "pix": "PIX",
+      "waitingBoleto": "Realize o pagamento do boleto escaneando o QR Code abaixo",
+      "waitingPix": "Realize o pagamento do PIX escaneando o QR Code ou copie o código PIX abaixo"
+    },
+    "voucher": {
+      "voucher": "Cupom de desconto",
+      "invalidVoucher": "CUPOM INVÁLIDO, EXPIRADO OU JÁ UTILIZADO.",
+      "successfullyRemoved": "Cupom removico com sucesso",
+      "failedToRemove": "Falha ao remover cupom",
+      "discountApplied": "Desconto aplicado: {{discount}}"
+    },
+    "cartError": {
+      "invalid_cart": "Carrinho invalido",
+      "error_message": "Este carrinho está vinculado a outro usuário."
+    }
+  }
+}
