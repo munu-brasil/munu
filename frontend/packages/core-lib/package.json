@@ -32,6 +32,7 @@
     "@httpx/exception": "^1.7.1",
     "@mui/joy": "5.0.0-alpha.72",
     "@munu/ts-utils": "workspace:^",
+    "@munu/ui-lib": "workspace:^",
     "@zodios/core": "10.7.7",
     "@zodios/plugins": "10.5.0",
     "dequal": "^2.0.3",

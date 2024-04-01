@@ -4752,6 +4752,7 @@ __metadata:
     "@mui/joy": "npm:5.0.0-alpha.72"
     "@munu/eslint-config-bases": "workspace:^"
     "@munu/ts-utils": "workspace:^"
+    "@munu/ui-lib": "workspace:^"
     "@testing-library/react": "npm:14.0.0"
     "@types/jest": "npm:29.4.0"
     "@types/node": "npm:18.14.2"

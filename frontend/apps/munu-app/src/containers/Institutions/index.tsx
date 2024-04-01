@@ -11,11 +11,7 @@ import {
   Typography,
   CircularProgress,
 } from '@mui/material';
-import {
-  SearchRounded,
-  ArrowDownwardRounded,
-  CheckCircleOutlineRounded,
-} from '@mui/icons-material';
+import { SearchRounded, ArrowDownwardRounded } from '@mui/icons-material';
 import { notify } from '@munu/core-lib/repo/notification';
 import Icons from '@munu/core-lib/components/Icons';
 
@@ -152,19 +148,15 @@ const Institutions = () => {
         <b>WELL DONE,YOU ARE ELIGIBLE</b>
       </Typography>
       <Box sx={(theme) => ({ marginTop: theme.spacing(4) })}>
-        <Zoom
-          in={cards.length > 0}
-          style={{ transformOrigin: '0 0 0' }}
-          {...(cards.length > 0 ? { timeout: 1000 } : {})}
-        >
-          <Grid container spacing={4}>
-            {cards.map((key) => (
-              <Grid key={key} item>
+        <Grid container spacing={4}>
+          {cards.map((key, i) => (
+            <Zoom key={key} in style={{ transitionDelay: `${50 * i}ms` }}>
+              <Grid item>
                 <Certificate />
               </Grid>
-            ))}
-          </Grid>
-        </Zoom>
+            </Zoom>
+          ))}
+        </Grid>
       </Box>
     </Box>
   );
@@ -217,9 +209,12 @@ const Certificate = (props: CertificateProps) => {
           style={{ minWidth: 150 }}
           disabled={success || loading}
           onClick={onclick}
-          sx={
-            success
-              ? (theme) => ({
+          sx={(theme) => ({
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            ...(success
+              ? {
                   '&: disabled': {
                     color: theme.palette.common.white,
                     background: `${theme.palette.success.main} !important`,
@@ -228,12 +223,14 @@ const Certificate = (props: CertificateProps) => {
                     MozBoxShadow: `0px 10px 0px ${theme.palette.success.dark} !important`,
                     WebkitBoxShadow: `0px 10px 0px ${theme.palette.success.dark} !important`,
                   },
-                })
-              : {}
-          }
+                }
+              : {}),
+          })}
         >
           {!success && !loading ? <b>CLAIM</b> : null}
-          {success ? <Icons.CheckCircle8Bit style={{ width: 25 }} /> : null}
+          {success ? (
+            <Icons.CheckCircle8Bit style={{ width: 25, height: 25 }} />
+          ) : null}
           {loading ? (
             <CircularProgress
               size={20}
