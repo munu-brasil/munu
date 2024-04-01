@@ -245,7 +245,7 @@ const Badges = (props: BadgesProps) => {
                 <Zoom
                   in
                   key={index}
-                  style={{ transitionDelay: `${50 * index}ms` }}
+                  style={{ transitionDelay: `${25 * index}ms` }}
                 >
                   <Grid
                     item

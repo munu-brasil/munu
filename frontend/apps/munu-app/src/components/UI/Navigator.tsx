@@ -12,16 +12,12 @@ import {
   ListItemButton,
   ListItemSecondaryAction,
 } from '@mui/material';
-import {
-  Settings,
-  ExpandMore,
-  ChevronRight,
-  ArrowBackRounded,
-} from '@mui/icons-material';
+import { Settings, ExpandMore, ChevronRight } from '@mui/icons-material';
 import Drawer, { DrawerProps } from '@mui/material/Drawer';
 import { NavLink, useHistory } from 'react-router-dom';
 import { MenuView } from '@/lib/internal/constants';
 import { Theme } from '@/themes/mui/mui.theme';
+import Icons from '@munu/core-lib/components/Icons';
 
 const useStyles = (theme: Theme, drawerWidth: number) =>
   ({
@@ -298,7 +294,7 @@ function Navigator(props: NavigatorProps) {
             onClose?.();
           }}
         >
-          <ArrowBackRounded />
+          <Icons.ArrowLeft8Bit />
         </IconButton>
       </Grow>
     </>

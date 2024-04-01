@@ -17,7 +17,7 @@ export const CustomDialog = (props: DialogProps) => {
         sx: {
           borderRadius: '0px',
           backgroundColor: 'transparent',
-          padding: theme.spacing(2),
+          padding: theme.spacing(2, 1),
           '&:before': {
             content: "''",
             left: 0,

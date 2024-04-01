@@ -1,4 +1,5 @@
-import { Home, School, StyleRounded } from '@mui/icons-material';
+import { School, StyleRounded } from '@mui/icons-material';
+import Icons from '@munu/core-lib/components/Icons';
 
 export interface MenuItem {
   title: string;
@@ -25,7 +26,7 @@ export const MenuCategories: MenuView[] = [
     title: 'Página inicial',
     permissions: [],
     to: '/',
-    icon: <Home />,
+    icon: <Icons.Home8Bit />,
     children: [],
   },
   {

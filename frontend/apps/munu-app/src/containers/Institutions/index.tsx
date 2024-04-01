@@ -11,7 +11,6 @@ import {
   Typography,
   CircularProgress,
 } from '@mui/material';
-import { SearchRounded, ArrowDownwardRounded } from '@mui/icons-material';
 import { notify } from '@munu/core-lib/repo/notification';
 import Icons from '@munu/core-lib/components/Icons';
 
@@ -22,7 +21,7 @@ function generateItems(length: number) {
 export type InstitutionsProps = {};
 const Institutions = () => {
   const [walletAddress, setWalletAddress] = useState<string>();
-  const [cards, setCards] = useState<string[]>([]);
+  const [cards, setCards] = useState<string[]>();
   const [loading, setLoading] = useState(false);
   const [{ wallet }] = useConnectWallet();
 
@@ -33,7 +32,7 @@ const Institutions = () => {
           reject('Falha ao carregar cards');
           return;
         }
-        const listNumber = Math.floor(Math.random() * 10) + 1;
+        const listNumber = Math.floor(Math.random() * 10);
         setCards(generateItems(listNumber));
         resolve();
       }, 2000);
@@ -82,7 +81,7 @@ const Institutions = () => {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        justifyContent: 'center',
+        marginTop: '20vh',
       }}
     >
       <Typography variant="h5">
@@ -114,7 +113,7 @@ const Institutions = () => {
             },
           })}
         >
-          <SearchRounded />
+          <Icons.Zoom8Bit style={{ height: '25px', width: '25px' }} />
           <InputBase
             fullWidth
             disabled={loading}
@@ -130,41 +129,58 @@ const Institutions = () => {
               },
             }}
           />
-          <IconButton type="submit" disabled={loading}>
+          <IconButton
+            type="submit"
+            disabled={loading}
+            sx={(theme) => ({
+              color: theme.palette.common.black,
+            })}
+          >
             {loading ? (
               <CircularProgress
                 size={20}
                 sx={(theme) => ({
+                  height: '25px',
+                  width: '25px',
                   color: theme.palette.common.black,
                 })}
               />
             ) : (
-              <ArrowDownwardRounded />
+              <Icons.ArrowDown8Bit />
             )}
           </IconButton>
         </Box>
       </Box>
-      <Typography variant="h5">
-        <b>WELL DONE,YOU ARE ELIGIBLE</b>
-      </Typography>
-      <Box sx={(theme) => ({ marginTop: theme.spacing(4) })}>
-        <Grid container spacing={4}>
-          {cards.map((key, i) => (
-            <Zoom key={key} in style={{ transitionDelay: `${50 * i}ms` }}>
-              <Grid
-                item
-                sx={(theme) => ({
-                  [theme.breakpoints.down('sm')]: {
-                    width: '100%',
-                  },
-                })}
-              >
-                <Certificate />
-              </Grid>
-            </Zoom>
-          ))}
-        </Grid>
-      </Box>
+      {(cards ?? []).length > 0 ? (
+        <>
+          <Typography variant="h5">
+            <b>WELL DONE,YOU ARE ELIGIBLE</b>
+          </Typography>
+          <Box sx={(theme) => ({ marginTop: theme.spacing(4) })}>
+            <Grid container spacing={4}>
+              {(cards ?? []).map((key, i) => (
+                <Zoom key={key} in style={{ transitionDelay: `${25 * i}ms` }}>
+                  <Grid
+                    item
+                    sx={(theme) => ({
+                      [theme.breakpoints.down('sm')]: {
+                        width: '100%',
+                      },
+                    })}
+                  >
+                    <Certificate />
+                  </Grid>
+                </Zoom>
+              ))}
+            </Grid>
+          </Box>
+        </>
+      ) : null}
+      {Array.isArray(cards) && cards.length === 0 ? (
+        <Typography variant="h5">
+          <b>There nothing here yet </b>
+        </Typography>
+      ) : null}
     </Box>
   );
 };
