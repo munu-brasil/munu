@@ -5,6 +5,8 @@ import { defineConfig } from 'vitest/config';
 import mkcert from 'vite-plugin-mkcert';
 import { loadEnv } from 'vite';
 import type { UserConfigExport } from 'vitest/config';
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
+import nodePolyfills from 'rollup-plugin-node-polyfills';
 
 const testFiles = ['./src/**/*.test.{js,jsx,ts,tsx}'];
 
@@ -55,6 +57,39 @@ export default defineConfig(({ mode }) => {
     },
     define: {
       'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV),
+      global: 'globalThis',
+    },
+    resolve: {
+      alias: {
+        stream: 'rollup-plugin-node-polyfills/polyfills/stream',
+        events: 'rollup-plugin-node-polyfills/polyfills/events',
+        assert: 'assert',
+        crypto: 'crypto-browserify',
+        util: 'util',
+        'near-api-js': 'near-api-js/dist/near-api-js.js',
+      },
+    },
+    build: {
+      target: 'esnext',
+      rollupOptions: {
+        plugins: [nodePolyfills({ crypto: true }) as any],
+      },
+    },
+    optimizeDeps: {
+      esbuildOptions: {
+        plugins: [
+          NodeGlobalsPolyfillPlugin({ buffer: true }) as any,
+          {
+            name: 'fix-node-globals-polyfill',
+            setup(build) {
+              build.onResolve(
+                { filter: /_virtual-process-polyfill_\.js/ },
+                ({ path }) => ({ path })
+              );
+            },
+          },
+        ],
+      },
     },
   };
 

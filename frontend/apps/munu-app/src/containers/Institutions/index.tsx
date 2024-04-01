@@ -18,30 +18,32 @@ import {
 } from '@mui/icons-material';
 import { notify } from '@munu/core-lib/repo/notification';
 import Icons from '@munu/core-lib/components/Icons';
+import {
+  CandyMachineDisplay,
+  getCandyMachines,
+} from '@munu/core-lib/solana/candymachine';
+import { useUmi } from '@munu/core-lib/solana/utils/useUmi';
 
 function generateItems(length: number) {
   return Array.from({ length }, (_, index) => `card_example_${index}`);
 }
 
+type ClaimItem = Awaited<ReturnType<typeof getCandyMachines>>[0];
+
 export type InstitutionsProps = {};
 const Institutions = () => {
   const [walletAddress, setWalletAddress] = useState<string>();
-  const [cards, setCards] = useState<string[]>([]);
+  const [cards, setCards] = useState<ClaimItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [{ wallet }] = useConnectWallet();
+  const umi = useUmi();
 
   const getCards = useCallback((wallet: string) => {
-    return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        if (wallet === 'falha') {
-          reject('Falha ao carregar cards');
-          return;
-        }
-        const listNumber = Math.floor(Math.random() * 10) + 1;
-        setCards(generateItems(listNumber));
-        resolve();
-      }, 2000);
-    });
+    return fetch('https://ga.notproduction.space/candymachines.json')
+      .then((r) => r.json())
+      .then((r: CandyMachineDisplay[]) => {
+        getCandyMachines(umi, r).then(setCards);
+      });
   }, []);
 
   const handleSubmit = useCallback(() => {
@@ -50,7 +52,7 @@ const Institutions = () => {
       getCards(walletAddress)
         .catch((e) => {
           notify({
-            message: e,
+            message: e?.message,
             type: 'error',
             temporary: true,
           });
@@ -158,9 +160,9 @@ const Institutions = () => {
           {...(cards.length > 0 ? { timeout: 1000 } : {})}
         >
           <Grid container spacing={4}>
-            {cards.map((key) => (
-              <Grid key={key} item>
-                <Certificate />
+            {cards.map((card, i) => (
+              <Grid key={card?.candyMachine?.data?.symbol + '-' + i} item>
+                <Certificate claim={card} />
               </Grid>
             ))}
           </Grid>
@@ -170,7 +172,7 @@ const Institutions = () => {
   );
 };
 
-type CertificateProps = {};
+type CertificateProps = { claim: ClaimItem };
 const Certificate = (props: CertificateProps) => {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -198,7 +200,7 @@ const Certificate = (props: CertificateProps) => {
         })}
       >
         <img
-          src={CertificateImg}
+          src={props.claim.preview?.image ?? CertificateImg}
           style={{
             width: 200,
             height: 200,
