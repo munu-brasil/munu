@@ -1,9 +1,9 @@
 export type Toast = {
   title: string;
-  description: string;
-  status: 'error' | 'success';
-  duration: number;
-  isClosable: boolean;
+  description?: string;
+  status?: 'error' | 'success';
+  duration?: number;
+  isClosable?: boolean;
 };
 
 export function toast(t: Toast) {

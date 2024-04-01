@@ -1,7 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Button3D } from '@/components/Button/Button3D';
 import { useConnectWallet } from '@web3-onboard/react';
-import CertificateImg from '@/lib/internal/images/certificate_02.jpg';
 import {
   Zoom,
   Grid,
@@ -11,29 +9,20 @@ import {
   Typography,
   CircularProgress,
 } from '@mui/material';
-import {
-  SearchRounded,
-  ArrowDownwardRounded,
-  CheckCircleOutlineRounded,
-} from '@mui/icons-material';
+import { SearchRounded, ArrowDownwardRounded } from '@mui/icons-material';
 import { notify } from '@munu/core-lib/repo/notification';
-import Icons from '@munu/core-lib/components/Icons';
 import {
   CandyMachineDisplay,
   getCandyMachines,
 } from '@munu/core-lib/solana/candymachine';
 import { useUmi } from '@munu/core-lib/solana/utils/useUmi';
-
-function generateItems(length: number) {
-  return Array.from({ length }, (_, index) => `card_example_${index}`);
-}
-
-type ClaimItem = Awaited<ReturnType<typeof getCandyMachines>>[0];
+import type { CandyMachineItem } from '@munu/core-lib/solana/candymachine';
+import { CandyMachine } from './CandyMachine';
 
 export type InstitutionsProps = {};
 const Institutions = () => {
   const [walletAddress, setWalletAddress] = useState<string>();
-  const [cards, setCards] = useState<ClaimItem[]>([]);
+  const [cards, setCards] = useState<CandyMachineItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [{ wallet }] = useConnectWallet();
   const umi = useUmi();
@@ -42,7 +31,11 @@ const Institutions = () => {
     return fetch('https://ga.notproduction.space/candymachines.json')
       .then((r) => r.json())
       .then((r: CandyMachineDisplay[]) => {
-        getCandyMachines(umi, r).then(setCards);
+        const cms = r.map((c) => ({
+          ...c,
+          allowList: new Map<string, Array<string>>([c.allowList as any]),
+        }));
+        getCandyMachines(umi, cms).then(setCards);
       });
   }, []);
 
@@ -69,7 +62,7 @@ const Institutions = () => {
       getCards(address)
         .catch((e) => {
           notify({
-            message: e,
+            message: e?.message,
             type: 'error',
             temporary: true,
           });
@@ -162,89 +155,11 @@ const Institutions = () => {
           <Grid container spacing={4}>
             {cards.map((card, i) => (
               <Grid key={card?.candyMachine?.data?.symbol + '-' + i} item>
-                <Certificate claim={card} />
+                <CandyMachine item={card} />
               </Grid>
             ))}
           </Grid>
         </Zoom>
-      </Box>
-    </Box>
-  );
-};
-
-type CertificateProps = { claim: ClaimItem };
-const Certificate = (props: CertificateProps) => {
-  const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const onclick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setLoading(true);
-    setTimeout(() => {
-      setSuccess(true);
-      setLoading(false);
-    }, 1000);
-  }, []);
-
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <Box
-        sx={(theme) => ({
-          marginBottom: theme.spacing(2),
-        })}
-      >
-        <img
-          src={props.claim.preview?.image ?? CertificateImg}
-          style={{
-            width: 200,
-            height: 200,
-          }}
-        />
-      </Box>
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Button3D
-          style={{ minWidth: 150 }}
-          disabled={success || loading}
-          onClick={onclick}
-          sx={
-            success
-              ? (theme) => ({
-                  '&: disabled': {
-                    color: theme.palette.common.white,
-                    background: `${theme.palette.success.main} !important`,
-                    border: `solid 1px ${theme.palette.success.light} !important`,
-                    boxShadow: `0px 10px 0px ${theme.palette.success.dark} !important`,
-                    MozBoxShadow: `0px 10px 0px ${theme.palette.success.dark} !important`,
-                    WebkitBoxShadow: `0px 10px 0px ${theme.palette.success.dark} !important`,
-                  },
-                })
-              : {}
-          }
-        >
-          {!success && !loading ? <b>CLAIM</b> : null}
-          {success ? <Icons.CheckCircle8Bit style={{ width: 25 }} /> : null}
-          {loading ? (
-            <CircularProgress
-              size={20}
-              sx={(theme) => ({
-                color: theme.palette.common.white,
-              })}
-            />
-          ) : null}
-        </Button3D>
       </Box>
     </Box>
   );

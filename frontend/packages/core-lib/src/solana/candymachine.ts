@@ -5,9 +5,13 @@ import {
   AccountVersion,
   fetchAllCandyMachine,
   safeFetchCandyGuard,
+  fetchCandyMachine,
+  CandyGuard,
+  CandyMachine,
 } from '@metaplex-foundation/mpl-candy-machine';
 import { guardChecker } from '@/solana/utils/checkAllowed';
 import { getSolanaTime } from '@/solana/utils/checkerHelper';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 export type CandyMachineDisplay = {
   allowList: Map<string, Array<string>>;
@@ -64,11 +68,14 @@ export async function getCandyMachines(umi: Umi, cms: CandyMachineDisplay[]) {
       candyGuard,
       guardReturn,
       ownedTokens,
+      allowList: cms[i].allowList,
     });
   }
 
   return cmachinesPreview;
 }
+
+export type CandyMachineItem = Awaited<ReturnType<typeof getCandyMachines>>[0];
 
 export const findCandyMachineViaAuthority = async (key: string) => {
   const connection = new Connection(

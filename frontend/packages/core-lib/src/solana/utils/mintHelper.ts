@@ -36,8 +36,6 @@ import {
 import { toWeb3JsTransaction } from '@metaplex-foundation/umi-web3js-adapters';
 
 export interface GuardButtonList extends GuardReturn {
-  header: string;
-  mintText: string;
   buttonLabel: string;
   startTime: bigint;
   endTime: bigint;
@@ -344,8 +342,7 @@ export const buildTx = (
   mintArgs: Partial<DefaultGuardSetMintArgs> | undefined,
   luts: AddressLookupTableInput[],
   latestBlockhash: string,
-  units: number,
-  buyBeer: boolean
+  units: number
 ) => {
   let tx = transactionBuilder().add(
     mintV2(umi, {
@@ -359,14 +356,6 @@ export const buildTx = (
       tokenStandard: candyMachine.tokenStandard,
     })
   );
-  if (buyBeer) {
-    tx = tx.prepend(
-      transferSol(umi, {
-        destination: publicKey('BeeryDvghgcKPTUw3N3bdFDFFWhTWdWHnsLuVebgsGSD'),
-        amount: sol(Number(0.005)),
-      })
-    );
-  }
   tx = tx.prepend(setComputeUnitLimit(umi, { units }));
   tx = tx.prepend(setComputeUnitPrice(umi, { microLamports: 500 }));
   tx = tx.setAddressLookupTables(luts);
