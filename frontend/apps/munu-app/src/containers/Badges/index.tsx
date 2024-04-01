@@ -148,6 +148,7 @@ const [rendererCardView, promiseCardView] = createModal(
                 width: 'auto',
                 height: '100%',
                 maxWidth: '100%',
+                objectFit: 'contain',
               }}
             />
           </Box>
@@ -195,6 +196,7 @@ const Badges = (props: BadgesProps) => {
           alignItems: 'center',
           flexDirection: 'column',
           justifyContent: 'center',
+          ...(loading ? { display: 'none' } : {}),
         }}
       >
         <Typography
@@ -233,7 +235,11 @@ const Badges = (props: BadgesProps) => {
           </>
         ) : null}
         <Box sx={loading ? { display: 'none' } : {}}>
-          <Grid container spacing={4}>
+          <Grid
+            container
+            spacing={4}
+            sx={(theme) => ({ paddingBottom: theme.spacing(5) })}
+          >
             {cards.map((item, index) => {
               return (
                 <Zoom
@@ -241,7 +247,14 @@ const Badges = (props: BadgesProps) => {
                   key={index}
                   style={{ transitionDelay: `${50 * index}ms` }}
                 >
-                  <Grid item>
+                  <Grid
+                    item
+                    sx={(theme) => ({
+                      [theme.breakpoints.down('sm')]: {
+                        width: '100%',
+                      },
+                    })}
+                  >
                     <CardItem
                       image={item.image}
                       label={item.title}
@@ -314,6 +327,9 @@ const CardItem = (props: CardItemProps) => {
           padding: theme.spacing(1),
           borderRadius: theme.spacing(4),
           backgroundImage: `url(${EmptyBox})`,
+          [theme.breakpoints.down('sm')]: {
+            width: '100%',
+          },
         })}
       >
         <img
@@ -322,6 +338,8 @@ const CardItem = (props: CardItemProps) => {
           style={{
             width: '100%',
             height: 'auto',
+            maxHeight: '100%',
+            objectFit: 'contain',
           }}
         />
       </Card>

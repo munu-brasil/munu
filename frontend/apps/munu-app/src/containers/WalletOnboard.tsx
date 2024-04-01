@@ -12,23 +12,19 @@ import { ExitToApp } from '@mui/icons-material';
 import { init, useConnectWallet } from '@web3-onboard/react';
 import phantomModule from '@web3-onboard/phantom';
 import Logo from '@/lib/internal/images/logo.png';
+import icon from '@/lib/internal/images/logo-32x32.png';
 import { Button3D } from '@/components/Button/Button3D';
+import { notify } from '@munu/core-lib/repo/notification';
 
 const phantom = phantomModule();
 
 init({
   wallets: [phantom],
-  chains: [
-    {
-      id: '0x1',
-      token: 'ETH',
-      label: 'Ethereum Mainnet',
-      rpcUrl: 'https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY',
-    },
-  ],
+  chains: [{ id: '0x1' }],
   appMetadata: {
     name: 'Phantom Web3-Onboard Demo',
-    icon: Logo,
+    icon: icon,
+    logo: Logo,
     description: 'My phantom wallet dapp using Onboard',
   },
 });
@@ -38,7 +34,8 @@ function formatWalletAddress(address: string) {
 }
 
 export const WalletOnboard = () => {
-  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+  const [{ wallet }, connect, disconnect] = useConnectWallet();
+  const [loading, setLoading] = useState(false);
   const [anchorEl, setAnchorEl] = useState(
     null as (EventTarget & HTMLDivElement) | null
   );
@@ -48,7 +45,15 @@ export const WalletOnboard = () => {
       e.preventDefault();
       e.stopPropagation();
       if (wallet) {
-        disconnect(wallet);
+        disconnect(wallet)
+          .catch(() => {
+            notify({
+              message: 'Falha ao desconectar',
+              type: 'error',
+              temporary: true,
+            });
+          })
+          .finally(() => setLoading(false));
         setAnchorEl(null);
       }
     },
@@ -59,7 +64,16 @@ export const WalletOnboard = () => {
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       e.stopPropagation();
-      connect();
+      setLoading(true);
+      connect()
+        .catch((e) => {
+          notify({
+            message: 'Falha ao conectar',
+            type: 'error',
+            temporary: true,
+          });
+        })
+        .finally(() => setLoading(false));
     },
     [connect]
   );
@@ -68,7 +82,7 @@ export const WalletOnboard = () => {
     <Grid item>
       {wallet ? (
         <Button
-          disabled={connecting}
+          disabled={loading}
           sx={(theme) => ({
             textTransform: 'none',
             color: theme.palette.common.black,
@@ -99,8 +113,8 @@ export const WalletOnboard = () => {
           <b>{formatWalletAddress(wallet?.accounts?.[0]?.address)}</b>
         </Button>
       ) : (
-        <Button3D disabled={connecting} onClick={onConnect}>
-          {connecting ? 'CONNECTING...' : 'CONNECT WALLET'}
+        <Button3D disabled={loading} onClick={onConnect}>
+          {loading ? 'CONNECTING...' : 'CONNECT WALLET'}
         </Button3D>
       )}
       <Menu
@@ -119,7 +133,7 @@ export const WalletOnboard = () => {
         }}
       >
         <MenuItem disabled>{wallet?.label}</MenuItem>
-        <MenuItem onClick={onDisconnect}>
+        <MenuItem disabled={loading} onClick={onDisconnect}>
           <ListItemText primary="Disconnect" />
           <ListItemIcon style={{ minWidth: 24 }}>
             <ExitToApp style={{ width: 24, height: 24 }} />

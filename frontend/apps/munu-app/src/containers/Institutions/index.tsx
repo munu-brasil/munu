@@ -151,7 +151,14 @@ const Institutions = () => {
         <Grid container spacing={4}>
           {cards.map((key, i) => (
             <Zoom key={key} in style={{ transitionDelay: `${50 * i}ms` }}>
-              <Grid item>
+              <Grid
+                item
+                sx={(theme) => ({
+                  [theme.breakpoints.down('sm')]: {
+                    width: '100%',
+                  },
+                })}
+              >
                 <Certificate />
               </Grid>
             </Zoom>
@@ -186,6 +193,9 @@ const Certificate = (props: CertificateProps) => {
     >
       <Box
         sx={(theme) => ({
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           marginBottom: theme.spacing(2),
         })}
       >

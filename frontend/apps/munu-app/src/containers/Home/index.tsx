@@ -52,7 +52,15 @@ const Home = (props: HomeProps) => {
             })}
           />
         </Grid>
-        <Grid item style={{ minWidth: '50%' }}>
+        <Grid
+          item
+          sx={(theme) => ({
+            [theme.breakpoints.down('sm')]: {
+              width: '100%',
+            },
+          })}
+          style={{ minWidth: '50%' }}
+        >
           <CardContainer color="primary" style={{ height: '100%' }}>
             <Box
               sx={(theme) => ({
@@ -126,7 +134,14 @@ const Home = (props: HomeProps) => {
         </Grid>
       </Grid>
       <Grid container spacing={3} sx={{ flex: 0 }}>
-        <Grid item>
+        <Grid
+          item
+          sx={(theme) => ({
+            [theme.breakpoints.down('sm')]: {
+              width: '100%',
+            },
+          })}
+        >
           <CardContainer color="secondary">
             <CardHeader
               icon={<WidgetsOutlined />}
@@ -172,7 +187,14 @@ const Home = (props: HomeProps) => {
             />
           </CardContainer>
         </Grid>
-        <Grid item>
+        <Grid
+          item
+          sx={(theme) => ({
+            [theme.breakpoints.down('sm')]: {
+              width: '100%',
+            },
+          })}
+        >
           <CardContainer color="warning">
             <CardHeader
               icon={<WidgetsOutlined />}
@@ -221,7 +243,14 @@ const Home = (props: HomeProps) => {
             />
           </CardContainer>
         </Grid>
-        <Grid item>
+        <Grid
+          item
+          sx={(theme) => ({
+            [theme.breakpoints.down('sm')]: {
+              width: '100%',
+            },
+          })}
+        >
           <CardContainer color="primary">
             <CardHeader
               icon={<WidgetsOutlined />}
@@ -268,7 +297,14 @@ const Home = (props: HomeProps) => {
         </Grid>
       </Grid>
       <Grid container spacing={3} sx={{ flex: 1 }}>
-        <Grid item>
+        <Grid
+          item
+          sx={(theme) => ({
+            [theme.breakpoints.down('sm')]: {
+              width: '100%',
+            },
+          })}
+        >
           <CardContainer
             title="badges"
             component={Button}
@@ -285,6 +321,9 @@ const Home = (props: HomeProps) => {
               flexDirection: 'column',
               '&: hover': {
                 background: theme.palette.secondary.main,
+              },
+              [theme.breakpoints.down('sm')]: {
+                width: '100%',
               },
             })}
           >
@@ -318,7 +357,14 @@ const Home = (props: HomeProps) => {
             </CardContent>
           </CardContainer>
         </Grid>
-        <Grid item>
+        <Grid
+          item
+          sx={(theme) => ({
+            [theme.breakpoints.down('sm')]: {
+              width: '100%',
+            },
+          })}
+        >
           <CardContainer
             color="warning"
             sx={{ height: '100%', maxHeight: 300 }}
@@ -369,7 +415,14 @@ const Home = (props: HomeProps) => {
             />
           </CardContainer>
         </Grid>
-        <Grid item>
+        <Grid
+          item
+          sx={(theme) => ({
+            [theme.breakpoints.down('sm')]: {
+              width: '100%',
+            },
+          })}
+        >
           <CardContainer
             color="primary"
             sx={{ height: '100%', maxHeight: 300 }}

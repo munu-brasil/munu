@@ -85,6 +85,7 @@ const useStyles = (theme: Theme, drawerWidth: number) =>
       overflowX: 'hidden',
       [theme.breakpoints.up('sm')]: {
         width: 0,
+        visibility: 'hidden',
       },
     },
     scrollBar: {
@@ -286,6 +287,9 @@ function Navigator(props: NavigatorProps) {
             '&:hover': {
               color: theme.palette.common.white,
               background: theme.palette.common.black,
+            },
+            [theme.breakpoints.down('sm')]: {
+              display: 'none',
             },
           })}
           onClick={(e) => {
