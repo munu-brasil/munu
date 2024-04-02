@@ -42,6 +42,7 @@
     "@metaplex-foundation/umi-web3js-adapters": "^0.9.1",
     "@mui/joy": "5.0.0-alpha.72",
     "@munu/ts-utils": "workspace:^",
+    "@munu/ui-lib": "workspace:^",
     "@solana/wallet-adapter-base": "^0.9.22",
     "@solana/wallet-adapter-react": "^0.15.32",
     "@solana/wallet-adapter-react-ui": "^0.9.31",

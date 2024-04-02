@@ -1,27 +1,25 @@
 import {
-  AllowList,
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
+import {
   CandyGuard,
   CandyMachine,
-  getMerkleProof,
-  mintV2,
-  route,
 } from '@metaplex-foundation/mpl-candy-machine';
+import type { CandyMachineItem } from '@munu/core-lib/solana/candymachine';
 import {
   AddressLookupTableInput,
   KeypairSigner,
-  Option,
   PublicKey,
-  Some,
   Transaction,
   Umi,
   createBigInt,
   generateSigner,
-  none,
   publicKey,
   signAllTransactions,
-  sol,
-  some,
-  transactionBuilder,
 } from '@metaplex-foundation/umi';
 import {
   DigitalAsset,
@@ -30,17 +28,16 @@ import {
   fetchDigitalAsset,
   fetchJsonMetadata,
 } from '@metaplex-foundation/mpl-token-metadata';
+import { styled } from '@mui/material/styles';
 import {
   Box,
-  Button,
   Grid,
-  Typography,
   Tooltip,
-  Divider,
-  TextField,
+  Typography,
+  TooltipProps,
+  tooltipClasses,
 } from '@mui/material';
 import { fetchAddressLookupTable } from '@metaplex-foundation/mpl-toolbox';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import {
   chooseGuardToUse,
   routeBuilder,
@@ -53,10 +50,17 @@ import { useSolanaTime } from '@munu/core-lib/solana/utils/SolanaTimeContext';
 import { base58 } from '@metaplex-foundation/umi/serializers';
 import { GuardReturn } from '@munu/core-lib/solana/utils/checkerHelper';
 import { verifyTx } from '@munu/core-lib/solana/utils/verifyTx';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { notify } from '@munu/core-lib/repo/notification';
+import { useUmi } from '@munu/core-lib/solana/utils/useUmi';
+import { Button3D } from '@/components/Button/Button3D';
+import HiddenComponent from '@munu/core-lib/components/HiddenComponent';
+import { createModal } from '@munu/core-lib/components/PromiseDialog';
+import { WalletOnboardDialog } from '@/containers/WalletOnboardDialog';
+import { guardChecker } from '@munu/core-lib/solana/utils/checkAllowed';
 
-function toast(a: any) {
-  console.log('toast', a);
-}
+const [rendererOnboardDialog, promiseOnboardDialog] =
+  createModal(WalletOnboardDialog);
 
 const updateLoadingText = (
   loadingText: string | undefined,
@@ -74,6 +78,16 @@ const updateLoadingText = (
   setGuardList(newGuardList);
 };
 
+const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: 300,
+    fontSize: theme.typography.pxToRem(12),
+  },
+}));
+
 const fetchNft = async (umi: Umi, nftAdress: PublicKey) => {
   let digitalAsset: DigitalAsset | undefined;
   let jsonMetadata: JsonMetadata | undefined;
@@ -82,12 +96,10 @@ const fetchNft = async (umi: Umi, nftAdress: PublicKey) => {
     jsonMetadata = await fetchJsonMetadata(umi, digitalAsset.metadata.uri);
   } catch (e) {
     console.error(e);
-    toast({
-      title: 'Nft could not be fetched!',
-      description: 'Please check your Wallet instead.',
-      status: 'info',
-      duration: 900,
-      isClosable: true,
+    notify({
+      message: 'Nft could not be fetched!',
+      type: 'error',
+      temporary: true,
     });
   }
 
@@ -143,11 +155,10 @@ const mintClick = async (
       allowLists
     );
     if (routeBuild) {
-      toast({
-        title: 'Allowlist detected. Please sign to be approved to mint.',
-        status: 'info',
-        duration: 900,
-        isClosable: true,
+      notify({
+        message: 'Allowlist detected. Please sign to be approved to mint.',
+        type: 'error',
+        temporary: true,
       });
       await routeBuild.sendAndConfirm(umi, {
         confirm: { commitment: 'processed' },
@@ -165,11 +176,10 @@ const mintClick = async (
       const fetchedLut = await fetchAddressLookupTable(umi, lutPubKey);
       tables = [fetchedLut];
     } else {
-      toast({
-        title: 'The developer should really set a lookup table!',
-        status: 'warning',
-        duration: 900,
-        isClosable: true,
+      notify({
+        message: 'The developer should really set a lookup table!',
+        type: 'error',
+        temporary: true,
       });
     }
 
@@ -262,10 +272,10 @@ const mintClick = async (
       setGuardList
     );
 
-    toast({
-      title: `${signedTransactions.length} Transaction(s) sent!`,
-      status: 'success',
-      duration: 3000,
+    notify({
+      message: `${signedTransactions.length} Transaction(s) sent!`,
+      type: 'error',
+      temporary: true,
     });
 
     const successfulMints = await verifyTx(umi, signatures);
@@ -307,12 +317,10 @@ const mintClick = async (
     }
   } catch (e) {
     console.error(`minting failed because of ${e}`);
-    toast({
-      title: 'Your mint failed!',
-      description: 'Please try again.',
-      status: 'error',
-      duration: 900,
-      isClosable: true,
+    notify({
+      message: 'Your mint failed!',
+      type: 'error',
+      temporary: true,
     });
   } finally {
     //find the guard by guardToUse.label and set minting to true
@@ -424,12 +432,68 @@ const Timer = ({
   return <Typography></Typography>;
 };
 
+let t: NodeJS.Timeout;
+const useConnectWallet = ({
+  callback,
+  checkEligibility,
+}: {
+  callback: () => void;
+  checkEligibility: () => Promise<{
+    allowed: boolean;
+    ownedTokens: DigitalAssetWithToken[] | undefined;
+    guards: GuardReturn[];
+  }>;
+}) => {
+  const [loading, setLoading] = useState(false);
+  const [, setIsConnected] = useState(false);
+  const { connect, wallet, connected } = useWallet();
+
+  const onConnect = useCallback(async () => {
+    setLoading(true);
+    if (!wallet) {
+      const ok = await promiseOnboardDialog();
+      if (!ok) {
+        setLoading(false);
+        setIsConnected(false);
+        return;
+      }
+    } else {
+      try {
+        await connect();
+      } catch (e) {
+        setLoading(false);
+        setIsConnected(false);
+        return;
+      }
+    }
+    setIsConnected(true);
+  }, [wallet]);
+
+  useEffect(() => {
+    clearTimeout(t);
+    t = setTimeout(() => {
+      checkEligibility().then(({ allowed }) => {
+        setIsConnected((isConnected) => {
+          if (isConnected && allowed) {
+            callback();
+            setLoading(false);
+            return false;
+          }
+          return isConnected;
+        });
+      });
+    }, 500);
+  }, [checkEligibility]);
+
+  return [loading, connected, onConnect] as [
+    typeof loading,
+    typeof connected,
+    typeof onConnect
+  ];
+};
+
 type Props = {
-  umi: Umi;
-  guardList: GuardReturn[];
-  candyMachine: CandyMachine | undefined;
-  candyGuard: CandyGuard | undefined;
-  ownedTokens: DigitalAssetWithToken[] | undefined;
+  candyMachineItem: CandyMachineItem;
   setGuardList: Dispatch<SetStateAction<GuardReturn[]>>;
   mintsCreated:
     | {
@@ -444,34 +508,67 @@ type Props = {
     >
   >;
   onOpen: () => void;
-  setCheckEligibility: Dispatch<SetStateAction<boolean>>;
-  allowLists: Map<string, Array<string>>;
 };
 
 export function ClaimButton({
-  umi,
-  guardList,
-  candyMachine,
-  candyGuard,
-  ownedTokens = [], // provide default empty array
-  setGuardList,
   mintsCreated,
   setMintsCreated,
   onOpen,
-  setCheckEligibility,
-  allowLists,
+  candyMachineItem,
 }: Props): JSX.Element {
+  const { candyMachine, candyGuard, allowList } = candyMachineItem;
+  const [isAllowed, setIsAllowed] = useState(false);
+  const [ownedTokens, setOwnedTokens] = useState<DigitalAssetWithToken[]>([]);
+  const [guardList, setGuardList] = useState<GuardReturn[]>([
+    { label: 'startDefault', allowed: false, maxAmount: 0 },
+  ]);
+  const [checkEligibility, setCheckEligibility] = useState<boolean>(true);
   const solanaTime = useSolanaTime();
-  const [numberInputValues, setNumberInputValues] = useState<{
-    [label: string]: number;
-  }>({});
+  const umi = useUmi();
+
+  const checkEligibilityFunc = useCallback(() => {
+    return new Promise<{
+      allowed: boolean;
+      ownedTokens: DigitalAssetWithToken[] | undefined;
+      guards: GuardReturn[];
+    }>(async (resolve) => {
+      if (
+        !candyMachineItem.candyMachine ||
+        !candyMachineItem.candyGuard ||
+        !checkEligibility
+      ) {
+        return;
+      }
+      const { guardReturn, ownedTokens } = await guardChecker(
+        umi,
+        candyMachineItem.candyGuard,
+        candyMachineItem.candyMachine,
+        solanaTime,
+        candyMachineItem.allowList
+      );
+
+      setOwnedTokens(ownedTokens ?? []);
+      setGuardList(guardReturn);
+      setIsAllowed(false);
+
+      let allowed = false;
+      for (const guard of guardReturn) {
+        if (guard.allowed) {
+          allowed = true;
+          break;
+        }
+      }
+
+      setIsAllowed(allowed);
+      resolve({ allowed, ownedTokens, guards: guardReturn });
+    });
+    // On purpose: not check for candyMachine, candyGuard, solanaTime
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [umi, checkEligibility, candyMachineItem]);
+
   if (!candyMachine || !candyGuard) {
     return <></>;
   }
-
-  const handleNumberInputChange = (label: string, value: number) => {
-    setNumberInputValues((prev) => ({ ...prev, [label]: value }));
-  };
 
   // remove duplicates from guardList
   //fucked up bugfix
@@ -515,97 +612,165 @@ export function ClaimButton({
   }
 
   const listItems = buttonGuardList.map((buttonGuard, index) => (
-    <Box key={index} marginTop={'20px'}>
-      <div>
-        {buttonGuard.endTime > createBigInt(0) &&
-          buttonGuard.endTime - solanaTime > createBigInt(0) &&
-          (!buttonGuard.startTime ||
-            buttonGuard.startTime - solanaTime <= createBigInt(0)) && (
-            <>
-              <Typography fontSize="sm" marginRight={'2'}>
-                Ending in:{' '}
-              </Typography>
-              <Timer
-                toTime={buttonGuard.endTime}
-                solanaTime={solanaTime}
-                setCheckEligibility={setCheckEligibility}
-              />
-            </>
-          )}
-        {buttonGuard.startTime > createBigInt(0) &&
-          buttonGuard.startTime - solanaTime > createBigInt(0) &&
-          (!buttonGuard.endTime ||
-            solanaTime - buttonGuard.endTime <= createBigInt(0)) && (
-            <>
-              <Typography fontSize="sm" marginRight={'2'}>
-                Starting in:{' '}
-              </Typography>
-              <Timer
-                toTime={buttonGuard.startTime}
-                solanaTime={solanaTime}
-                setCheckEligibility={setCheckEligibility}
-              />
-            </>
-          )}
-      </div>
+    <ButtonGuard
+      key={index}
+      isAllowed={isAllowed}
+      buttonGuard={buttonGuard}
+      guardList={guardList}
+      solanaTime={solanaTime}
+      checkEligibility={checkEligibilityFunc}
+      setCheckEligibility={setCheckEligibility}
+      onClick={() => {
+        mintClick(
+          umi,
+          buttonGuard,
+          candyMachine,
+          candyGuard,
+          ownedTokens,
+          1,
+          mintsCreated,
+          setMintsCreated,
+          guardList,
+          setGuardList,
+          onOpen,
+          setCheckEligibility,
+          allowList
+        );
+      }}
+    />
+  ));
+
+  return (
+    <>
+      {listItems}
+      {rendererOnboardDialog}
+    </>
+  );
+}
+
+type ButtonGuardProps = {
+  solanaTime: bigint;
+  isAllowed: boolean;
+  guardList: GuardReturn[];
+  buttonGuard: GuardButtonList;
+  onClick: () => void;
+  setCheckEligibility: Dispatch<SetStateAction<boolean>>;
+  checkEligibility: () => Promise<{
+    allowed: boolean;
+    ownedTokens: DigitalAssetWithToken[] | undefined;
+    guards: GuardReturn[];
+  }>;
+};
+
+const ButtonGuard = (props: ButtonGuardProps) => {
+  const {
+    guardList,
+    isAllowed,
+    buttonGuard,
+    solanaTime,
+    onClick,
+    setCheckEligibility,
+    checkEligibility,
+  } = props;
+  const [connecting, connected, onConnect] = useConnectWallet({
+    callback: onClick,
+    checkEligibility,
+  });
+
+  const showEndTime =
+    buttonGuard.endTime > createBigInt(0) &&
+    buttonGuard.endTime - solanaTime > createBigInt(0) &&
+    (!buttonGuard.startTime ||
+      buttonGuard.startTime - solanaTime <= createBigInt(0));
+  const showStartTime =
+    buttonGuard.startTime > createBigInt(0) &&
+    buttonGuard.startTime - solanaTime > createBigInt(0) &&
+    (!buttonGuard.endTime ||
+      solanaTime - buttonGuard.endTime <= createBigInt(0));
+
+  const handleClick = useCallback(
+    async (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (!connected) {
+        onConnect();
+        return;
+      }
+      onClick();
+    },
+    [connected, onConnect, onClick]
+  );
+
+  return (
+    <Box marginTop="20px">
       <Grid columns={2} spacing={5} container>
         <Grid item>
-          {process.env.NEXT_PUBLIC_MULTIMINT && buttonGuard.allowed ? (
-            <TextField
-              type="number"
-              value={numberInputValues[buttonGuard.label] || 1}
-              inputProps={{
-                min: 1,
-                max: buttonGuard.maxAmount < 1 ? 1 : buttonGuard.maxAmount,
-              }}
-              size="small"
-              disabled={!buttonGuard.allowed}
-              onChange={(e) =>
-                handleNumberInputChange(
-                  buttonGuard.label,
-                  parseInt(e.target.value)
-                )
-              }
-            />
-          ) : null}
-
-          <Tooltip title={buttonGuard.tooltip} aria-label="Mint button">
-            <Button
-              onClick={() =>
-                mintClick(
-                  umi,
-                  buttonGuard,
-                  candyMachine,
-                  candyGuard,
-                  ownedTokens,
-                  numberInputValues[buttonGuard.label] || 1,
-                  mintsCreated,
-                  setMintsCreated,
-                  guardList,
-                  setGuardList,
-                  onOpen,
-                  setCheckEligibility,
-                  allowLists
-                )
-              }
-              key={buttonGuard.label}
-              size="small"
-              disabled={!buttonGuard.allowed}
-              endIcon={
-                guardList.find((elem) => elem.label === buttonGuard.label)
-                  ?.minting ? (
-                  <div>...</div>
-                ) : null
-              }
-            >
-              {guardList.find((elem) => elem.label === buttonGuard.label)
-                ?.loadingText || buttonGuard.buttonLabel}
-            </Button>
-          </Tooltip>
+          <HtmlTooltip
+            arrow
+            open={showStartTime || showEndTime}
+            placement="top"
+            title={
+              <div>
+                <HiddenComponent hidden={!showEndTime}>
+                  <Typography
+                    fontSize="sm"
+                    marginRight="2"
+                    sx={(theme) => ({
+                      display: 'flex',
+                      color: theme.palette.common.white,
+                    })}
+                  >
+                    <span>Ending in:</span>
+                    <Timer
+                      toTime={buttonGuard.endTime}
+                      solanaTime={solanaTime}
+                      setCheckEligibility={setCheckEligibility}
+                    />
+                  </Typography>
+                </HiddenComponent>
+                <HiddenComponent hidden={!showStartTime}>
+                  <Typography
+                    fontSize="sm"
+                    marginRight="2"
+                    sx={(theme) => ({
+                      display: 'flex',
+                      color: theme.palette.common.white,
+                    })}
+                  >
+                    <span>Starting in:&nbsp;</span>
+                    <Timer
+                      toTime={buttonGuard.startTime}
+                      solanaTime={solanaTime}
+                      setCheckEligibility={setCheckEligibility}
+                    />
+                  </Typography>
+                </HiddenComponent>
+              </div>
+            }
+          >
+            <div>
+              <Tooltip title={buttonGuard.tooltip} aria-label="Mint button">
+                <Button3D
+                  size="small"
+                  onClick={handleClick}
+                  style={{ minWidth: 150 }}
+                  key={buttonGuard.label}
+                  disabled={connecting || (connected && !isAllowed)}
+                  endIcon={
+                    guardList.find((elem) => elem.label === buttonGuard.label)
+                      ?.minting ? (
+                      <div>...</div>
+                    ) : null
+                  }
+                >
+                  {guardList.find((elem) => elem.label === buttonGuard.label)
+                    ?.loadingText || buttonGuard.buttonLabel}
+                </Button3D>
+              </Tooltip>
+            </div>
+          </HtmlTooltip>
         </Grid>
       </Grid>
     </Box>
-  ));
-
-  return <>{listItems}</>;
-}
+  );
+};

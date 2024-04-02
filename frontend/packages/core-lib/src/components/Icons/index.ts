@@ -13,6 +13,7 @@ import BRL from './BRL';
 import Menu from './Menu';
 import MenuBold from './MenuBold';
 import CheckCircle8Bit from './CheckCircle8Bit';
+import Close8Bit from './Close8Bit';
 
 export default {
   Documents,
@@ -30,4 +31,5 @@ export default {
   Menu,
   MenuBold,
   CheckCircle8Bit,
+  Close8Bit,
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useConnectWallet } from '@web3-onboard/react';
+import { useWallet } from '@solana/wallet-adapter-react';
 import {
   Zoom,
   Grid,
@@ -24,17 +24,30 @@ const Institutions = () => {
   const [walletAddress, setWalletAddress] = useState<string>();
   const [cards, setCards] = useState<CandyMachineItem[]>([]);
   const [loading, setLoading] = useState(false);
-  const [{ wallet }] = useConnectWallet();
+  const { wallet } = useWallet();
   const umi = useUmi();
+
+  const account = (wallet?.adapter as any)?.wallet?.accounts?.[0] as {
+    address?: string;
+    chains?: string[];
+    features?: string[];
+    icon?: string;
+    label?: string;
+    publicKey?: string;
+  };
 
   const getCards = useCallback((wallet: string) => {
     return fetch('https://ga.notproduction.space/candymachines.json')
       .then((r) => r.json())
       .then((r: CandyMachineDisplay[]) => {
-        const cms = r.map((c) => ({
-          ...c,
-          allowList: new Map<string, Array<string>>([c.allowList as any]),
-        }));
+        const cms = r
+          .filter((c) => {
+            return JSON.stringify(c.allowList).includes(wallet);
+          })
+          .map((c) => ({
+            ...c,
+            allowList: new Map<string, Array<string>>([c.allowList as any]),
+          }));
         getCandyMachines(umi, cms).then(setCards);
       });
   }, []);
@@ -56,7 +69,7 @@ const Institutions = () => {
 
   useEffect(() => {
     if (wallet) {
-      const address = wallet?.accounts?.[0]?.address ?? '';
+      const address = account?.address ?? '';
       setWalletAddress(address);
       setLoading(true);
       getCards(address)
@@ -71,7 +84,7 @@ const Institutions = () => {
     } else {
       setWalletAddress('');
     }
-  }, [wallet, getCards]);
+  }, [account, getCards]);
 
   return (
     <Box

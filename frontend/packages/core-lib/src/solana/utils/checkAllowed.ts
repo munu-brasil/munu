@@ -1,6 +1,5 @@
 import {
   AddressGate,
-  Allocation,
   CandyGuard,
   CandyMachine,
   EndDate,
@@ -16,9 +15,6 @@ import {
   TokenBurn,
   TokenGate,
   TokenPayment,
-  getMerkleRoot,
-  getMerkleProof,
-  route,
 } from '@metaplex-foundation/mpl-candy-machine';
 import {
   SolAmount,

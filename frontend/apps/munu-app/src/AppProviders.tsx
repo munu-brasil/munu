@@ -6,6 +6,7 @@ import type { FC, PropsWithChildren } from 'react';
 
 import { createEmotionCache } from '@/lib/emotion';
 import { muiTheme } from '@/themes/mui/mui.theme';
+import { notify } from '@munu/core-lib/repo/notification';
 import { SolanaTimeProvider } from '@munu/core-lib/solana/utils/SolanaTimeContext';
 import { UmiProvider } from '@munu/core-lib/solana/utils/UmiProvider';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
@@ -51,7 +52,17 @@ export const AppProviders: FC<Props> = (props) => {
       <MuiThemeProvider theme={muiTheme}>
         {/* Mui CssBaseline disabled in this example as tailwind provides its own */}
         {/* <CssBaseline /> */}
-        <WalletProvider wallets={[]}>
+        <WalletProvider
+          wallets={[]}
+          autoConnect
+          onError={(e) => {
+            notify({
+              message: e?.name ?? '',
+              type: 'error',
+              temporary: true,
+            });
+          }}
+        >
           <UmiProvider endpoint={endpoint}>
             <WalletModalProvider>
               <SolanaTimeProvider>

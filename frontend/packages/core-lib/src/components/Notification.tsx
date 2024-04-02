@@ -3,8 +3,8 @@ import {
   notify as notifyRepo,
   useNotification,
 } from '../repo/notification';
-import Alert from '@munu/ui-lib/src/ux/notification/Alert';
-import NotificationInline from '@munu/ui-lib/src/ux/notification/Inline';
+import Alert from '@munu/ui-lib/ux/notification/Alert';
+import NotificationInline from '@munu/ui-lib/ux/notification/Inline';
 import { useMemo } from 'react';
 
 function randstr(x: number = 5) {

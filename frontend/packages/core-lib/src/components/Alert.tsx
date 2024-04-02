@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useAlert } from '../repo/alert';
-import AlertDialog from '@munu/ui-lib/src/ux/popupAlert/AlertDialog';
+import AlertDialog from '@munu/ui-lib/ux/popupAlert/AlertDialog';
 
 export default (section?: string) => () => {
   const { dismiss, alert } = useAlert(section);
