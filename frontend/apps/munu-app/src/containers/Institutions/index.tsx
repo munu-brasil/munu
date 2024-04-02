@@ -9,12 +9,12 @@ import {
   Typography,
   CircularProgress,
 } from '@mui/material';
-import { SearchRounded, ArrowDownwardRounded } from '@mui/icons-material';
 import { notify } from '@munu/core-lib/repo/notification';
 import {
   CandyMachineDisplay,
   getCandyMachines,
 } from '@munu/core-lib/solana/candymachine';
+import Icons from '@munu/core-lib/components/Icons';
 import { useUmi } from '@munu/core-lib/solana/utils/useUmi';
 import type { CandyMachineItem } from '@munu/core-lib/solana/candymachine';
 import { CandyMachine } from './CandyMachine';
@@ -22,7 +22,7 @@ import { CandyMachine } from './CandyMachine';
 export type InstitutionsProps = {};
 const Institutions = () => {
   const [walletAddress, setWalletAddress] = useState<string>();
-  const [cards, setCards] = useState<CandyMachineItem[]>([]);
+  const [cards, setCards] = useState<CandyMachineItem[]>();
   const [loading, setLoading] = useState(false);
   const { wallet } = useWallet();
   const umi = useUmi();
@@ -94,7 +94,7 @@ const Institutions = () => {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        justifyContent: 'center',
+        marginTop: '20vh',
       }}
     >
       <Typography variant="h5">
@@ -126,7 +126,7 @@ const Institutions = () => {
             },
           })}
         >
-          <SearchRounded />
+          <Icons.Zoom8Bit style={{ height: '25px', width: '25px' }} />
           <InputBase
             fullWidth
             disabled={loading}
@@ -142,38 +142,74 @@ const Institutions = () => {
               },
             }}
           />
-          <IconButton type="submit" disabled={loading}>
+          <IconButton
+            type="submit"
+            disabled={loading}
+            sx={(theme) => ({
+              color: theme.palette.common.black,
+            })}
+          >
             {loading ? (
               <CircularProgress
                 size={20}
                 sx={(theme) => ({
+                  height: '25px',
+                  width: '25px',
                   color: theme.palette.common.black,
                 })}
               />
             ) : (
-              <ArrowDownwardRounded />
+              <Icons.ArrowDown8Bit />
             )}
           </IconButton>
         </Box>
       </Box>
-      <Typography variant="h5">
-        <b>WELL DONE,YOU ARE ELIGIBLE</b>
-      </Typography>
-      <Box sx={(theme) => ({ marginTop: theme.spacing(4) })}>
-        <Zoom
-          in={cards.length > 0}
-          style={{ transformOrigin: '0 0 0' }}
-          {...(cards.length > 0 ? { timeout: 1000 } : {})}
+      {loading ? (
+        <Typography
+          variant="h3"
+          sx={(theme) => ({
+            fontFamily: 'VT323',
+            color: theme.palette.common.black,
+            padding: theme.spacing(2),
+          })}
         >
-          <Grid container spacing={4}>
-            {cards.map((card, i) => (
-              <Grid key={card?.candyMachine?.data?.symbol + '-' + i} item>
-                <CandyMachine item={card} />
-              </Grid>
-            ))}
-          </Grid>
-        </Zoom>
-      </Box>
+          Loading ...
+        </Typography>
+      ) : null}
+      {(cards ?? []).length > 0 && !loading ? (
+        <>
+          <Typography variant="h5">
+            <b>WELL DONE,YOU ARE ELIGIBLE</b>
+          </Typography>
+          <Box sx={(theme) => ({ marginTop: theme.spacing(4) })}>
+            <Grid container spacing={4}>
+              {(cards ?? []).map((card, i) => (
+                <Zoom
+                  key={card?.candyMachine?.data?.symbol + '-' + i}
+                  in
+                  style={{ transitionDelay: `${25 * i}ms` }}
+                >
+                  <Grid
+                    item
+                    sx={(theme) => ({
+                      [theme.breakpoints.down('sm')]: {
+                        width: '100%',
+                      },
+                    })}
+                  >
+                    <CandyMachine item={card} />
+                  </Grid>
+                </Zoom>
+              ))}
+            </Grid>
+          </Box>
+        </>
+      ) : null}
+      {!loading && Array.isArray(cards) && cards.length === 0 ? (
+        <Typography variant="h5">
+          <b>There nothing here yet </b>
+        </Typography>
+      ) : null}
     </Box>
   );
 };

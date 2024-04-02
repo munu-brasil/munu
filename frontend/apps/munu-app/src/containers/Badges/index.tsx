@@ -1,5 +1,16 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Box, Chip, Card, Grid, Zoom, Typography } from '@mui/material';
+import {
+  Box,
+  Chip,
+  Card,
+  Grid,
+  Zoom,
+  Button,
+  IconButton,
+  Typography,
+  DialogTitle,
+  DialogContent,
+} from '@mui/material';
 import { notify } from '@munu/core-lib/repo/notification';
 import EmptyBox from '@/lib/internal/images/empty_box.png';
 import LoadingDog from '@/lib/internal/images/loading_01.gif';
@@ -7,6 +18,79 @@ import { getMUNUNFTFromWallet } from '@munu/core-lib/solana/candymachine';
 import { BaseWalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useUmi } from '@munu/core-lib/solana/utils/useUmi';
 import type { ItemData } from '@munu/core-lib/solana/candymachine';
+import { createModal } from '@munu/core-lib/components/PromiseDialog';
+import { CustomDialog } from '@/components/Dialog/CustomDialog';
+import Icons from '@munu/core-lib/components/Icons';
+
+const [rendererCardView, promiseCardView] = createModal(
+  ({
+    data,
+    open,
+    close,
+  }: {
+    data?: ItemData;
+    open: boolean;
+    close: () => void;
+  }) => {
+    const onClose = useCallback(() => {
+      close();
+    }, [close]);
+
+    return (
+      <CustomDialog
+        fullWidth
+        maxWidth="xs"
+        open={open}
+        onClose={onClose}
+        sx={{ minHeight: '80vh' }}
+      >
+        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant="h6">
+            <b>{data?.name}</b>
+          </Typography>
+          <Box
+            sx={{
+              opacity: 1,
+              lineHeight: 1,
+              display: 'flex',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <IconButton onClick={onClose} style={{ padding: 0 }}>
+              <Icons.Close8Bit style={{ width: 25, height: 25 }} />
+            </IconButton>
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          <Box
+            sx={(theme) => ({
+              width: '100%',
+              height: '100%',
+              maxHeight: '300px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: theme.spacing(2),
+            })}
+          >
+            <img
+              alt={data?.name}
+              src={data?.image}
+              style={{
+                width: 'auto',
+                height: '100%',
+                maxWidth: '100%',
+                maxHeight: '300px',
+                objectFit: 'contain',
+              }}
+            />
+          </Box>
+          <Typography variant="body1">{data?.description}</Typography>
+        </DialogContent>
+      </CustomDialog>
+    );
+  }
+);
 
 export type BadgesProps = {};
 
@@ -47,6 +131,7 @@ const Badges = (props: BadgesProps) => {
           alignItems: 'center',
           flexDirection: 'column',
           justifyContent: 'center',
+          ...(loading ? { display: 'none' } : {}),
         }}
       >
         <Typography
@@ -97,24 +182,42 @@ const Badges = (props: BadgesProps) => {
             </Typography>
           </>
         ) : null}
-        <Box>
-          <Zoom
-            in={cards.length > 0}
-            style={{ transformOrigin: '0 0 0' }}
-            {...(cards.length > 0 ? { timeout: 1000 } : {})}
+        <Box sx={loading ? { display: 'none' } : {}}>
+          <Grid
+            container
+            spacing={4}
+            sx={(theme) => ({ paddingBottom: theme.spacing(5) })}
           >
-            <Grid container spacing={4}>
-              {cards.map((item, index) => {
-                return (
-                  <Grid key={index} item>
-                    <CardItem image={item.image} label={item.name} />
+            {cards.map((item, index) => {
+              return (
+                <Zoom
+                  in
+                  key={index}
+                  style={{ transitionDelay: `${25 * index}ms` }}
+                >
+                  <Grid
+                    item
+                    sx={(theme) => ({
+                      [theme.breakpoints.down('sm')]: {
+                        width: '100%',
+                      },
+                    })}
+                  >
+                    <CardItem
+                      image={item.image}
+                      label={item.name}
+                      onClick={() => {
+                        promiseCardView({ data: item });
+                      }}
+                    />
                   </Grid>
-                );
-              })}
-            </Grid>
-          </Zoom>
+                </Zoom>
+              );
+            })}
+          </Grid>
         </Box>
       </Box>
+      {rendererCardView}
     </>
   );
 };
@@ -122,10 +225,11 @@ const Badges = (props: BadgesProps) => {
 type CardItemProps = {
   label?: string;
   image: string;
+  onClick?: () => void;
 };
 
 const CardItem = (props: CardItemProps) => {
-  const { image, label } = props;
+  const { image, label, onClick } = props;
   return (
     <Box
       sx={{
@@ -153,6 +257,12 @@ const CardItem = (props: CardItemProps) => {
       ) : null}
       <Card
         title={label}
+        component={Button}
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onClick?.();
+        }}
         sx={(theme) => ({
           width: '200px',
           height: '250px',
@@ -165,6 +275,9 @@ const CardItem = (props: CardItemProps) => {
           padding: theme.spacing(1),
           borderRadius: theme.spacing(4),
           backgroundImage: `url(${EmptyBox})`,
+          [theme.breakpoints.down('sm')]: {
+            width: '100%',
+          },
         })}
       >
         <img
@@ -173,6 +286,8 @@ const CardItem = (props: CardItemProps) => {
           style={{
             width: '100%',
             height: 'auto',
+            maxHeight: '100%',
+            objectFit: 'contain',
           }}
         />
       </Card>

@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { CSSInterpolation } from '@emotion/css';
-import { CssBaseline, Typography, Link } from '@mui/material';
+import { CssBaseline, Typography, Link, useMediaQuery } from '@mui/material';
 import Navigator from './Navigator';
 import Header from './Header';
 import { useTheme } from '@mui/material/styles';
@@ -101,16 +101,33 @@ export interface PaperbaseProps {
 function Paperbase(props: PaperbaseProps) {
   const { navigator, toolbarItems, footer: footerComponent } = props;
   const theme = useTheme();
+  const isSmallerScreen = useMediaQuery(theme.breakpoints.down('sm'), {
+    noSsr: true,
+  });
+  const isMediumScreen = useMediaQuery(theme.breakpoints.between('sm', 'md'), {
+    noSsr: true,
+  });
+  const isLargeScreen = !isMediumScreen && !isSmallerScreen;
+
   const [paperStyle, setPaperStyle] = useState(DefaultPaperStyle);
   const [menuVariant, setMenuVariant] = useState<
     'permanent' | 'persistent' | 'temporary'
-  >('permanent');
+  >(isLargeScreen ? 'permanent' : 'temporary');
   const [open, setOpen] = useState(false);
   const classes = useStyles(theme, paperStyle);
 
-  const handleDrawerToggle = () => {
+  const changeMenuVariant = useCallback(
+    (vari: 'permanent' | 'persistent' | 'temporary') => {
+      if (isLargeScreen) {
+        setMenuVariant(vari);
+      }
+    },
+    [isLargeScreen]
+  );
+
+  const handleDrawerToggle = useCallback(() => {
     setOpen((o) => !o);
-  };
+  }, []);
 
   const Nav = navigator ?? Navigator;
   return (
@@ -121,9 +138,9 @@ function Paperbase(props: PaperbaseProps) {
           menuVariant,
           paperStyle,
           openNavigationDrawer: open,
-          setMenuVariant,
           setPaperStyle,
           setOpenNavigationDrawer: setOpen,
+          setMenuVariant: changeMenuVariant,
         }}
       >
         <HeaderTitleContextContainer>
