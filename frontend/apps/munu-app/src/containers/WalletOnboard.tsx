@@ -18,14 +18,7 @@ const phantom = phantomModule();
 
 init({
   wallets: [phantom],
-  chains: [
-    {
-      id: '0x1',
-      token: 'ETH',
-      label: 'Ethereum Mainnet',
-      rpcUrl: 'https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY',
-    },
-  ],
+  chains: [],
   appMetadata: {
     name: 'Phantom Web3-Onboard Demo',
     icon: Logo,

@@ -2,50 +2,35 @@ import { useState, useEffect, useCallback } from 'react';
 import { Box, Chip, Card, Grid, Zoom, Typography } from '@mui/material';
 import { notify } from '@munu/core-lib/repo/notification';
 import EmptyBox from '@/lib/internal/images/empty_box.png';
-import Card1 from '@/lib/internal/images/card_01.png';
-import Card2 from '@/lib/internal/images/card_02.png';
-import Card3 from '@/lib/internal/images/card_03.png';
-import Card4 from '@/lib/internal/images/card_04.jpg';
-import Card5 from '@/lib/internal/images/card_05.jpg';
-import Card6 from '@/lib/internal/images/card_06.png';
-import Card7 from '@/lib/internal/images/card_07.png';
-import Card8 from '@/lib/internal/images/card_08.png';
-import Card9 from '@/lib/internal/images/card_09.png';
 import LoadingDog from '@/lib/internal/images/loading_01.gif';
-
-const CardsExamples = [
-  { image: Card1, label: 'Rust' },
-  { image: Card2, label: 'Type-Script' },
-  { image: Card3, label: 'Python' },
-  { image: Card4, label: 'Go' },
-  { image: Card5, label: 'C#' },
-  { image: Card6, label: 'PHP' },
-  { image: Card7, label: 'Java-Script' },
-  { image: Card8, label: 'Ruby' },
-  { image: Card9, label: 'Cobol' },
-];
+import { getMUNUNFTFromWallet } from '@munu/core-lib/solana/candymachine';
+import { BaseWalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import { useUmi } from '@munu/core-lib/solana/utils/useUmi';
+import type { ItemData } from '@munu/core-lib/solana/candymachine';
 
 export type BadgesProps = {};
 
 const Badges = (props: BadgesProps) => {
   const [loading, setLoading] = useState(false);
-  const [cards, setCards] = useState<typeof CardsExamples>([]);
+  const [cards, setCards] = useState<ItemData[]>([]);
+  const umi = useUmi();
+  const isGuestWallet = umi.identity.publicKey.startsWith('11111111111111111');
 
-  const getCards = useCallback(() => {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        setCards(CardsExamples);
-        resolve();
-      }, 2000);
-    });
-  }, []);
+  const getCards = useCallback(async () => {
+    if (isGuestWallet) {
+      return [];
+    }
+    return await getMUNUNFTFromWallet(umi.identity.publicKey).then((r) =>
+      setCards(r)
+    );
+  }, [isGuestWallet]);
 
   useEffect(() => {
     setLoading(true);
     getCards()
       .catch((e) => {
         notify({
-          message: e,
+          message: e?.message,
           type: 'error',
           temporary: true,
         });
@@ -74,6 +59,19 @@ const Badges = (props: BadgesProps) => {
         >
           <b>SELECT CARD</b>
         </Typography>
+        {isGuestWallet ? (
+          <BaseWalletMultiButton
+            labels={{
+              'change-wallet': 'Mudar carteira',
+              'copy-address': 'Copiar endereço',
+              'has-wallet': 'Carteira encontrada',
+              'no-wallet': 'Nenhuma carteira',
+              connecting: 'Conectando',
+              copied: 'Copiado',
+              disconnect: 'Desconectar',
+            }}
+          />
+        ) : null}
       </Box>
       <Box
         sx={{
@@ -109,7 +107,7 @@ const Badges = (props: BadgesProps) => {
               {cards.map((item, index) => {
                 return (
                   <Grid key={index} item>
-                    <CardItem image={item.image} label={item.label} />
+                    <CardItem image={item.image} label={item.name} />
                   </Grid>
                 );
               })}

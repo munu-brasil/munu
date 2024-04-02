@@ -18,7 +18,7 @@ export type CandyMachineDisplay = {
   address: string;
 };
 
-type ItemData = {
+export type ItemData = {
   name: string;
   symbol?: string;
   description: string;
@@ -102,3 +102,47 @@ const timeout = (ms: number) =>
   new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
+
+export const findNFTByCreator = async (key: string) => {
+  const connection = new Connection(
+    (process as any).env.NEXT_PUBLIC_RPC,
+    'confirmed'
+  );
+  const metaplex = new Metaplex(connection);
+  const authority = new PublicKey(key);
+
+  metaplex.use(guestIdentity());
+
+  const nfts = await metaplex.nfts().findAllByCreator({
+    creator: authority,
+  });
+  return nfts;
+};
+
+export const findNFTByOwner = async (key: string) => {
+  const connection = new Connection(
+    (process as any).env.NEXT_PUBLIC_RPC ?? 'https://api.devnet.solana.com',
+    'confirmed'
+  );
+  const metaplex = new Metaplex(connection);
+  const authority = new PublicKey(key);
+
+  metaplex.use(guestIdentity());
+
+  const nfts = await metaplex.nfts().findAllByOwner({
+    owner: authority,
+  });
+  return nfts;
+};
+
+export const getMUNUNFTFromWallet = async (key: string) => {
+  const nfts = await findNFTByOwner(key);
+  const munu = nfts.filter((nft) => nft.symbol === 'MUNUCERT');
+  const result: ItemData[] = [];
+  for (let i = 0; i < munu.length; i++) {
+    const nft = munu[i];
+    const data = await fetch(nft.uri).then((res) => res.json());
+    result.push(data);
+  }
+  return result;
+};
