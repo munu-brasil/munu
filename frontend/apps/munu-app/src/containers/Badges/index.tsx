@@ -14,13 +14,15 @@ import {
 import { notify } from '@munu/core-lib/repo/notification';
 import EmptyBox from '@/lib/internal/images/empty_box.png';
 import LoadingDog from '@/lib/internal/images/loading_01.gif';
+import Cards from '@/lib/internal/images/cards_01.png';
 import { getMUNUNFTFromWallet } from '@munu/core-lib/solana/candymachine';
-import { BaseWalletMultiButton } from '@solana/wallet-adapter-react-ui';
 import { useUmi } from '@munu/core-lib/solana/utils/useUmi';
 import type { ItemData } from '@munu/core-lib/solana/candymachine';
 import { createModal } from '@munu/core-lib/components/PromiseDialog';
 import { CustomDialog } from '@/components/Dialog/CustomDialog';
 import Icons from '@munu/core-lib/components/Icons';
+import { useWallet } from '@solana/wallet-adapter-react';
+import HiddenComponent from '@munu/core-lib/components/HiddenComponent';
 
 const [rendererCardView, promiseCardView] = createModal(
   ({
@@ -98,16 +100,16 @@ const Badges = (props: BadgesProps) => {
   const [loading, setLoading] = useState(false);
   const [cards, setCards] = useState<ItemData[]>([]);
   const umi = useUmi();
-  const isGuestWallet = umi.identity.publicKey.startsWith('11111111111111111');
+  const { connected } = useWallet();
 
   const getCards = useCallback(async () => {
-    if (isGuestWallet) {
+    if (!connected) {
       return [];
     }
     return await getMUNUNFTFromWallet(umi.identity.publicKey).then((r) =>
       setCards(r)
     );
-  }, [isGuestWallet]);
+  }, [connected]);
 
   useEffect(() => {
     setLoading(true);
@@ -124,40 +126,62 @@ const Badges = (props: BadgesProps) => {
 
   return (
     <>
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          ...(loading ? { display: 'none' } : {}),
-        }}
-      >
-        <Typography
-          sx={(theme) => ({
-            fontSize: '3rem',
-            fontFamily: 'VT323',
-            color: theme.palette.common.white,
-            textShadow: `${theme.palette.grey[600]} 3px 4px 2px`,
-          })}
+      <HiddenComponent hidden={connected}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            height: '100%',
+          }}
         >
-          <b>SELECT CARD</b>
-        </Typography>
-        {isGuestWallet ? (
-          <BaseWalletMultiButton
-            labels={{
-              'change-wallet': 'Mudar carteira',
-              'copy-address': 'Copiar endereço',
-              'has-wallet': 'Carteira encontrada',
-              'no-wallet': 'Nenhuma carteira',
-              connecting: 'Conectando',
-              copied: 'Copiado',
-              disconnect: 'Desconectar',
-            }}
-          />
-        ) : null}
-      </Box>
+          <Typography
+            variant="h3"
+            sx={(theme) => ({
+              fontFamily: 'VT323',
+              color: theme.palette.common.white,
+              textShadow: `${theme.palette.grey[600]} 3px 4px 2px`,
+            })}
+          >
+            Wallet not connected
+          </Typography>
+          <Typography
+            variant="h4"
+            sx={(theme) => ({
+              fontFamily: 'VT323',
+              color: theme.palette.common.white,
+              textShadow: `${theme.palette.grey[600]} 3px 4px 2px`,
+            })}
+          >
+            Connect to your wallet to see your badges
+          </Typography>
+          <img alt="cards" src={Cards} style={{ width: 'auto', height: 300 }} />
+        </Box>
+      </HiddenComponent>
+      <HiddenComponent hidden={!connected}>
+        <Box
+          sx={{
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            ...(loading ? { display: 'none' } : {}),
+          }}
+        >
+          <Typography
+            sx={(theme) => ({
+              fontSize: '3rem',
+              fontFamily: 'VT323',
+              color: theme.palette.common.white,
+              textShadow: `${theme.palette.grey[600]} 3px 4px 2px`,
+            })}
+          >
+            <b>SELECT CARD</b>
+          </Typography>
+        </Box>
+      </HiddenComponent>
       <Box
         sx={{
           width: '100%',
@@ -168,54 +192,54 @@ const Badges = (props: BadgesProps) => {
           justifyContent: 'center',
         }}
       >
-        {loading ? (
-          <>
-            <img alt="Loading" src={LoadingDog} />
-            <Typography
-              variant="h3"
-              sx={(theme) => ({
-                fontFamily: 'VT323',
-                color: theme.palette.common.white,
-              })}
-            >
-              Loading ...
-            </Typography>
-          </>
-        ) : null}
-        <Box sx={loading ? { display: 'none' } : {}}>
-          <Grid
-            container
-            spacing={4}
-            sx={(theme) => ({ paddingBottom: theme.spacing(5) })}
-          >
-            {cards.map((item, index) => {
-              return (
-                <Zoom
-                  in
-                  key={index}
-                  style={{ transitionDelay: `${25 * index}ms` }}
-                >
-                  <Grid
-                    item
-                    sx={(theme) => ({
-                      [theme.breakpoints.down('sm')]: {
-                        width: '100%',
-                      },
-                    })}
-                  >
-                    <CardItem
-                      image={item.image}
-                      label={item.name}
-                      onClick={() => {
-                        promiseCardView({ data: item });
-                      }}
-                    />
-                  </Grid>
-                </Zoom>
-              );
+        <HiddenComponent hidden={!loading}>
+          <img alt="Loading" src={LoadingDog} />
+          <Typography
+            variant="h3"
+            sx={(theme) => ({
+              fontFamily: 'VT323',
+              color: theme.palette.common.white,
             })}
-          </Grid>
-        </Box>
+          >
+            Loading ...
+          </Typography>
+        </HiddenComponent>
+        <HiddenComponent hidden={!connected}>
+          <Box sx={loading ? { display: 'none' } : {}}>
+            <Grid
+              container
+              spacing={4}
+              sx={(theme) => ({ paddingBottom: theme.spacing(5) })}
+            >
+              {cards.map((item, index) => {
+                return (
+                  <Zoom
+                    in
+                    key={index}
+                    style={{ transitionDelay: `${25 * index}ms` }}
+                  >
+                    <Grid
+                      item
+                      sx={(theme) => ({
+                        [theme.breakpoints.down('sm')]: {
+                          width: '100%',
+                        },
+                      })}
+                    >
+                      <CardItem
+                        image={item.image}
+                        label={item.name}
+                        onClick={() => {
+                          promiseCardView({ data: item });
+                        }}
+                      />
+                    </Grid>
+                  </Zoom>
+                );
+              })}
+            </Grid>
+          </Box>
+        </HiddenComponent>
       </Box>
       {rendererCardView}
     </>

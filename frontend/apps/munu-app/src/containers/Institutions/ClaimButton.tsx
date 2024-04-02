@@ -494,28 +494,10 @@ const useConnectWallet = ({
 
 type Props = {
   candyMachineItem: CandyMachineItem;
-  setGuardList: Dispatch<SetStateAction<GuardReturn[]>>;
-  mintsCreated:
-    | {
-        mint: PublicKey;
-        offChainMetadata: JsonMetadata | undefined;
-      }[]
-    | undefined;
-  setMintsCreated: Dispatch<
-    SetStateAction<
-      | { mint: PublicKey; offChainMetadata: JsonMetadata | undefined }[]
-      | undefined
-    >
-  >;
   onOpen: () => void;
 };
 
-export function ClaimButton({
-  mintsCreated,
-  setMintsCreated,
-  onOpen,
-  candyMachineItem,
-}: Props): JSX.Element {
+export function ClaimButton({ onOpen, candyMachineItem }: Props): JSX.Element {
   const { candyMachine, candyGuard, allowList } = candyMachineItem;
   const [isAllowed, setIsAllowed] = useState(false);
   const [ownedTokens, setOwnedTokens] = useState<DigitalAssetWithToken[]>([]);
@@ -523,6 +505,10 @@ export function ClaimButton({
     { label: 'startDefault', allowed: false, maxAmount: 0 },
   ]);
   const [checkEligibility, setCheckEligibility] = useState<boolean>(true);
+  const [mintsCreated, setMintsCreated] = useState<
+    | { mint: PublicKey; offChainMetadata: JsonMetadata | undefined }[]
+    | undefined
+  >();
   const solanaTime = useSolanaTime();
   const umi = useUmi();
 
