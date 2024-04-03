@@ -18,6 +18,7 @@ import Home8Bit from './Home8Bit';
 import Zoom8Bit from './Zoom8Bit';
 import ArrowDown8Bit from './ArrowDown8Bit';
 import ArrowLeft8Bit from './ArrowLeft8Bit';
+import Play8Bit from './Play8Bit';
 
 export default {
   Documents,
@@ -40,4 +41,5 @@ export default {
   Zoom8Bit,
   ArrowDown8Bit,
   ArrowLeft8Bit,
+  Play8Bit,
 };

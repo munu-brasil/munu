@@ -307,7 +307,7 @@ const ActiveLinkNoAction = (props: {
   url: string;
   activeClassName: string;
   className?: string;
-  children?: React.ReactNodeArray | React.ReactNode;
+  children?: React.ReactNode[] | React.ReactNode;
 }) => {
   const { url, activeClassName, className, children } = props;
   return (
