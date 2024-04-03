@@ -18,10 +18,7 @@ export function CandyMachine({ item }: { item: CandyMachineItem }) {
       >
         <img
           src={item.preview?.image ?? CertificateImg}
-          style={{
-            width: 200,
-            height: 200,
-          }}
+          style={{ width: 200, height: 200 }}
         />
       </Box>
       <Box

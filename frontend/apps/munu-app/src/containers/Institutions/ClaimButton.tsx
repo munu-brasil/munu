@@ -26,7 +26,6 @@ import {
   DigitalAssetWithToken,
   JsonMetadata,
   fetchDigitalAsset,
-  fetchJsonMetadata,
 } from '@metaplex-foundation/mpl-token-metadata';
 import { styled } from '@mui/material/styles';
 import {
@@ -58,6 +57,7 @@ import HiddenComponent from '@munu/core-lib/components/HiddenComponent';
 import { createModal } from '@munu/core-lib/components/PromiseDialog';
 import { WalletOnboardDialog } from '@/containers/WalletOnboardDialog';
 import { guardChecker } from '@munu/core-lib/solana/utils/checkAllowed';
+import Icons from '@munu/core-lib/components/Icons';
 
 const [rendererOnboardDialog, promiseOnboardDialog] =
   createModal(WalletOnboardDialog);
@@ -93,7 +93,7 @@ const fetchNft = async (umi: Umi, nftAdress: PublicKey) => {
   let jsonMetadata: JsonMetadata | undefined;
   try {
     digitalAsset = await fetchDigitalAsset(umi, nftAdress);
-    jsonMetadata = await fetchJsonMetadata(umi, digitalAsset.metadata.uri);
+    jsonMetadata = await fetch(digitalAsset.metadata.uri).then((r) => r.json());
   } catch (e) {
     console.error(e);
     notify({
@@ -595,9 +595,10 @@ export function ClaimButton({ onOpen, candyMachineItem }: Props): JSX.Element {
     <ButtonGuard
       key={index}
       isAllowed={isAllowed}
-      buttonGuard={buttonGuard}
       guardList={guardList}
       solanaTime={solanaTime}
+      success={(mintsCreated ?? [])?.length > 0}
+      buttonGuard={buttonGuard}
       checkEligibility={checkEligibilityFunc}
       setCheckEligibility={setCheckEligibility}
       onClick={() => {
@@ -607,7 +608,7 @@ export function ClaimButton({ onOpen, candyMachineItem }: Props): JSX.Element {
           candyMachine,
           candyGuard,
           ownedTokens,
-          1,
+          buttonGuard?.mintAmount || 1,
           mintsCreated,
           setMintsCreated,
           guardList,
@@ -629,6 +630,7 @@ export function ClaimButton({ onOpen, candyMachineItem }: Props): JSX.Element {
 }
 
 type ButtonGuardProps = {
+  success?: boolean;
   solanaTime: bigint;
   isAllowed: boolean;
   guardList: GuardReturn[];
@@ -644,6 +646,7 @@ type ButtonGuardProps = {
 
 const ButtonGuard = (props: ButtonGuardProps) => {
   const {
+    success,
     guardList,
     isAllowed,
     buttonGuard,
@@ -735,16 +738,37 @@ const ButtonGuard = (props: ButtonGuardProps) => {
                   onClick={handleClick}
                   style={{ minWidth: 150 }}
                   key={buttonGuard.label}
-                  disabled={connecting || (connected && !isAllowed)}
+                  disabled={connecting || success || (connected && !isAllowed)}
                   endIcon={
                     guardList.find((elem) => elem.label === buttonGuard.label)
                       ?.minting ? (
                       <div>...</div>
                     ) : null
                   }
+                  sx={(theme) => ({
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    ...(success
+                      ? {
+                          '&: disabled': {
+                            color: theme.palette.common.white,
+                            background: `${theme.palette.success.main} !important`,
+                            border: `solid 1px ${theme.palette.success.light} !important`,
+                            boxShadow: `0px 10px 0px ${theme.palette.success.dark} !important`,
+                            MozBoxShadow: `0px 10px 0px ${theme.palette.success.dark} !important`,
+                            WebkitBoxShadow: `0px 10px 0px ${theme.palette.success.dark} !important`,
+                          },
+                        }
+                      : {}),
+                  })}
                 >
-                  {guardList.find((elem) => elem.label === buttonGuard.label)
-                    ?.loadingText || buttonGuard.buttonLabel}
+                  {success ? (
+                    <Icons.CheckCircle8Bit style={{ width: 25, height: 25 }} />
+                  ) : (
+                    guardList.find((elem) => elem.label === buttonGuard.label)
+                      ?.loadingText || buttonGuard.buttonLabel
+                  )}
                 </Button3D>
               </Tooltip>
             </div>

@@ -5,7 +5,7 @@ import {
 } from '@metaplex-foundation/mpl-candy-machine';
 import { fetchToken } from '@metaplex-foundation/mpl-toolbox';
 import { PublicKey, Some, Umi } from '@metaplex-foundation/umi';
-import { toast } from './toast';
+import { notify } from '../../repo/notification';
 
 export const checkAtaValid = (
   umi: Umi,
@@ -26,13 +26,11 @@ export const checkAtaValid = (
   });
   atas.forEach((ata) => {
     fetchToken(umi, ata).catch((e) => {
-      console.log(e);
-      toast({
-        title: 'Your Candy Guard config is incorrect!',
-        description: `${ata} is not a Associated Token Account! Minting will fail!`,
-        status: 'error',
-        duration: 9000,
-        isClosable: false,
+      console.warn(e);
+      notify({
+        message: 'Your Candy Guard config is incorrect!',
+        type: 'error',
+        temporary: true,
       });
     });
   });

@@ -37,19 +37,27 @@ const Institutions = () => {
   };
 
   const getCards = useCallback((wallet: string) => {
-    return fetch('https://ga.notproduction.space/candymachines.json')
-      .then((r) => r.json())
-      .then((r: CandyMachineDisplay[]) => {
-        const cms = r
-          .filter((c) => {
-            return JSON.stringify(c.allowList).includes(wallet);
-          })
-          .map((c) => ({
-            ...c,
-            allowList: new Map<string, Array<string>>([c.allowList as any]),
-          }));
-        getCandyMachines(umi, cms).then(setCards);
-      });
+    return new Promise<void>((resolve, reject) => {
+      fetch('https://ga.notproduction.space/candymachines.json')
+        .then((r) => r.json())
+        .then((r: CandyMachineDisplay[]) => {
+          const cms = r
+            .filter((c) => {
+              return JSON.stringify(c.allowList).includes(wallet);
+            })
+            .map((c) => ({
+              ...c,
+              allowList: new Map<string, Array<string>>([c.allowList as any]),
+            }));
+          getCandyMachines(umi, cms)
+            .then((r) => {
+              resolve();
+              setCards(r);
+            })
+            .catch(reject);
+        })
+        .catch(reject);
+    });
   }, []);
 
   const handleSubmit = useCallback(() => {

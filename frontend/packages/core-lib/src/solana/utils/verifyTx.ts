@@ -1,6 +1,6 @@
 import { PublicKey, Umi } from '@metaplex-foundation/umi';
-import { toast } from './toast';
 import { base58 } from '@metaplex-foundation/umi/serializers';
+import { notify } from '../../repo/notification';
 
 const detectBotTax = (logs: string[]) => {
   if (logs.find((l) => l.includes('Candy Guard Botting'))) {
@@ -50,10 +50,10 @@ export const verifyTx = async (umi: Umi, signatures: Uint8Array[]) => {
   });
 
   if (failed && failed.length > 0) {
-    toast({
-      title: `${failed.length} Mints failed!`,
-      status: 'error',
-      duration: 3000,
+    notify({
+      message: `${failed.length} Mints failed!`,
+      type: 'error',
+      temporary: true,
     });
     failed.forEach((fail) => {
       console.error(fail);
@@ -61,10 +61,10 @@ export const verifyTx = async (umi: Umi, signatures: Uint8Array[]) => {
   }
 
   if (successful.length > 0) {
-    toast({
-      title: `${successful.length} Mints successful!`,
-      status: 'success',
-      duration: 3000,
+    notify({
+      message: `${successful.length} Mints successful!`,
+      type: 'success',
+      temporary: true,
     });
   }
 
