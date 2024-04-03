@@ -7,6 +7,8 @@ import { loadEnv } from 'vite';
 import type { UserConfigExport } from 'vitest/config';
 import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill';
 import nodePolyfills from 'rollup-plugin-node-polyfills';
+import { nodePolyfills as nodePolyfills2 } from 'vite-plugin-node-polyfills';
+import inject from '@rollup/plugin-inject';
 
 const testFiles = ['./src/**/*.test.{js,jsx,ts,tsx}'];
 
@@ -72,7 +74,16 @@ export default defineConfig(({ mode }) => {
     build: {
       target: 'esnext',
       rollupOptions: {
-        plugins: [nodePolyfills({ crypto: true }) as any],
+        plugins: [
+          inject({ Buffer: ['buffer', 'Buffer'] }),
+          nodePolyfills2({
+            globals: {
+              Buffer: true, // can also be 'build', 'dev', or false
+              global: true,
+            },
+          }),
+          nodePolyfills({ crypto: true }) as any,
+        ],
       },
     },
     optimizeDeps: {

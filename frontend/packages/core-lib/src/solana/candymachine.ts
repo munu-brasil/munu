@@ -6,8 +6,8 @@ import {
   fetchAllCandyMachine,
   safeFetchCandyGuard,
 } from '@metaplex-foundation/mpl-candy-machine';
-import { guardChecker } from '@/solana/utils/checkAllowed';
-import { getSolanaTime } from '@/solana/utils/checkerHelper';
+import { guardChecker } from './utils/checkAllowed';
+import { getSolanaTime } from './utils/checkerHelper';
 
 export type CandyMachineDisplay = {
   allowList: Map<string, Array<string>>;

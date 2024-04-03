@@ -4663,7 +4663,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.13, @jridgewell/sourcemap-codec@npm:^1.4.14":
+"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.13, @jridgewell/sourcemap-codec@npm:^1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.15":
   version: 1.4.15
   resolution: "@jridgewell/sourcemap-codec@npm:1.4.15"
   checksum: b71b5eeb0af50fb1dbdf18e88aa5cf755baa30723f0d5fd2ac069f861d0c73b12b968321314e4db86d5a4d5d89a292211f68ba94767c620fee35247a94c05890
@@ -5847,6 +5847,7 @@ __metadata:
     "@mui/joy": "npm:5.0.0-alpha.72"
     "@munu/eslint-config-bases": "workspace:^"
     "@munu/ts-utils": "workspace:^"
+    "@munu/ui-lib": "workspace:^"
     "@solana/wallet-adapter-base": "npm:^0.9.22"
     "@solana/wallet-adapter-react": "npm:^0.15.32"
     "@solana/wallet-adapter-react-ui": "npm:^0.9.31"
@@ -6969,6 +6970,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/plugin-inject@npm:5.0.5, @rollup/plugin-inject@npm:^5.0.5":
+  version: 5.0.5
+  resolution: "@rollup/plugin-inject@npm:5.0.5"
+  dependencies:
+    "@rollup/pluginutils": "npm:^5.0.1"
+    estree-walker: "npm:^2.0.2"
+    magic-string: "npm:^0.30.3"
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: a775e58eed2b533972d2ed794a865f4fa3cc4e5db864bbf26393bf30f157e4350b2c9f8d73f9340dbcda40570367d726568dca682eba956de59b025f7ce95e4b
+  languageName: node
+  linkType: hard
+
 "@rollup/plugin-json@npm:^4.1.0":
   version: 4.1.0
   resolution: "@rollup/plugin-json@npm:4.1.0"
@@ -7016,6 +7033,22 @@ __metadata:
     estree-walker: "npm:^2.0.1"
     picomatch: "npm:^2.2.2"
   checksum: 96f7c2ec2ca7f20178c65a6634a1d612fc3ff6d4a70ff18468d1a909218d491f0164c320dbf195fbbf932059e71c21cfa31b64813d7922f14c83e773527f8b8e
+  languageName: node
+  linkType: hard
+
+"@rollup/pluginutils@npm:^5.0.1":
+  version: 5.1.0
+  resolution: "@rollup/pluginutils@npm:5.1.0"
+  dependencies:
+    "@types/estree": "npm:^1.0.0"
+    estree-walker: "npm:^2.0.2"
+    picomatch: "npm:^2.3.1"
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 9258fd2268c82c1b531c156c11f0b0d0382b142d2e5d346a94b775555a998f22e47b50b8e61fe440437c1d2e464311a8f5f30576463a7f8ed8980d8c53169755
   languageName: node
   linkType: hard
 
@@ -14366,6 +14399,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"browser-resolve@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "browser-resolve@npm:2.0.0"
+  dependencies:
+    resolve: "npm:^1.17.0"
+  checksum: 9ae78600250f5bb8e871d09d7f2b80378fa53cfede6b4cad7bbfca8b24fcd8fb53ddf2637c22010c7ee46b130bd86bbb2b9ae0980a51179b254cd21c4b5090b5
+  languageName: node
+  linkType: hard
+
 "browserify-aes@npm:^1.0.0, browserify-aes@npm:^1.0.4":
   version: 1.2.0
   resolution: "browserify-aes@npm:1.2.0"
@@ -14611,7 +14653,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"buffer@npm:^5.1.0, buffer@npm:^5.4.3, buffer@npm:^5.5.0":
+"buffer@npm:^5.1.0, buffer@npm:^5.4.3, buffer@npm:^5.5.0, buffer@npm:^5.7.1":
   version: 5.7.1
   resolution: "buffer@npm:5.7.1"
   dependencies:
@@ -16058,6 +16100,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"create-require@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "create-require@npm:1.1.1"
+  checksum: 9db2a6d1a6e69929e4b18045910289a17543f9f07ba4d6027e9c3fdc4c985998cd4b6738a45675ab870287483832332d5aa75a1612c87230149d1fba568ae86a
+  languageName: node
+  linkType: hard
+
 "cronstrue@npm:2.26.0":
   version: 2.26.0
   resolution: "cronstrue@npm:2.26.0"
@@ -17149,6 +17198,13 @@ __metadata:
   version: 1.2.0
   resolution: "domain-browser@npm:1.2.0"
   checksum: 15a8c14a7701aba81f48db3e93ac758a11b774c4134517f6ee63c79287f29797da67b1bbfd982f430f833eac6404ce01144780db0505fef7ca4e813d2848939f
+  languageName: node
+  linkType: hard
+
+"domain-browser@npm:^4.22.0":
+  version: 4.23.0
+  resolution: "domain-browser@npm:4.23.0"
+  checksum: 2bfbbe6947aa3cc81e3c82c49082814b93a5326dee785f6577911a3eb08d9df0d182e65eba848545e421d9d911b09b2ba1d4d7c24e62433bf41ca7193aeb2df1
   languageName: node
   linkType: hard
 
@@ -22290,6 +22346,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"isomorphic-timers-promises@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "isomorphic-timers-promises@npm:1.0.1"
+  checksum: 701b832452cccacce6f0ff332442f8fc7085ca44b5555837c5a3610383aa049169faa6d13f8ff28b75260cad51372104e2f5862c63d142dd0b0c5305d43697a5
+  languageName: node
+  linkType: hard
+
 "isomorphic-unfetch@npm:3.1.0, isomorphic-unfetch@npm:^3.1.0":
   version: 3.1.0
   resolution: "isomorphic-unfetch@npm:3.1.0"
@@ -24338,6 +24401,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"magic-string@npm:^0.30.3":
+  version: 0.30.8
+  resolution: "magic-string@npm:0.30.8"
+  dependencies:
+    "@jridgewell/sourcemap-codec": "npm:^1.4.15"
+  checksum: ee66b2332e84a4297d8fb9c5baaa7e851cc12ca78b220fc39da152cca5b79d20c42d9eea7821d71d07540602b4ac2f950cc81abaa5f2441c32658ded0af95007
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^2.0.0, make-dir@npm:^2.1.0":
   version: 2.1.0
   resolution: "make-dir@npm:2.1.0"
@@ -25299,6 +25371,7 @@ __metadata:
     "@munu/core-lib": "workspace:^"
     "@munu/eslint-config-bases": "workspace:^"
     "@munu/ui-lib": "workspace:^"
+    "@rollup/plugin-inject": "npm:5.0.5"
     "@types/react": "npm:18.0.28"
     "@types/react-dom": "npm:18.0.11"
     "@types/react-router-dom": "npm:5.3.3"
@@ -25323,6 +25396,7 @@ __metadata:
     typescript: "npm:4.9.5"
     vite: "npm:4.1.4"
     vite-plugin-mkcert: "npm:1.13.4"
+    vite-plugin-node-polyfills: "npm:0.21.0"
     vite-plugin-svgr: "npm:2.4.0"
     vite-tsconfig-paths: "npm:4.0.5"
     vitest: "npm:0.29.1"
@@ -25801,6 +25875,41 @@ __metadata:
   version: 2.0.14
   resolution: "node-releases@npm:2.0.14"
   checksum: 77b397ea9c3cf2dd58120932ac0ff208cedf95986ed222b06ef6d7d1fdd2a5cad02ee4297c8fb117f6ca8e1b2942f5c61e6533ce832f8d3a9f429253cd58ebde
+  languageName: node
+  linkType: hard
+
+"node-stdlib-browser@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "node-stdlib-browser@npm:1.2.0"
+  dependencies:
+    assert: "npm:^2.0.0"
+    browser-resolve: "npm:^2.0.0"
+    browserify-zlib: "npm:^0.2.0"
+    buffer: "npm:^5.7.1"
+    console-browserify: "npm:^1.1.0"
+    constants-browserify: "npm:^1.0.0"
+    create-require: "npm:^1.1.1"
+    crypto-browserify: "npm:^3.11.0"
+    domain-browser: "npm:^4.22.0"
+    events: "npm:^3.0.0"
+    https-browserify: "npm:^1.0.0"
+    isomorphic-timers-promises: "npm:^1.0.1"
+    os-browserify: "npm:^0.3.0"
+    path-browserify: "npm:^1.0.1"
+    pkg-dir: "npm:^5.0.0"
+    process: "npm:^0.11.10"
+    punycode: "npm:^1.4.1"
+    querystring-es3: "npm:^0.2.1"
+    readable-stream: "npm:^3.6.0"
+    stream-browserify: "npm:^3.0.0"
+    stream-http: "npm:^3.2.0"
+    string_decoder: "npm:^1.0.0"
+    timers-browserify: "npm:^2.0.4"
+    tty-browserify: "npm:0.0.1"
+    url: "npm:^0.11.0"
+    util: "npm:^0.12.4"
+    vm-browserify: "npm:^1.0.1"
+  checksum: cc071e7ad19c9a2c185d515dcddc002ca3c1ec9f8c0146a78124f20e4d7e23b7ae0e9ac39d8c1c428066184d1e18dd33e777ec75f385331cf0469750c9966205
   languageName: node
   linkType: hard
 
@@ -28030,7 +28139,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"querystring-es3@npm:^0.2.0":
+"querystring-es3@npm:^0.2.0, querystring-es3@npm:^0.2.1":
   version: 0.2.1
   resolution: "querystring-es3@npm:0.2.1"
   checksum: 7f5aaca4c82244148c157b4bf5ecc5e1471c936e0825e06eb8df45fce96f85fc9eb72fd3a76af077260db4b492e2199016d71b9a96e883854439d217019031e6
@@ -30753,6 +30862,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"stream-http@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "stream-http@npm:3.2.0"
+  dependencies:
+    builtin-status-codes: "npm:^3.0.0"
+    inherits: "npm:^2.0.4"
+    readable-stream: "npm:^3.6.0"
+    xtend: "npm:^4.0.2"
+  checksum: bf3a4e3741f6021fa332d165cfa443f3c2b299a1e8a5f9d28f3699faf758f1bba4f648f958e8c601282cca11ef5717f04e526d8ef208796b765fff9fa29abbd9
+  languageName: node
+  linkType: hard
+
 "stream-shift@npm:^1.0.0":
   version: 1.0.1
   resolution: "stream-shift@npm:1.0.1"
@@ -32193,6 +32314,13 @@ __metadata:
   version: 0.0.0
   resolution: "tty-browserify@npm:0.0.0"
   checksum: 1926c00568bab00806ca940dffdb10f0397625d61fd6a51536b854665caeec8b912ff46665f08f28c1e88d23c5a65cb86017e987abb62ebdc4e7b6c09cd7df6d
+  languageName: node
+  linkType: hard
+
+"tty-browserify@npm:0.0.1":
+  version: 0.0.1
+  resolution: "tty-browserify@npm:0.0.1"
+  checksum: a0a5df6054c7418de2f22a9344f504c863e450dbf138a60751de9ce0c668baabe99f299ae2add8910b30eff669ad9ed64a2dbc1d6eaa3372cee8c9369a75280c
   languageName: node
   linkType: hard
 
@@ -33667,6 +33795,18 @@ __metadata:
   peerDependencies:
     vite: ">=3"
   checksum: 6259f76122ad7e6bf3c73f74759a1bec7b977b05e0f68b09e4b47ae7079e3e1af8c249be44d70a6318b3448d749ae3ac6d1cc69129ced6e51a950fa7f4184a43
+  languageName: node
+  linkType: hard
+
+"vite-plugin-node-polyfills@npm:0.21.0":
+  version: 0.21.0
+  resolution: "vite-plugin-node-polyfills@npm:0.21.0"
+  dependencies:
+    "@rollup/plugin-inject": "npm:^5.0.5"
+    node-stdlib-browser: "npm:^1.2.0"
+  peerDependencies:
+    vite: ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
+  checksum: 0492b8b4b6343e58f19a73bbb72b7db3b924dfed18ed86b33c11428f3613e8dbc8b3dff56142a29715173cecc9cfc435dc7ecf3a8d2c44f58a61611880cff07d
   languageName: node
   linkType: hard
 

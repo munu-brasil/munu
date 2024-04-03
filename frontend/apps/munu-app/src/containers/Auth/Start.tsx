@@ -89,9 +89,6 @@ const StartGame = () => {
                 fontFamily: 'VT323',
                 color: theme.palette.warning.main,
                 textShadow: `3px 0 #000, -3px 0 #000, 0 3px #000, 0 -3px #000, 2px 2px #000, -2px -2px #000, 2px -2px #000, -2px 2px #000`,
-                //   background: `-webkit-linear-gradient(${theme.palette.warning.main}, ${theme.palette.warning.dark})`,
-                //   '-webkit-background-clip': 'text',
-                //   '-webkit-text-fill-color': 'transparent',
               })}
             >
               START GAME

@@ -18,7 +18,7 @@ import {
   publicKey,
 } from '@metaplex-foundation/umi';
 import { DigitalAssetWithToken } from '@metaplex-foundation/mpl-token-metadata';
-import { toast } from '@/solana/utils/toast';
+import { toast } from './toast';
 
 export interface GuardReturn {
   label: string;

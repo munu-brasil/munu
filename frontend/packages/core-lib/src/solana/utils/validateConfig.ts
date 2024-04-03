@@ -5,7 +5,7 @@ import {
 } from '@metaplex-foundation/mpl-candy-machine';
 import { fetchToken } from '@metaplex-foundation/mpl-toolbox';
 import { PublicKey, Some, Umi } from '@metaplex-foundation/umi';
-import { toast } from '@/solana/utils/toast';
+import { toast } from './toast';
 
 export const checkAtaValid = (
   umi: Umi,
