@@ -1,32 +1,26 @@
-import React from 'react';
-import Alert, { AlertColor } from '@mui/material/Alert';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import { NotificationAction, NotificationMessage } from './types';
-import { styled } from '@mui/material/styles';
+import { useEffect } from 'react';
+import { Alert, Typography, Grow, Link, AlertColor } from '@mui/material';
+import { NotificationMessage, NotificationAction } from './types';
 
-const RootDiv = styled('div')(
-  ({ theme }) => `
-    width: '100%',
-
-    '& > * + *': {
-      marginTop: ${theme.spacing(2)},
-    },
-`
-);
-
-export interface NotificationProps {
-  notification?: NotificationMessage;
-  dismiss?: any;
+type SnackbarToastProps = {
+  dismiss: () => void;
   duration?: number;
+  notification?: NotificationMessage;
   LinkComponent?: any;
-}
+};
 
-const SimpleAlerts = (props: NotificationProps) => {
+const TIMEOUT = 300;
+
+const SnackbarToast = (props: SnackbarToastProps) => {
   const { dismiss, duration = 10000, LinkComponent } = props;
-  const { message, type, actions, temporary = true } = props.notification ?? {};
+  const {
+    message,
+    type,
+    actions,
+    temporary = true,
+  } = props?.notification ?? {};
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (temporary) {
       const t = setTimeout(() => {
         dismiss();
@@ -38,8 +32,18 @@ const SimpleAlerts = (props: NotificationProps) => {
   }, [message, dismiss, temporary, duration]);
 
   return (
-    <RootDiv style={{ display: !!message ? 'inherit' : 'none' }}>
-      <Alert onClose={dismiss} severity={type as AlertColor}>
+    <Grow in timeout={TIMEOUT}>
+      <Alert
+        icon={false}
+        severity={type as AlertColor}
+        onClose={dismiss}
+        variant="filled"
+        sx={(theme) => ({
+          mb: 1,
+          width: 280,
+          boxShadow: theme.shadows[1],
+        })}
+      >
         <Typography variant="body2">
           {message ?? ''}{' '}
           {actions?.map?.((action) => (
@@ -50,7 +54,7 @@ const SimpleAlerts = (props: NotificationProps) => {
           ))}
         </Typography>
       </Alert>
-    </RootDiv>
+    </Grow>
   );
 };
 
@@ -80,4 +84,4 @@ export const RenderNotificationAction = ({
   );
 };
 
-export default SimpleAlerts;
+export default SnackbarToast;

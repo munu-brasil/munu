@@ -11,11 +11,11 @@ import {
   HeaderTitleContextContainer,
   PaperbaseContextContainer,
 } from '@/components/UI/UIContext';
-import notification from '@munu/core-lib/components/Notification';
+import { snackbarStackNotification } from '@munu/core-lib/components/Notification';
 import alert from '@munu/core-lib/components/Alert';
 import Logo from '@/lib/internal/images/logo.png';
 
-const SnackbarNotification = notification();
+const SnackbarNotification = snackbarStackNotification();
 const PopupAlert = alert();
 
 function Copyright() {

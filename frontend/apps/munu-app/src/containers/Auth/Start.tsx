@@ -7,10 +7,10 @@ import { WalletOnboardDialog } from '@/containers/WalletOnboardDialog';
 import { useWallet } from '@solana/wallet-adapter-react';
 import Icons from '@munu/core-lib/components/Icons';
 import { keyframes } from '@emotion/react';
-import notification from '@munu/core-lib/components/Notification';
+import { snackbarStackNotification } from '@munu/core-lib/components/Notification';
 import alert from '@munu/core-lib/components/Alert';
 
-const SnackbarNotification = notification();
+const SnackbarNotification = snackbarStackNotification();
 const PopupAlert = alert();
 
 const pressStart = keyframes`

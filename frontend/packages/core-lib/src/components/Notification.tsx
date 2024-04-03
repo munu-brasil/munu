@@ -2,9 +2,11 @@ import {
   Notification,
   notify as notifyRepo,
   useNotification,
+  useListNotification,
 } from '../repo/notification';
 import Alert from '@munu/ui-lib/ux/notification/Alert';
 import NotificationInline from '@munu/ui-lib/ux/notification/Inline';
+import SnackbarStack from '@munu/ui-lib/ux/notification/SnackbarStack';
 import { useMemo } from 'react';
 
 function randstr(x: number = 5) {
@@ -45,6 +47,20 @@ export const LocalNotification =
       <NotificationInline
         dismiss={() => dismiss(section)}
         notification={notification}
+        LinkComponent={LinkComponent}
+      />
+    );
+  };
+
+export const snackbarStackNotification =
+  (section?: string) =>
+  ({ LinkComponent }: { LinkComponent?: any }) => {
+    const { dismiss, notifications } = useListNotification(section);
+
+    return (
+      <SnackbarStack
+        dismiss={dismiss}
+        notifications={notifications}
         LinkComponent={LinkComponent}
       />
     );

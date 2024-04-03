@@ -157,7 +157,7 @@ const mintClick = async (
     if (routeBuild) {
       notify({
         message: 'Allowlist detected. Please sign to be approved to mint.',
-        type: 'error',
+        type: 'info',
         temporary: true,
       });
       await routeBuild.sendAndConfirm(umi, {
@@ -175,12 +175,6 @@ const mintClick = async (
       const lutPubKey = publicKey(lut);
       const fetchedLut = await fetchAddressLookupTable(umi, lutPubKey);
       tables = [fetchedLut];
-    } else {
-      notify({
-        message: 'The developer should really set a lookup table!',
-        type: 'error',
-        temporary: true,
-      });
     }
 
     const mintTxs: Transaction[] = [];
@@ -274,7 +268,7 @@ const mintClick = async (
 
     notify({
       message: `${signedTransactions.length} Transaction(s) sent!`,
-      type: 'error',
+      type: 'info',
       temporary: true,
     });
 
