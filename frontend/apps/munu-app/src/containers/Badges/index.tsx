@@ -1,98 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-  Box,
-  Chip,
-  Card,
-  Grid,
-  Zoom,
-  Button,
-  IconButton,
-  Typography,
-  DialogTitle,
-  DialogContent,
-} from '@mui/material';
+import { Box, Chip, Card, Grid, Zoom, Button, Typography } from '@mui/material';
 import { notify } from '@munu/core-lib/repo/notification';
 import EmptyBox from '@/lib/internal/images/empty_box.png';
 import LoadingDog from '@/lib/internal/images/loading_01.gif';
 import Cards from '@/lib/internal/images/cards_01.png';
 import { getMUNUNFTFromWallet } from '@munu/core-lib/solana/candymachine';
 import { useUmi } from '@munu/core-lib/solana/utils/useUmi';
-import type { ItemData } from '@munu/core-lib/solana/candymachine';
 import { createModal } from '@munu/core-lib/components/PromiseDialog';
-import { CustomDialog } from '@/components/Dialog/CustomDialog';
-import Icons from '@munu/core-lib/components/Icons';
 import { useWallet } from '@solana/wallet-adapter-react';
 import HiddenComponent from '@munu/core-lib/components/HiddenComponent';
+import { NFTDialog } from '@/containers/Badges/NFTDialog';
+import type { ItemData } from '@munu/core-lib/solana/candymachine';
 
-const [rendererCardView, promiseCardView] = createModal(
-  ({
-    data,
-    open,
-    close,
-  }: {
-    data?: ItemData;
-    open: boolean;
-    close: () => void;
-  }) => {
-    const onClose = useCallback(() => {
-      close();
-    }, [close]);
-
-    return (
-      <CustomDialog
-        fullWidth
-        maxWidth="xs"
-        open={open}
-        onClose={onClose}
-        sx={{ minHeight: '80vh' }}
-      >
-        <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Typography variant="h6">
-            <b>{data?.name}</b>
-          </Typography>
-          <Box
-            sx={{
-              opacity: 1,
-              lineHeight: 1,
-              display: 'flex',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <IconButton onClick={onClose} style={{ padding: 0 }}>
-              <Icons.Close8Bit style={{ width: 25, height: 25 }} />
-            </IconButton>
-          </Box>
-        </DialogTitle>
-        <DialogContent>
-          <Box
-            sx={(theme) => ({
-              width: '100%',
-              height: '100%',
-              maxHeight: '300px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: theme.spacing(2),
-            })}
-          >
-            <img
-              alt={data?.name}
-              src={data?.image}
-              style={{
-                width: 'auto',
-                height: '100%',
-                maxWidth: '100%',
-                maxHeight: '300px',
-                objectFit: 'contain',
-              }}
-            />
-          </Box>
-          <Typography variant="body1">{data?.description}</Typography>
-        </DialogContent>
-      </CustomDialog>
-    );
-  }
-);
+const [rendererCardView, promiseCardView] = createModal(NFTDialog);
 
 export type BadgesProps = {};
 

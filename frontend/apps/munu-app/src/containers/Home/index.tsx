@@ -17,8 +17,11 @@ import {
   CardActions,
   CardChip,
 } from '@/components/StyledCard';
-import AvatarExample from '@/lib/internal/images/avatar_example.png';
+import { Badges } from '@/containers/Home/Badges';
+import Graphic from '@/lib/internal/images/graphic.png';
+import MachineCloud from '@/lib/internal/images/machine_cloud.png';
 import MagicBook from '@/lib/internal/images/magic_book.png';
+import Jupiter from '@/lib/internal/images/jupiter.png';
 import { useHistory } from 'react-router';
 
 export type HomeProps = {};
@@ -40,434 +43,383 @@ const Home = (props: HomeProps) => {
         },
       })}
     >
-      <Grid container spacing={3} sx={{ flex: 0 }}>
-        <Grid item>
-          <Avatar
-            alt="avatar"
-            src={AvatarExample}
-            sx={(theme) => ({
-              width: '125px',
-              height: '100%',
-              borderRadius: theme.spacing(4),
-            })}
-          />
-        </Grid>
+      <Grid container>
         <Grid
           item
-          sx={(theme) => ({
-            [theme.breakpoints.down('sm')]: {
-              width: '100%',
-            },
-          })}
-          style={{ minWidth: '50%' }}
+          lg={9}
+          md={10}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+          }}
         >
-          <CardContainer color="primary" style={{ height: '100%' }}>
-            <Box
-              sx={(theme) => ({
-                display: 'flex',
-                alignItems: 'center',
-                textAlign: 'center',
-                padding: theme.spacing(1, 0),
-                '& > *:nth-child(n+2)': {
-                  marginLeft: theme.spacing(),
-                },
-              })}
-            >
-              <Avatar
+          <Grid
+            container
+            spacing={3}
+            sx={(theme) => ({ marginBottom: theme.spacing(3) })}
+          >
+            <Grid item lg={8}>
+              <CardContainer
+                color="primary"
                 sx={(theme) => ({
-                  width: 35,
-                  height: 35,
-                  color: theme.palette.common.black,
-                  background: theme.palette.common.white,
-                  border: `solid 1px ${theme.palette.common.black}`,
+                  marginBottom: theme.spacing(3),
+                  maxWidth: '50%',
+                  minWidth: 300,
                 })}
               >
-                <WidgetsOutlined />
-              </Avatar>
-              <Typography
-                variant="subtitle1"
-                fontWeight="900"
-                sx={(theme) => ({
-                  marginBottom: theme.spacing(-1),
-                })}
-              >
-                OxMatuz
-              </Typography>
-              <CardChip label="VIP" />
-            </Box>
-            <CardContent
-              sx={(theme) => ({
-                padding: theme.spacing(1, 0),
-              })}
-            >
-              <Typography
-                variant="h5"
-                fontWeight="800"
-                style={{ lineHeight: 1 }}
-              >
-                Eu sou uma pessoa legal
-              </Typography>
-            </CardContent>
-            <CardActions
-              text={
-                <span>
-                  <b>+2,154</b> Trust Man
-                </span>
-              }
-              action={
-                <Button
-                  color="inherit"
-                  endIcon={
-                    <ArrowForwardRounded sx={{ fontSize: '12px !important' }} />
+                <Box
+                  sx={(theme) => ({
+                    display: 'flex',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    padding: theme.spacing(1, 0),
+                    '& > *:nth-child(n+2)': {
+                      marginLeft: theme.spacing(),
+                    },
+                  })}
+                >
+                  <Avatar
+                    sx={(theme) => ({
+                      width: 35,
+                      height: 35,
+                      color: theme.palette.common.black,
+                      background: theme.palette.common.white,
+                      border: `solid 1px ${theme.palette.common.black}`,
+                    })}
+                  >
+                    <WidgetsOutlined />
+                  </Avatar>
+                  <Typography
+                    variant="subtitle1"
+                    fontWeight="900"
+                    sx={(theme) => ({
+                      marginBottom: theme.spacing(-1),
+                    })}
+                  >
+                    OxMatuz
+                  </Typography>
+                  <CardChip label="VIP" />
+                </Box>
+                <CardContent
+                  sx={(theme) => ({
+                    padding: theme.spacing(1, 0),
+                  })}
+                >
+                  <Typography
+                    variant="h5"
+                    fontWeight="800"
+                    style={{ lineHeight: 1 }}
+                  >
+                    Eu sou uma pessoa legal
+                  </Typography>
+                </CardContent>
+                <CardActions
+                  text={
+                    <span>
+                      <b>+2,154</b> Trust Man
+                    </span>
                   }
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: 'inherit',
-                    padding: 0,
-                  }}
-                >
-                  <b>More</b>
-                </Button>
-              }
-            />
-          </CardContainer>
-        </Grid>
-      </Grid>
-      <Grid container spacing={3} sx={{ flex: 0 }}>
-        <Grid
-          item
-          sx={(theme) => ({
-            [theme.breakpoints.down('sm')]: {
-              width: '100%',
-            },
-          })}
-        >
-          <CardContainer color="secondary">
-            <CardHeader
-              icon={<WidgetsOutlined />}
-              title="Balance"
-              actions={
-                <CardChip
-                  label="10%"
-                  icon={<ArrowUpwardRounded color="inherit" />}
-                />
-              }
-            />
-            <CardContent
-              sx={(theme) => ({
-                padding: theme.spacing(1, 0),
-              })}
-            >
-              <Typography
-                variant="h3"
-                fontWeight="800"
-                style={{ lineHeight: 1 }}
-              >
-                175,000
-              </Typography>
-            </CardContent>
-            <CardActions
-              text={
-                <span>
-                  <b>+$100,000</b> From last month
-                </span>
-              }
-              action={
-                <Button
-                  color="inherit"
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: 'inherit',
-                    padding: 0,
-                  }}
-                >
-                  <b>More</b>
-                </Button>
-              }
-            />
-          </CardContainer>
-        </Grid>
-        <Grid
-          item
-          sx={(theme) => ({
-            [theme.breakpoints.down('sm')]: {
-              width: '100%',
-            },
-          })}
-        >
-          <CardContainer color="warning">
-            <CardHeader
-              icon={<WidgetsOutlined />}
-              title="Sales"
-              actions={
-                <CardChip
-                  label="20%"
-                  icon={<ArrowUpwardRounded color="inherit" />}
-                />
-              }
-            />
-            <CardContent
-              sx={(theme) => ({
-                padding: theme.spacing(1, 0),
-              })}
-            >
-              <Typography
-                variant="h3"
-                fontWeight="800"
-                style={{ lineHeight: 1 }}
-              >
-                9,500
-              </Typography>
-            </CardContent>
-            <CardActions
-              text={
-                <span>
-                  <b>+3,456</b> From last month
-                </span>
-              }
-              action={
-                <Button
-                  color="inherit"
-                  endIcon={
-                    <ArrowForwardRounded sx={{ fontSize: '12px !important' }} />
+                  action={
+                    <Button
+                      color="inherit"
+                      endIcon={
+                        <ArrowForwardRounded
+                          sx={{ fontSize: '12px !important' }}
+                        />
+                      }
+                      sx={{
+                        textTransform: 'none',
+                        fontSize: 'inherit',
+                        padding: 0,
+                      }}
+                    >
+                      <b>More</b>
+                    </Button>
                   }
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: 'inherit',
-                    padding: 0,
-                  }}
-                >
-                  <b>More</b>
-                </Button>
-              }
-            />
-          </CardContainer>
-        </Grid>
-        <Grid
-          item
-          sx={(theme) => ({
-            [theme.breakpoints.down('sm')]: {
-              width: '100%',
-            },
-          })}
-        >
-          <CardContainer color="primary">
-            <CardHeader
-              icon={<WidgetsOutlined />}
-              title="Order"
-              actions={
-                <CardChip
-                  label="25%"
-                  icon={<ArrowUpwardRounded color="inherit" />}
                 />
-              }
-            />
-            <CardContent sx={(theme) => ({ padding: theme.spacing(1, 0) })}>
-              <Typography
-                variant="h3"
-                fontWeight="800"
-                style={{ lineHeight: 1 }}
+              </CardContainer>
+              <CardContainer
+                color="primary"
+                sx={(theme) => ({ marginBottom: theme.spacing(3) })}
               >
-                12,400
-              </Typography>
-            </CardContent>
-            <CardActions
-              text={
-                <span>
-                  <b>+2,154</b> From last month
-                </span>
-              }
-              action={
-                <Button
-                  color="inherit"
-                  endIcon={
-                    <ArrowForwardRounded sx={{ fontSize: '12px !important' }} />
-                  }
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: 'inherit',
-                    padding: 0,
-                  }}
+                <Box
+                  sx={(theme) => ({
+                    display: 'flex',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    padding: theme.spacing(1, 0),
+                    '& > *:nth-child(n+2)': {
+                      marginLeft: theme.spacing(),
+                    },
+                  })}
                 >
-                  <b>More</b>
-                </Button>
-              }
-            />
-          </CardContainer>
+                  <Avatar
+                    sx={(theme) => ({
+                      width: 35,
+                      height: 35,
+                      color: theme.palette.common.black,
+                      background: theme.palette.common.white,
+                      border: `solid 1px ${theme.palette.common.black}`,
+                    })}
+                  >
+                    <WidgetsOutlined />
+                  </Avatar>
+                  <Typography
+                    variant="subtitle1"
+                    fontWeight="900"
+                    sx={(theme) => ({
+                      marginBottom: theme.spacing(-1),
+                    })}
+                  >
+                    OxMatuz
+                  </Typography>
+                  <CardChip label="VIP" />
+                </Box>
+                <img
+                  alt="graphic"
+                  src={Graphic}
+                  style={{
+                    height: '150px',
+                    width: '100%',
+                    objectFit: 'contain',
+                  }}
+                />
+              </CardContainer>
+              <Grid container spacing={3}>
+                <Grid item lg={4}>
+                  <CardContainer
+                    title="badges"
+                    component={Button}
+                    color="secondary"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      history.push('/badges');
+                    }}
+                    style={{ minWidth: 'auto' }}
+                    sx={(theme) => ({
+                      display: 'flex',
+                      height: '100%',
+                      maxHeight: 300,
+                      width: '100%',
+                      flexDirection: 'column',
+                      '&: hover': {
+                        background: theme.palette.secondary.main,
+                      },
+                    })}
+                  >
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight="900"
+                      sx={(theme) => ({
+                        textAlign: 'center',
+                        marginBottom: theme.spacing(-1),
+                      })}
+                    >
+                      BADGES
+                    </Typography>
+                    <CardContent
+                      sx={(theme) => ({
+                        flex: 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: theme.spacing(1, 0),
+                      })}
+                    >
+                      <img
+                        alt="badges"
+                        src={MagicBook}
+                        style={{
+                          height: '200px',
+                          width: 'auto',
+                        }}
+                      />
+                    </CardContent>
+                  </CardContainer>
+                </Grid>
+                <Grid item lg={4}>
+                  <CardContainer
+                    color="warning"
+                    style={{ minWidth: 'auto' }}
+                    sx={{ height: '100%', width: '100%', maxHeight: 300 }}
+                  >
+                    <CardHeader
+                      icon={<WidgetsOutlined />}
+                      title="Reputation"
+                      actions={
+                        <CardChip
+                          label="20%"
+                          icon={<ArrowUpwardRounded color="inherit" />}
+                        />
+                      }
+                    />
+                    <CardContent
+                      sx={(theme) => ({
+                        padding: theme.spacing(1, 0),
+                      })}
+                    >
+                      <Typography
+                        variant="h3"
+                        fontWeight="800"
+                        style={{ lineHeight: 1 }}
+                      >
+                        9,500 rP
+                      </Typography>
+                      <Typography variant="caption">
+                        <b>+3,456</b> From last month
+                      </Typography>
+                    </CardContent>
+                    <CardActions
+                      text=""
+                      action={
+                        <Button
+                          color="inherit"
+                          endIcon={
+                            <ArrowForwardRounded
+                              sx={{ fontSize: '12px !important' }}
+                            />
+                          }
+                          sx={{
+                            textTransform: 'none',
+                            fontSize: 'inherit',
+                            padding: 0,
+                          }}
+                        >
+                          <b>More</b>
+                        </Button>
+                      }
+                    />
+                  </CardContainer>
+                </Grid>
+                <Grid item lg={4}>
+                  <CardContainer
+                    color="primary"
+                    style={{ minWidth: 'auto' }}
+                    sx={{ height: '100%', width: '100%', maxHeight: 300 }}
+                  >
+                    <CardHeader
+                      icon={<WidgetsOutlined />}
+                      title="Colab"
+                      actions={
+                        <CardChip
+                          label="25%"
+                          icon={<ArrowUpwardRounded color="inherit" />}
+                        />
+                      }
+                    />
+                    <CardContent
+                      sx={(theme) => ({ padding: theme.spacing(1, 0) })}
+                    >
+                      <Typography
+                        variant="h3"
+                        fontWeight="800"
+                        style={{ lineHeight: 1 }}
+                      >
+                        12,400 rP
+                      </Typography>
+                      <Typography variant="caption">
+                        <b>+2,154</b> From last month
+                      </Typography>
+                    </CardContent>
+                    <CardActions
+                      text=""
+                      action={
+                        <Button
+                          color="inherit"
+                          endIcon={
+                            <ArrowForwardRounded
+                              sx={{ fontSize: '12px !important' }}
+                            />
+                          }
+                          sx={{
+                            textTransform: 'none',
+                            fontSize: 'inherit',
+                            padding: 0,
+                          }}
+                        >
+                          <b>More</b>
+                        </Button>
+                      }
+                    />
+                  </CardContainer>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item lg={4}>
+              <CardContainer
+                color="info"
+                sx={{ width: '100%', height: '100%' }}
+              >
+                <CardHeader
+                  icon={<WidgetsOutlined />}
+                  title="Balance"
+                  actions={
+                    <CardChip
+                      label="10%"
+                      icon={<ArrowUpwardRounded color="inherit" />}
+                    />
+                  }
+                />
+              </CardContainer>
+            </Grid>
+          </Grid>
+          <Badges />
         </Grid>
-      </Grid>
-      <Grid container spacing={3} sx={{ flex: 1 }}>
         <Grid
           item
-          sx={(theme) => ({
-            [theme.breakpoints.down('sm')]: {
-              width: '100%',
-            },
-          })}
+          lg={3}
+          md={2}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+          }}
         >
-          <CardContainer
-            title="badges"
-            component={Button}
-            color="secondary"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              history.push('/badges');
-            }}
+          <Box
             sx={(theme) => ({
               display: 'flex',
-              height: '100%',
-              maxHeight: 300,
-              flexDirection: 'column',
-              '&: hover': {
-                background: theme.palette.secondary.main,
-              },
-              [theme.breakpoints.down('sm')]: {
-                width: '100%',
-              },
+              alignItems: 'center',
+              width: 'auto',
+              height: '50px',
+              justifyContent: 'center',
+              padding: theme.spacing(1),
+              border: `solid 1px #ffffc8`,
+              borderRadius: theme.spacing(2),
+              marginBottom: theme.spacing(1),
+              backgroundColor: theme.palette.common.black,
             })}
           >
             <Typography
-              variant="subtitle1"
-              fontWeight="900"
-              sx={(theme) => ({
-                textAlign: 'center',
-                marginBottom: theme.spacing(-1),
-              })}
+              sx={{
+                fontSize: '0.7rem',
+                lineHeight: '27px',
+                letterSpacing: '-0.045em',
+                color: '#ffffc8',
+              }}
             >
-              BADGES
+              Powered by
             </Typography>
-            <CardContent
-              sx={(theme) => ({
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: theme.spacing(1, 0),
-              })}
-            >
-              <img
-                alt="badges"
-                src={MagicBook}
-                style={{
-                  height: '200px',
-                  width: 'auto',
-                }}
-              />
-            </CardContent>
-          </CardContainer>
-        </Grid>
-        <Grid
-          item
-          sx={(theme) => ({
-            [theme.breakpoints.down('sm')]: {
-              width: '100%',
-            },
-          })}
-        >
-          <CardContainer
-            color="warning"
-            sx={{ height: '100%', maxHeight: 300 }}
-          >
-            <CardHeader
-              icon={<WidgetsOutlined />}
-              title="Reputation"
-              actions={
-                <CardChip
-                  label="20%"
-                  icon={<ArrowUpwardRounded color="inherit" />}
-                />
-              }
+            <img
+              src={Jupiter}
+              alt="Jupiter"
+              style={{ objectFit: 'fill', width: 'auto', height: '42px' }}
             />
-            <CardContent
-              sx={(theme) => ({
-                padding: theme.spacing(1, 0),
-              })}
-            >
-              <Typography
-                variant="h3"
-                fontWeight="800"
-                style={{ lineHeight: 1 }}
-              >
-                9,500 rP
-              </Typography>
-              <Typography variant="caption">
-                <b>+3,456</b> From last month
-              </Typography>
-            </CardContent>
-            <CardActions
-              text=""
-              action={
-                <Button
-                  color="inherit"
-                  endIcon={
-                    <ArrowForwardRounded sx={{ fontSize: '12px !important' }} />
-                  }
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: 'inherit',
-                    padding: 0,
-                  }}
-                >
-                  <b>More</b>
-                </Button>
-              }
+          </Box>
+          <Button>
+            <img
+              alt="institutions"
+              src={MachineCloud}
+              style={{
+                height: 'auto',
+                width: '370px',
+                maxWidth: '100%',
+                minWidth: '300px',
+              }}
             />
-          </CardContainer>
-        </Grid>
-        <Grid
-          item
-          sx={(theme) => ({
-            [theme.breakpoints.down('sm')]: {
-              width: '100%',
-            },
-          })}
-        >
-          <CardContainer
-            color="primary"
-            sx={{ height: '100%', maxHeight: 300 }}
-          >
-            <CardHeader
-              icon={<WidgetsOutlined />}
-              title="Colab"
-              actions={
-                <CardChip
-                  label="25%"
-                  icon={<ArrowUpwardRounded color="inherit" />}
-                />
-              }
-            />
-            <CardContent sx={(theme) => ({ padding: theme.spacing(1, 0) })}>
-              <Typography
-                variant="h3"
-                fontWeight="800"
-                style={{ lineHeight: 1 }}
-              >
-                12,400 rP
-              </Typography>
-              <Typography variant="caption">
-                <b>+2,154</b> From last month
-              </Typography>
-            </CardContent>
-            <CardActions
-              text=""
-              action={
-                <Button
-                  color="inherit"
-                  endIcon={
-                    <ArrowForwardRounded sx={{ fontSize: '12px !important' }} />
-                  }
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: 'inherit',
-                    padding: 0,
-                  }}
-                >
-                  <b>More</b>
-                </Button>
-              }
-            />
-          </CardContainer>
+          </Button>
         </Grid>
       </Grid>
     </Box>

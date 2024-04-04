@@ -1,11 +1,13 @@
 import { useCallback } from 'react';
-import { CssBaseline, Typography, Button, Box } from '@mui/material';
-import DefaultBackground from '@/lib/internal/images/background_04.png';
+import { CssBaseline, Button, Box } from '@mui/material';
+import DefaultBackground from '@/lib/internal/images/background_07.jpg';
 import Logo from '@/lib/internal/images/logo.png';
+import StartGameImage from '@/lib/internal/images/start_game.png';
+import Solana from '@/lib/internal/images/solana.png';
+import InsertSolanaCoin from '@/lib/internal/images/insert_solana_coin.png';
 import { createModal } from '@munu/core-lib/components/PromiseDialog';
 import { WalletOnboardDialog } from '@/containers/WalletOnboardDialog';
 import { useWallet } from '@solana/wallet-adapter-react';
-import Icons from '@munu/core-lib/components/Icons';
 import { keyframes } from '@emotion/react';
 import { snackbarStackNotification } from '@munu/core-lib/components/Notification';
 import alert from '@munu/core-lib/components/Alert';
@@ -80,46 +82,29 @@ const StartGame = () => {
             <img
               alt="MUNU"
               src={Logo}
-              style={{ width: '20vw', height: 'auto', minWidth: '300px' }}
+              style={{ width: '30vw', height: 'auto', minWidth: '300px' }}
             />
-            <Typography
-              variant="h2"
-              fontWeight={700}
-              sx={(theme) => ({
-                fontFamily: 'VT323',
-                color: theme.palette.warning.main,
-                textShadow: `3px 0 #000, -3px 0 #000, 0 3px #000, 0 -3px #000, 2px 2px #000, -2px -2px #000, 2px -2px #000, -2px 2px #000`,
-              })}
-            >
-              START GAME
-            </Typography>
-            <Button
-              onClick={onConnect}
-              startIcon={
-                <Box
-                  sx={(theme) => ({
-                    height: '25px',
-                    color: theme.palette.warning.main,
-                    animation: `${pressStart} 1s infinite`,
-                  })}
-                >
-                  <Icons.Play8Bit style={{ width: 25, height: 25 }} />
-                </Box>
-              }
-              sx={{ marginLeft: '-25px' }}
-            >
-              <Typography
-                variant="h5"
-                sx={(theme) => ({
-                  fontFamily: 'VT323',
-                  textTransform: 'none',
-                  color: theme.palette.warning.main,
-                  textShadow: `3px 0 #000, -3px 0 #000, 0 3px #000, 0 -3px #000, 2px 2px #000, -2px -2px #000, 2px -2px #000, -2px 2px #000`,
-                })}
-              >
-                Insert Your Solana Coin
-              </Typography>
+            <Box sx={(theme) => ({ margin: theme.spacing(2, 0) })}>
+              <img
+                alt="start_game"
+                src={StartGameImage}
+                style={{ width: '20vw', height: 'auto', minWidth: '200px' }}
+              />
+            </Box>
+            <Button onClick={onConnect}>
+              <img
+                alt="start_game"
+                src={InsertSolanaCoin}
+                style={{ width: '18vw', height: 'auto', minWidth: '180px' }}
+              />
             </Button>
+            <Box sx={(theme) => ({ marginTop: '10vh' })}>
+              <img
+                alt="solana"
+                src={Solana}
+                style={{ width: '13vw', height: 'auto', minWidth: '180px' }}
+              />
+            </Box>
           </Box>
           {rendererOnboardDialog}
         </Box>

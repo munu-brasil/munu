@@ -20,7 +20,7 @@ export const muiTheme = createTheme({
       main: '#FEC053ff',
     },
     info: {
-      main: '#FCD7B4ff',
+      main: '#fac6bb',
     },
     success: {
       main: '#71D98B',
