@@ -2,13 +2,12 @@ import { useState, useCallback } from 'react';
 import { CSSInterpolation } from '@emotion/css';
 import { CssBaseline, Typography, Link, useMediaQuery } from '@mui/material';
 import Navigator from './Navigator';
-import Header from './Header';
 import { useTheme } from '@mui/material/styles';
 import { Theme } from '@/themes/mui/mui.theme';
 import {
   DefaultPaperStyle,
-  HeaderTitleRenderer,
-  HeaderTitleContextContainer,
+  HeaderRenderer,
+  HeaderContextContainer,
   PaperbaseContextContainer,
 } from '@/components/UI/UIContext';
 import { snackbarStackNotification } from '@munu/core-lib/components/Notification';
@@ -32,7 +31,7 @@ function Copyright() {
   );
 }
 
-const drawerWidth = 240;
+export const drawerWidth = 160;
 const rightDrawerWidth = 620;
 
 const useStyles = (theme: Theme, content: CSSInterpolation) =>
@@ -92,14 +91,13 @@ const useStyles = (theme: Theme, content: CSSInterpolation) =>
   } as { [key: string]: CSSInterpolation });
 
 export interface PaperbaseProps {
-  children?: React.ReactNode;
-  toolbarItems?: React.ReactNode;
   navigator?: any;
+  children?: React.ReactNode;
   footer?: React.ReactNode;
 }
 
 function Paperbase(props: PaperbaseProps) {
-  const { navigator, toolbarItems, footer: footerComponent } = props;
+  const { navigator, footer: footerComponent } = props;
   const theme = useTheme();
   const isSmallerScreen = useMediaQuery(theme.breakpoints.down('sm'), {
     noSsr: true,
@@ -112,7 +110,7 @@ function Paperbase(props: PaperbaseProps) {
   const [paperStyle, setPaperStyle] = useState(DefaultPaperStyle);
   const [menuVariant, setMenuVariant] = useState<
     'permanent' | 'persistent' | 'temporary'
-  >(isLargeScreen ? 'permanent' : 'temporary');
+  >('temporary');
   const [open, setOpen] = useState(false);
   const classes = useStyles(theme, paperStyle);
 
@@ -143,17 +141,8 @@ function Paperbase(props: PaperbaseProps) {
           setMenuVariant: changeMenuVariant,
         }}
       >
-        <HeaderTitleContextContainer>
-          <Header
-            className="no-print"
-            onDrawerToggle={handleDrawerToggle}
-            rightItems={
-              <>
-                <HeaderTitleRenderer />
-                {toolbarItems}
-              </>
-            }
-          />
+        <HeaderContextContainer>
+          <HeaderRenderer />
           <span className="no-print">
             <Nav
               open={open}
@@ -183,7 +172,7 @@ function Paperbase(props: PaperbaseProps) {
             <SnackbarNotification />
             <PopupAlert />
           </main>
-        </HeaderTitleContextContainer>
+        </HeaderContextContainer>
       </PaperbaseContextContainer>
     </div>
   );

@@ -1,5 +1,6 @@
-import { School, StyleRounded } from '@mui/icons-material';
-import Icons from '@munu/core-lib/components/Icons';
+import BagIcon from '@/lib/internal/images/bag.png';
+import CoinIcon from '@/lib/internal/images/coin_icon.png';
+import { Avatar } from '@mui/material';
 
 export interface MenuItem {
   title: string;
@@ -21,26 +22,69 @@ export interface MenuView {
   isActive?: (e: { url: string; query?: string }) => boolean;
 }
 
-export const MenuCategories: MenuView[] = [
+export const LateralMenu: MenuView[] = [
   {
     title: 'Página inicial',
     permissions: [],
     to: '/',
-    icon: <Icons.Home8Bit />,
     children: [],
   },
   {
     title: 'Instituições',
     permissions: [],
-    to: '/institutions',
-    icon: <School />,
+    to: '/claims',
     children: [],
   },
   {
     title: 'Badges',
     permissions: [],
     to: '/badges',
-    icon: <StyleRounded />,
+    children: [],
+  },
+];
+
+export const HeaderMenu: MenuView[] = [
+  {
+    title: '320,990 magiK',
+    permissions: [],
+    to: '/badges',
+    icon: (
+      <Avatar
+        src={CoinIcon}
+        alt="magiK"
+        sx={{ width: '40px', height: '40px' }}
+      />
+    ),
+    children: [],
+  },
+  {
+    title: 'invertory',
+    permissions: [],
+    to: '/badges',
+    icon: (
+      <Avatar
+        src={BagIcon}
+        alt="bag_icon"
+        sx={{ width: '50px', height: '50px' }}
+      />
+    ),
+    children: [],
+  },
+  {
+    title: 'claim',
+    permissions: [],
+    to: '/claims',
+    icon: (
+      <Avatar
+        src=" "
+        alt=" "
+        sx={(theme) => ({
+          backgroundColor: theme.palette.primary.main,
+          width: '30px',
+          height: '30px',
+        })}
+      />
+    ),
     children: [],
   },
 ];

@@ -204,13 +204,15 @@ function Navigator(props: NavigatorProps) {
                       }
                     : {})}
                 >
-                  <ListItemIcon
-                    classes={{
-                      root: css(classes.itemIcon),
-                    }}
-                  >
-                    {getIcon(parentIcon as string)}
-                  </ListItemIcon>
+                  {parentIcon ? (
+                    <ListItemIcon
+                      classes={{
+                        root: css(classes.itemIcon),
+                      }}
+                    >
+                      {getIcon(parentIcon as string)}
+                    </ListItemIcon>
+                  ) : null}
                   <ListItemText>{title}</ListItemText>
                   {open && children.length > 0 ? (
                     <ListItemSecondaryAction css={classes.itemAction}>

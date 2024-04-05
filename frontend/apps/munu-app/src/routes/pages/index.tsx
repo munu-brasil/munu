@@ -3,7 +3,6 @@ import Paperbase from 'components/UI/Paperbase';
 import Menu from 'containers/Menu';
 import { CrumbsProvider, CrumbsRoot } from '@/components/CrumbsProvider';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
-import { WalletOnboard } from 'containers/WalletOnboard';
 import Loader from '@munu/core-lib/components/Loader';
 import PageLoader from '@/components/PageLoader';
 import SecureContainer from '@/containers/SecureContainer';
@@ -25,23 +24,8 @@ const Badges = Loader({
 
 function Admin() {
   return (
-    <SecureContainer ignoreRoutes={['/institutions']}>
-      <Paperbase
-        navigator={Menu}
-        toolbarItems={
-          <div
-            style={{
-              display: 'flex',
-              marginRight: 12,
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-            }}
-          >
-            <WalletOnboard />
-          </div>
-        }
-        footer={null}
-      >
+    <SecureContainer ignoreRoutes={['/claims']}>
+      <Paperbase navigator={Menu} footer={null}>
         <CrumbsProvider>
           <span>
             <CrumbsRoot component={Breadcrumbs} />
@@ -49,11 +33,7 @@ function Admin() {
           <Switch>
             <Route exact path="/" component={() => <Home />} />
             <Route exact path="/badges" component={() => <Badges />} />
-            <Route
-              exact
-              path="/institutions"
-              component={() => <Institutions />}
-            />
+            <Route exact path="/claims" component={() => <Institutions />} />
           </Switch>
         </CrumbsProvider>
       </Paperbase>

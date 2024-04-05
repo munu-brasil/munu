@@ -31,7 +31,7 @@ export const muiTheme = createTheme({
   },
   mixins: {
     toolbar: {
-      minHeight: 80,
+      minHeight: 48,
     },
   },
 });

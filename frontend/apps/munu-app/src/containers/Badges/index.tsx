@@ -98,7 +98,7 @@ const Badges = (props: BadgesProps) => {
               textShadow: `${theme.palette.grey[600]} 3px 4px 2px`,
             })}
           >
-            <b>SELECT CARD</b>
+            <b>INVERTORY</b>
           </Typography>
         </Box>
       </HiddenComponent>

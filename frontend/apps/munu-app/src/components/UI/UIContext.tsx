@@ -1,6 +1,4 @@
 import React from 'react';
-import { ListItem, ListItemText } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import { CSSInterpolation } from '@emotion/css';
 import DefaultBackground from '@/lib/internal/images/background_04.png';
 
@@ -11,107 +9,44 @@ export const DefaultPaperStyle: CSSInterpolation = {
   backgroundRepeat: 'no-repeat',
 };
 
-export type HeaderTitleContextValue = {
+export type HeaderContextValue = {
   content: React.ReactNode | null;
   setContent: (c: React.ReactNode | null) => void;
 };
-export const HeaderTitleContext = React.createContext<HeaderTitleContextValue>({
+export const HeaderContext = React.createContext<HeaderContextValue>({
   content: null,
   setContent: () => {},
 });
 
-export function HeaderTitle({
-  children,
-}: {
-  children: React.ReactNode | null;
-}) {
-  const { setContent } = React.useContext(HeaderTitleContext);
+export function PageHeader({ children }: { children: React.ReactNode | null }) {
+  const { setContent } = React.useContext(HeaderContext);
   React.useEffect(() => {
     setContent(children);
   }, [children, setContent]);
   return null;
 }
 
-export function HeaderIconTitle({ title }: { title: string }) {
-  const theme = useTheme();
-
-  return (
-    <ListItem
-      component="div"
-      css={{
-        flex: 1,
-        width: 'auto',
-        textAlign: 'center',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: theme.palette.common.black,
-        [theme.breakpoints.down('sm')]: {
-          display: 'none',
-        },
-      }}
-    >
-      <ListItemText
-        primary={title}
-        primaryTypographyProps={{ variant: 'h4', fontWeight: 700 }}
-      />
-    </ListItem>
-  );
-}
-
-export function HeaderTitleRenderer() {
-  const { content } = React.useContext(HeaderTitleContext);
+export function HeaderRenderer() {
+  const { content } = React.useContext(HeaderContext);
 
   return <>{content}</>;
 }
 
-export function HeaderTitleContextContainer(props: {
-  children?: React.ReactNode;
-}) {
+export function HeaderContextContainer(props: { children?: React.ReactNode }) {
   const [headerTitleContent, setHeaderTitleContent] =
     React.useState<React.ReactNode | null>(null);
 
   return (
-    <HeaderTitleContext.Provider
+    <HeaderContext.Provider
       value={{
         content: headerTitleContent,
         setContent: setHeaderTitleContent,
       }}
     >
       {props?.children}
-    </HeaderTitleContext.Provider>
+    </HeaderContext.Provider>
   );
 }
-
-export enum ChatQueryPrams {
-  openChatWithUserID = 'openChatWith',
-}
-export enum ChatVariant {
-  double = 'double',
-  single = 'single',
-  wrap = 'wrap',
-}
-export enum ChatMessageSize {
-  small = 'small',
-  large = 'large',
-}
-export enum ChatPosition {
-  right = 'right',
-  left = 'left',
-}
-
-export type ChatData = {
-  userID: string | null;
-  appoID?: string;
-  apscID?: string;
-  megrID?: string;
-  variant?: ChatVariant;
-  messageSize?: ChatMessageSize;
-  chatPosition?: ChatPosition;
-  classes?: {
-    chatWindow?: string;
-  };
-  onPressActions?: () => void;
-};
 
 export type PaperbaseContextValue = {
   menuVariant?: 'temporary' | 'permanent' | 'persistent' | null;
