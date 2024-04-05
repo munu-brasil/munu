@@ -219,12 +219,15 @@ export const calculateMintable = (
     mintableAmount = newAmount;
   }
 
-  if (!process.env.NEXT_PUBLIC_MAXMINTAMOUNT) return mintableAmount;
+  if (!import.meta.env.VITE_PUBLIC_MAXMINTAMOUNT) return mintableAmount;
   let maxmintamount = 0;
   try {
-    maxmintamount = Number(process.env.NEXT_PUBLIC_MAXMINTAMOUNT);
+    maxmintamount = Number(import.meta.env.VITE_PUBLIC_MAXMINTAMOUNT);
   } catch (e) {
-    console.error('process.env.NEXT_PUBLIC_MAXMINTAMOUNT is not a number!', e);
+    console.error(
+      'import.meta.env.VITE_PUBLIC_MAXMINTAMOUNT is not a number!',
+      e
+    );
     return mintableAmount;
   }
   if (mintableAmount > maxmintamount) {
@@ -241,7 +244,7 @@ export async function listNFTsByWallet(umi: Umi) {
 
   // UMI Contract Address
   const umiContractAddress = new Web3PK(
-    process.env.NEXT_PUBLIC_CANDY_MACHINE_ID!
+    import.meta.env.VITE_PUBLIC_CANDY_MACHINE_ID!
   );
 
   // Query metadata accounts

@@ -58,7 +58,7 @@ export default defineConfig(({ mode }) => {
       ],
     },
     define: {
-      'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV),
+      'import.meta.env.NODE_ENV': JSON.stringify(env.NODE_ENV),
       global: 'globalThis',
     },
     resolve: {

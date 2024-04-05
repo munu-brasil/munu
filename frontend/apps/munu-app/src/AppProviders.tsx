@@ -37,14 +37,14 @@ export const AppProviders: FC<Props> = (props) => {
 
   let network = WalletAdapterNetwork.Devnet;
   if (
-    process.env.NEXT_PUBLIC_ENVIRONMENT === 'mainnet-beta' ||
-    process.env.NEXT_PUBLIC_ENVIRONMENT === 'mainnet'
+    import.meta.env.VITE_PUBLIC_ENVIRONMENT === 'mainnet-beta' ||
+    import.meta.env.VITE_PUBLIC_ENVIRONMENT === 'mainnet'
   ) {
     network = WalletAdapterNetwork.Mainnet;
   }
   let endpoint = 'https://api.devnet.solana.com';
-  if (process.env.NEXT_PUBLIC_RPC) {
-    endpoint = process.env.NEXT_PUBLIC_RPC;
+  if (import.meta.env.VITE_PUBLIC_RPC) {
+    endpoint = import.meta.env.VITE_PUBLIC_RPC;
   }
 
   return (
