@@ -47,7 +47,7 @@ export const HeaderMenu: MenuView[] = [
   {
     title: '320,990 magiK',
     permissions: [],
-    to: '/badges',
+    to: '/magik',
     icon: (
       <Avatar
         src={CoinIcon}
@@ -58,7 +58,7 @@ export const HeaderMenu: MenuView[] = [
     children: [],
   },
   {
-    title: 'invertory',
+    title: 'inventory',
     permissions: [],
     to: '/badges',
     icon: (

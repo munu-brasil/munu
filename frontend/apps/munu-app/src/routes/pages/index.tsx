@@ -22,6 +22,11 @@ const Badges = Loader({
   fallback: PageLoader,
 });
 
+const SelectCards = Loader({
+  loader: () => import('./selectCards'),
+  fallback: PageLoader,
+});
+
 function Admin() {
   return (
     <SecureContainer ignoreRoutes={['/claims']}>
@@ -34,6 +39,7 @@ function Admin() {
             <Route exact path="/" component={() => <Home />} />
             <Route exact path="/badges" component={() => <Badges />} />
             <Route exact path="/claims" component={() => <Institutions />} />
+            <Route exact path="/magik" component={() => <SelectCards />} />
           </Switch>
         </CrumbsProvider>
       </Paperbase>

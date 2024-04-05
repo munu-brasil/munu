@@ -247,13 +247,13 @@ const Home = (props: HomeProps) => {
               <Grid container spacing={3}>
                 <Grid item lg={4}>
                   <CardContainer
-                    title="badges"
+                    title="Deck Stack"
                     component={Button}
                     color="secondary"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
-                      history.push('/badges');
+                      history.push('/magik');
                     }}
                     style={{ minWidth: 'auto' }}
                     sx={(theme) => ({
