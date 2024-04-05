@@ -73,7 +73,7 @@ export type CandyMachineItem = Awaited<ReturnType<typeof getCandyMachines>>[0];
 
 export const findCandyMachineViaAuthority = async (key: string) => {
   const connection = new Connection(
-    (process as any).env.VITE_PUBLIC_RPC,
+    import.meta.env.VITE_PUBLIC_RPC,
     'confirmed'
   );
   const metaplex = new Metaplex(connection);
@@ -94,7 +94,7 @@ export const findCandyMachineViaAuthority = async (key: string) => {
 
 export const findNFTByCreator = async (key: string) => {
   const connection = new Connection(
-    (process as any).env.VITE_PUBLIC_RPC,
+    import.meta.env.VITE_PUBLIC_RPC,
     'confirmed'
   );
   const metaplex = new Metaplex(connection);
@@ -110,7 +110,7 @@ export const findNFTByCreator = async (key: string) => {
 
 export const findNFTByOwner = async (key: string) => {
   const connection = new Connection(
-    (process as any).env.VITE_PUBLIC_RPC ?? 'https://api.devnet.solana.com',
+    import.meta.env.VITE_PUBLIC_RPC ?? 'https://api.devnet.solana.com',
     'confirmed'
   );
   const metaplex = new Metaplex(connection);

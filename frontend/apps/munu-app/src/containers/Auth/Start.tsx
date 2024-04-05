@@ -3,7 +3,7 @@ import { CssBaseline, Button, Box } from '@mui/material';
 import DefaultBackground from '@/lib/internal/images/background_07.jpg';
 import Logo from '@/lib/internal/images/logo.png';
 import StartGameImage from '@/lib/internal/images/start_game.png';
-import Solana from '@/lib/internal/images/solana.png';
+import SolanaLogo from '@/lib/internal/images/solana_logo.png';
 import InsertSolanaCoin from '@/lib/internal/images/insert_solana_coin.png';
 import { createModal } from '@munu/core-lib/components/PromiseDialog';
 import { WalletOnboardDialog } from '@/containers/WalletOnboardDialog';
@@ -101,7 +101,7 @@ const StartGame = () => {
             <Box sx={(theme) => ({ marginTop: '10vh' })}>
               <img
                 alt="solana"
-                src={Solana}
+                src={SolanaLogo}
                 style={{ width: '13vw', height: 'auto', minWidth: '180px' }}
               />
             </Box>

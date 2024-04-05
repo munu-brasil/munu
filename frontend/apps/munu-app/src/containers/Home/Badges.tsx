@@ -19,6 +19,113 @@ import HiddenComponent from '@munu/core-lib/components/HiddenComponent';
 import { NFTDialog } from '@/containers/Badges/NFTDialog';
 import { cx, css, CSSInterpolation } from '@emotion/css';
 import type { ItemData } from '@munu/core-lib/solana/candymachine';
+import CardPhp from '@/lib/internal/images/php.png';
+import CardJs from '@/lib/internal/images/js.png';
+import CardRust from '@/lib/internal/images/rust.png';
+import CardPython from '@/lib/internal/images/python.png';
+import CardCandymachine from '@/lib/internal/images/candymachine.png';
+import CardCobol from '@/lib/internal/images/cobol.png';
+import CardGo from '@/lib/internal/images/go.png';
+import CardNodejs from '@/lib/internal/images/nodejs.png';
+import CardRuby from '@/lib/internal/images/ruby.png';
+import CardTypescript from '@/lib/internal/images/typescript.png';
+import CardSolfare from '@/lib/internal/images/solfare.png';
+import CardPhantom from '@/lib/internal/images/phantom.png';
+import CardCsharp from '@/lib/internal/images/csharp.png';
+
+const CardsExample: ItemData[] = [
+  {
+    name: 'Php',
+    image: CardPhp,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+  {
+    name: 'Js',
+    image: CardJs,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+  {
+    name: 'Rust',
+    image: CardRust,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+  {
+    name: 'Python',
+    image: CardPython,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+  {
+    name: 'Candymachine',
+    image: CardCandymachine,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+  {
+    name: 'Cobol',
+    image: CardCobol,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+  {
+    name: 'Go',
+    image: CardGo,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+  {
+    name: 'Nodejs',
+    image: CardNodejs,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+  {
+    name: 'Ruby',
+    image: CardRuby,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+  {
+    name: 'Typescript',
+    image: CardTypescript,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+  {
+    name: 'Solfare',
+    image: CardSolfare,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+  {
+    name: 'Phantom',
+    image: CardPhantom,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+  {
+    name: 'Csharp',
+    image: CardCsharp,
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    properties: {} as any,
+  },
+];
 
 const [rendererCardView, promiseCardView] = createModal(NFTDialog);
 
@@ -41,9 +148,12 @@ export const Badges = (props: BadgesProps) => {
     if (!connected) {
       return [];
     }
-    return await getMUNUNFTFromWallet(umi.identity.publicKey).then((r) =>
-      setCards(r)
-    );
+    return await getMUNUNFTFromWallet(umi.identity.publicKey)
+      .then((r) => setCards([...r, ...CardsExample]))
+      .catch((e) => {
+        setCards(CardsExample);
+        throw e;
+      });
   }, [connected]);
 
   useEffect(() => {
@@ -60,7 +170,7 @@ export const Badges = (props: BadgesProps) => {
   }, [getCards]);
 
   useEffect(() => {
-    const index = cards.length - 1;
+    const index = 0;
     const card = cardRef?.current?.[index];
     const container = contRef?.current;
     if (!!card && !!container) {
@@ -82,7 +192,7 @@ export const Badges = (props: BadgesProps) => {
   }, [cards, isSmallerScreen, contRef]);
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div style={{ width: '100%', height: '100%', maxWidth: '70vw' }}>
       <Box
         sx={(theme) => ({
           width: '100%',
@@ -91,7 +201,6 @@ export const Badges = (props: BadgesProps) => {
           overflow: 'hidden',
           position: 'relative',
           alignItems: 'center',
-          ...(scrollOpen ? { marginLeft: theme.spacing(-4) } : {}),
         })}
       >
         <ScrollButtons
@@ -124,7 +233,21 @@ export const Badges = (props: BadgesProps) => {
                 Loading ...
               </Typography>
             </HiddenComponent>
-            <HiddenComponent hidden={!connected || loading}>
+            <HiddenComponent hidden={cards.length > 0 || loading}>
+              <Typography
+                variant="h3"
+                sx={(theme) => ({
+                  fontFamily: 'VT323',
+                  color: theme.palette.common.black,
+                  padding: theme.spacing(2),
+                })}
+              >
+                No NFT found
+              </Typography>
+            </HiddenComponent>
+            <HiddenComponent
+              hidden={!connected || loading || cards.length === 0}
+            >
               <Box
                 ref={contRef}
                 sx={{

@@ -226,6 +226,8 @@ const CardItem = ({
         ...(isHovered
           ? {
               zIndex: 999,
+              transformOrigin: 'top center',
+              transform: 'scale3d(1.3, 1.3, 1)',
             }
           : {}),
       }}
