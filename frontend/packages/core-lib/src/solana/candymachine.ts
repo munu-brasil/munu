@@ -41,7 +41,6 @@ export async function getCandyMachines(umi: Umi, cms: CandyMachineDisplay[]) {
   for (let i = 0; i < v2cmachines.length; i++) {
     const cm = v2cmachines[i];
     const allowLists = cms[i].allowList;
-    await timeout(100 + Math.random() * 50);
     const candyGuard = await safeFetchCandyGuard(umi, cm.mintAuthority);
     const availableItem = cm?.items.find(async (e) => !e.minted);
     let preview: ItemData | null = null;
@@ -50,7 +49,6 @@ export async function getCandyMachines(umi: Umi, cms: CandyMachineDisplay[]) {
       preview = await resp.json();
     }
     const solanaTime = await getSolanaTime(umi);
-    await timeout(200 + Math.random() * 100);
     const { guardReturn, ownedTokens } = await guardChecker(
       umi,
       candyGuard!,

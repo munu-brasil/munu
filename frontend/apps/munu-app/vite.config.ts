@@ -62,6 +62,7 @@ export default defineConfig(({ mode }) => {
       global: 'globalThis',
     },
     resolve: {
+      preserveSymlinks: true,
       alias: {
         stream: 'rollup-plugin-node-polyfills/polyfills/stream',
         events: 'rollup-plugin-node-polyfills/polyfills/events',
