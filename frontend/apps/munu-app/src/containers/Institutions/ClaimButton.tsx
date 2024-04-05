@@ -172,7 +172,7 @@ const mintClick = async (
 
     // fetch LUT
     let tables: AddressLookupTableInput[] = [];
-    const lut = process.env.NEXT_PUBLIC_LUT;
+    const lut = import.meta.env.VITE_PUBLIC_LUT;
     if (lut) {
       const lutPubKey = publicKey(lut);
       const fetchedLut = await fetchAddressLookupTable(umi, lutPubKey);
@@ -336,6 +336,7 @@ const mintClick = async (
 const useConnectWallet = ({
   callback,
   checkEligibility,
+  index,
 }: {
   callback: () => void;
   checkEligibility: () => Promise<{
@@ -343,6 +344,7 @@ const useConnectWallet = ({
     ownedTokens: DigitalAssetWithToken[] | undefined;
     guards: GuardReturn[];
   }>;
+  index: number;
 }) => {
   const [loading, setLoading] = useState(false);
   const [, setIsConnected] = useState(false);
@@ -381,7 +383,7 @@ const useConnectWallet = ({
           return isConnected;
         });
       });
-    }, 500);
+    }, 500 + index * 500);
     return () => {
       clearTimeout(t);
     };
@@ -502,6 +504,7 @@ export function ClaimButton({ onOpen, candyMachineItem }: Props): JSX.Element {
   const listItems = buttonGuardList.map((buttonGuard, index) => (
     <ButtonGuard
       key={index}
+      index={index}
       isAllowed={isAllowed}
       guardList={guardList}
       solanaTime={solanaTime}
@@ -550,6 +553,7 @@ type ButtonGuardProps = {
     ownedTokens: DigitalAssetWithToken[] | undefined;
     guards: GuardReturn[];
   }>;
+  index: number;
 };
 
 const ButtonGuard = (props: ButtonGuardProps) => {
@@ -562,10 +566,12 @@ const ButtonGuard = (props: ButtonGuardProps) => {
     onClick,
     setCheckEligibility,
     checkEligibility,
+    index,
   } = props;
   const [connecting, connected, onConnect] = useConnectWallet({
     callback: onClick,
     checkEligibility,
+    index,
   });
 
   const showEndTime =

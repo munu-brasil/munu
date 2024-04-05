@@ -49,8 +49,12 @@ const Institutions = () => {
               ...c,
               allowList: new Map<string, Array<string>>([c.allowList as any]),
             }));
-          getCandyMachines(umi, cms)
-            .then((r) => {
+          getCandyMachines(
+            umi,
+            cms.filter((_, i) => i < 5 && i > 0)
+          )
+            .then(async (r) => {
+              await timeout(500 + Math.random() * 50);
               resolve();
               setCards(r);
             })
@@ -223,3 +227,8 @@ const Institutions = () => {
 };
 
 export default Institutions;
+
+const timeout = (ms: number) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
