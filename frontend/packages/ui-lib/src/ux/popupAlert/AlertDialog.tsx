@@ -43,7 +43,7 @@ export default function AlertDialog(props: AlertDialogProps) {
           <Button
             key={i}
             onClick={(e) => action?.onClick?.(e, handleClose)}
-            {...action?.props}
+            {...(action?.props as any)}
           >
             {action?.label}
           </Button>

@@ -6,20 +6,30 @@ import {
   Button,
   Avatar,
 } from '@mui/material';
-import {
-  ArrowUpwardRounded,
-  WidgetsOutlined,
-  ArrowForwardRounded,
-} from '@mui/icons-material';
-import {
-  CardContainer,
-  CardHeader,
-  CardActions,
-  CardChip,
-} from '@/components/StyledCard';
+import { ArrowUpwardRounded, ArrowForwardRounded } from '@mui/icons-material';
+import { CardContainer, CardHeader, CardChip } from '@/components/StyledCard';
+import { Badges } from '@/containers/Home/Badges';
+import Graphic from '@/lib/internal/images/graphic.png';
+import MachineCloud from '@/lib/internal/images/machine_cloud.png';
+import CardsStack from '@/lib/internal/images/cards_stack.png';
+import Jupiter from '@/lib/internal/images/jupiter.png';
 import AvatarExample from '@/lib/internal/images/avatar_example.png';
-import MagicBook from '@/lib/internal/images/magic_book.png';
+import AvatarExample02 from '@/lib/internal/images/avatar_example_02.png';
+import BookIcon from '@/lib/internal/images/book_icon.png';
+import MedalIcon from '@/lib/internal/images/medal_icon.png';
+import Handshake from '@/lib/internal/images/handshake.png';
+import Accept from '@/lib/internal/images/accept.png';
+import Reject from '@/lib/internal/images/reject.png';
+import Magnifier from '@/lib/internal/images/magnifier.png';
+import Diamond from '@/lib/internal/images/diamond.png';
+import StarIcon from '@/lib/internal/images/star.png';
+import TrophyIcon from '@/lib/internal/images/trophy.png';
+import CakeIcon from '@/lib/internal/images/cake.png';
+import MedalIcon02 from '@/lib/internal/images/medal.png';
+import GraphicIcon from '@/lib/internal/images/graphic_icon.png';
 import { useHistory } from 'react-router';
+import { drawerWidth } from '@/components/UI/Paperbase';
+import { Columns01, Columns02, Columns03 } from '@/containers/Home/GraphColumn';
 
 export type HomeProps = {};
 
@@ -28,395 +38,643 @@ const Home = (props: HomeProps) => {
 
   return (
     <Box
-      sx={(theme) => ({
+      sx={{
         width: '100%',
         height: '100%',
         display: 'flex',
         alignItems: 'center',
-        flexDirection: 'column',
         justifyContent: 'center',
-        '& > *': {
-          marginBottom: theme.spacing(4),
-        },
-      })}
+      }}
     >
-      <Grid container spacing={3} sx={{ flex: 0 }}>
-        <Grid item>
-          <Avatar
-            alt="avatar"
-            src={AvatarExample}
-            sx={(theme) => ({
-              width: '125px',
-              height: '100%',
-              borderRadius: theme.spacing(4),
-            })}
-          />
-        </Grid>
-        <Grid item style={{ minWidth: '50%' }}>
-          <CardContainer color="primary" style={{ height: '100%' }}>
-            <Box
-              sx={(theme) => ({
-                display: 'flex',
-                alignItems: 'center',
-                textAlign: 'center',
-                padding: theme.spacing(1, 0),
-                '& > *:nth-child(n+2)': {
-                  marginLeft: theme.spacing(),
-                },
-              })}
-            >
-              <Avatar
-                sx={(theme) => ({
-                  width: 35,
-                  height: 35,
-                  color: theme.palette.common.black,
-                  background: theme.palette.common.white,
-                  border: `solid 1px ${theme.palette.common.black}`,
-                })}
+      <Box
+        sx={(theme) => ({
+          width: `calc(${drawerWidth} - ${theme.spacing(3)})`,
+          height: '100%',
+          padding: theme.spacing(0.5, 0),
+          marginRight: theme.spacing(3),
+        })}
+      >
+        <Avatar
+          alt="avatar"
+          src={AvatarExample}
+          sx={(theme) => ({
+            width: '125px',
+            height: '140px',
+            borderRadius: theme.spacing(4),
+          })}
+        />
+      </Box>
+      <Grid container>
+        <Grid
+          item
+          lg={9}
+          md={10}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+          }}
+        >
+          <Grid
+            container
+            spacing={3}
+            sx={(theme) => ({ marginBottom: theme.spacing(3) })}
+          >
+            <Grid item>
+              <CardContainer
+                color="primary"
+                style={{ width: '450px', maxWidth: '100%', height: '100%' }}
               >
-                <WidgetsOutlined />
-              </Avatar>
-              <Typography
-                variant="subtitle1"
-                fontWeight="900"
-                sx={(theme) => ({
-                  marginBottom: theme.spacing(-1),
-                })}
-              >
-                OxMatuz
-              </Typography>
-              <CardChip label="VIP" />
-            </Box>
-            <CardContent
-              sx={(theme) => ({
-                padding: theme.spacing(1, 0),
-              })}
-            >
-              <Typography
-                variant="h5"
-                fontWeight="800"
-                style={{ lineHeight: 1 }}
-              >
-                Eu sou uma pessoa legal
-              </Typography>
-            </CardContent>
-            <CardActions
-              text={
-                <span>
-                  <b>+2,154</b> Trust Man
-                </span>
-              }
-              action={
-                <Button
-                  color="inherit"
-                  endIcon={
-                    <ArrowForwardRounded sx={{ fontSize: '12px !important' }} />
+                <CardHeader
+                  title={
+                    <Box
+                      sx={(theme) => ({
+                        display: 'flex',
+                        alignItems: 'center',
+                        marginLeft: theme.spacing(),
+                        paddingBottom: theme.spacing(0.5),
+                        '& > *:nth-child(n+2)': {
+                          marginLeft: theme.spacing(),
+                        },
+                      })}
+                    >
+                      <Typography variant="subtitle1" fontWeight="900">
+                        OxMatuz
+                      </Typography>
+                      <CardChip label="VIP" />
+                    </Box>
                   }
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: 'inherit',
-                    padding: 0,
+                  avatarProps={{
+                    src: Diamond,
+                    alt: 'diamond_icon',
+                    style: { width: 30, height: 'auto' },
                   }}
-                >
-                  <b>More</b>
-                </Button>
-              }
-            />
-          </CardContainer>
-        </Grid>
-      </Grid>
-      <Grid container spacing={3} sx={{ flex: 0 }}>
-        <Grid item>
-          <CardContainer color="secondary">
-            <CardHeader
-              icon={<WidgetsOutlined />}
-              title="Balance"
-              actions={
-                <CardChip
-                  label="10%"
-                  icon={<ArrowUpwardRounded color="inherit" />}
-                />
-              }
-            />
-            <CardContent
-              sx={(theme) => ({
-                padding: theme.spacing(1, 0),
-              })}
-            >
-              <Typography
-                variant="h3"
-                fontWeight="800"
-                style={{ lineHeight: 1 }}
-              >
-                175,000
-              </Typography>
-            </CardContent>
-            <CardActions
-              text={
-                <span>
-                  <b>+$100,000</b> From last month
-                </span>
-              }
-              action={
-                <Button
-                  color="inherit"
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: 'inherit',
-                    padding: 0,
+                  containerProps={{
+                    style: { width: '100%', paddingBottom: 0 },
                   }}
-                >
-                  <b>More</b>
-                </Button>
-              }
-            />
-          </CardContainer>
-        </Grid>
-        <Grid item>
-          <CardContainer color="warning">
-            <CardHeader
-              icon={<WidgetsOutlined />}
-              title="Sales"
-              actions={
-                <CardChip
-                  label="20%"
-                  icon={<ArrowUpwardRounded color="inherit" />}
                 />
-              }
-            />
-            <CardContent
-              sx={(theme) => ({
-                padding: theme.spacing(1, 0),
-              })}
-            >
-              <Typography
-                variant="h3"
-                fontWeight="800"
-                style={{ lineHeight: 1 }}
+                <CardContent
+                  sx={(theme) => ({
+                    padding: theme.spacing(1, 0),
+                  })}
+                >
+                  <Typography
+                    variant="h5"
+                    fontWeight="800"
+                    style={{ lineHeight: 1 }}
+                  >
+                    I am a Happy Owl
+                  </Typography>
+                </CardContent>
+                <Box
+                  sx={(theme) => ({
+                    display: 'flex',
+                    padding: theme.spacing(),
+                    '& > *:nth-child(n+2)': {
+                      marginLeft: theme.spacing(2),
+                    },
+                  })}
+                >
+                  <Box
+                    sx={(theme) => ({
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      '& > *:nth-child(n+2)': {
+                        marginLeft: theme.spacing(),
+                      },
+                    })}
+                  >
+                    <img
+                      alt="star_icon"
+                      src={StarIcon}
+                      style={{ width: 'auto', height: '35px' }}
+                    />
+                    <Typography sx={{ fontFamily: 'VT323' }}>
+                      NÍVEL: 1
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={(theme) => ({
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      '& > *:nth-child(n+2)': {
+                        marginLeft: theme.spacing(),
+                      },
+                    })}
+                  >
+                    <img
+                      alt="medal_icon_02"
+                      src={MedalIcon02}
+                      style={{ width: 'auto', height: '35px' }}
+                    />
+                    <Typography sx={{ fontFamily: 'VT323' }}>XP: 50</Typography>
+                  </Box>
+                  <Box
+                    sx={(theme) => ({
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      '& > *:nth-child(n+2)': {
+                        marginLeft: theme.spacing(),
+                      },
+                    })}
+                  >
+                    <img
+                      alt="cake_icon"
+                      src={CakeIcon}
+                      style={{ width: 'auto', height: '35px' }}
+                    />
+                    <Typography sx={{ fontFamily: 'VT323' }}>
+                      RP: 5.000
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={(theme) => ({
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      '& > *:nth-child(n+2)': {
+                        marginLeft: theme.spacing(),
+                      },
+                    })}
+                  >
+                    <img
+                      alt="trophy_icon"
+                      src={TrophyIcon}
+                      style={{ width: 'auto', height: '35px' }}
+                    />
+                    <Typography sx={{ fontFamily: 'VT323' }}>
+                      COLAB: 6
+                    </Typography>
+                  </Box>
+                </Box>
+              </CardContainer>
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            spacing={3}
+            sx={(theme) => ({ marginBottom: theme.spacing(3) })}
+          >
+            <Grid item lg={7}>
+              <CardContainer
+                color="primary"
+                sx={(theme) => ({ marginBottom: theme.spacing(3) })}
               >
-                9,500
-              </Typography>
-            </CardContent>
-            <CardActions
-              text={
-                <span>
-                  <b>+3,456</b> From last month
-                </span>
-              }
-              action={
-                <Button
-                  color="inherit"
-                  endIcon={
-                    <ArrowForwardRounded sx={{ fontSize: '12px !important' }} />
+                <CardHeader
+                  title={
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight="900"
+                      sx={(theme) => ({ marginLeft: theme.spacing() })}
+                    >
+                      Interaction Chart
+                    </Typography>
                   }
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: 'inherit',
-                    padding: 0,
+                  avatarProps={{
+                    src: GraphicIcon,
+                    alt: 'graphic_icon',
+                    style: { width: 40, height: 'auto' },
                   }}
-                >
-                  <b>More</b>
-                </Button>
-              }
-            />
-          </CardContainer>
-        </Grid>
-        <Grid item>
-          <CardContainer color="primary">
-            <CardHeader
-              icon={<WidgetsOutlined />}
-              title="Order"
-              actions={
-                <CardChip
-                  label="25%"
-                  icon={<ArrowUpwardRounded color="inherit" />}
+                  containerProps={{
+                    style: { width: '100%', paddingBottom: 0 },
+                  }}
                 />
-              }
-            />
-            <CardContent sx={(theme) => ({ padding: theme.spacing(1, 0) })}>
-              <Typography
-                variant="h3"
-                fontWeight="800"
-                style={{ lineHeight: 1 }}
+                <RenderGraphExample />
+              </CardContainer>
+              <Grid container spacing={3}>
+                <Grid item lg={4}>
+                  <CardContainer
+                    title="Deck Stack"
+                    component={Button}
+                    color="secondary"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      history.push('/magik');
+                    }}
+                    style={{ minWidth: 'auto' }}
+                    sx={(theme) => ({
+                      display: 'flex',
+                      height: '100%',
+                      maxHeight: 300,
+                      width: '100%',
+                      flexDirection: 'column',
+                      '&: hover': {
+                        background: theme.palette.secondary.main,
+                      },
+                    })}
+                  >
+                    <CardHeader
+                      title="Deck Stack"
+                      avatarProps={{
+                        src: BookIcon,
+                        alt: 'book_icon',
+                        style: { width: 50, height: 40 },
+                      }}
+                      containerProps={{
+                        style: { width: '100%', paddingBottom: 0 },
+                      }}
+                    />
+                    <CardContent
+                      sx={(theme) => ({
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: theme.spacing(1, 0),
+                      })}
+                    >
+                      <img
+                        alt="badges"
+                        src={CardsStack}
+                        style={{
+                          width: 'auto',
+                          height: '175px',
+                          maxWidth: '100%',
+                          maxHeight: '100%',
+                        }}
+                      />
+                    </CardContent>
+                  </CardContainer>
+                </Grid>
+                <Grid item lg={4}>
+                  <CardContainer
+                    color="warning"
+                    style={{ minWidth: 'auto' }}
+                    sx={{ height: '100%', width: '100%', maxHeight: 300 }}
+                  >
+                    <CardHeader
+                      title="Reputation"
+                      avatarProps={{
+                        src: MedalIcon,
+                        alt: 'medal_icon',
+                        style: { width: 50, height: 40 },
+                      }}
+                      actions={
+                        <CardChip
+                          label="20%"
+                          icon={<ArrowUpwardRounded color="inherit" />}
+                        />
+                      }
+                    />
+                    <CardContent
+                      sx={(theme) => ({
+                        height: '100%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: theme.spacing(1, 0),
+                      })}
+                    >
+                      <Typography
+                        variant="h4"
+                        fontWeight="800"
+                        style={{ lineHeight: 1 }}
+                      >
+                        9,500 rP
+                      </Typography>
+                    </CardContent>
+                  </CardContainer>
+                </Grid>
+                <Grid item lg={4}>
+                  <CardContainer
+                    color="primary"
+                    style={{ minWidth: 'auto' }}
+                    sx={{ height: '100%', width: '100%', maxHeight: 300 }}
+                  >
+                    <CardHeader
+                      title="Colab"
+                      actions={
+                        <CardChip
+                          label="25%"
+                          icon={<ArrowUpwardRounded color="inherit" />}
+                        />
+                      }
+                      avatarProps={{
+                        src: Handshake,
+                        alt: 'handshake',
+                        style: { width: 50, height: 40 },
+                      }}
+                    />
+                    <CardContent
+                      sx={(theme) => ({
+                        display: 'flex',
+                        alignItems: 'center',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        padding: theme.spacing(1, 0),
+                      })}
+                    >
+                      <Box
+                        sx={(theme) => ({
+                          display: 'flex',
+                          width: '150px',
+                          alignItems: 'center',
+                          justifyContent: 'flex-start',
+                          marginBottom: theme.spacing(2),
+                        })}
+                      >
+                        <img
+                          src={Accept}
+                          alt="accept"
+                          style={{ width: 50, height: 50 }}
+                        />
+                        <Typography
+                          variant="h4"
+                          fontWeight="700"
+                          sx={(theme) => ({
+                            marginLeft: theme.spacing(2),
+                          })}
+                        >
+                          100
+                        </Typography>
+                      </Box>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          width: '150px',
+                          alignItems: 'center',
+                          justifyContent: 'flex-start',
+                        }}
+                      >
+                        <img
+                          src={Reject}
+                          alt="Reject"
+                          style={{ width: 50, height: 50 }}
+                        />
+                        <Typography
+                          variant="h4"
+                          fontWeight="700"
+                          sx={(theme) => ({
+                            marginLeft: theme.spacing(2),
+                          })}
+                        >
+                          30
+                        </Typography>
+                      </Box>
+                    </CardContent>
+                  </CardContainer>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item lg={5}>
+              <CardContainer
+                color="info"
+                sx={{ width: '100%', height: '100%' }}
               >
-                12,400
-              </Typography>
-            </CardContent>
-            <CardActions
-              text={
-                <span>
-                  <b>+2,154</b> From last month
-                </span>
-              }
-              action={
-                <Button
-                  color="inherit"
-                  endIcon={
-                    <ArrowForwardRounded sx={{ fontSize: '12px !important' }} />
-                  }
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: 'inherit',
-                    padding: 0,
+                <CardHeader
+                  title="The Magnify"
+                  avatarProps={{
+                    src: Magnifier,
+                    alt: 'magnifier',
+                    style: { width: 40, height: 40, marginRight: '8px' },
                   }}
+                />
+                <CardContent
+                  sx={(theme) => ({
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    marginBottom: theme.spacing(2),
+                  })}
                 >
-                  <b>More</b>
-                </Button>
-              }
-            />
-          </CardContainer>
+                  <Typography
+                    variant="h5"
+                    fontWeight="500"
+                    sx={(theme) => ({
+                      fontFamily: 'VT323',
+                      color: theme.palette.common.black,
+                      padding: theme.spacing(2),
+                    })}
+                  >
+                    RP ROUND: -20
+                  </Typography>
+                  <Box
+                    sx={(theme) => ({
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      marginTop: theme.spacing(1),
+                    })}
+                  >
+                    <Box
+                      sx={(theme) => ({
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'end',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        marginRight: theme.spacing(2),
+                      })}
+                    >
+                      <Box
+                        sx={(theme) => ({
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'start',
+                          marginBottom: theme.spacing(2),
+                        })}
+                      >
+                        <Avatar
+                          alt="avatar_example"
+                          src={AvatarExample}
+                          sx={(theme) => ({
+                            width: '170px',
+                            height: 'auto',
+                            maxWidth: '100%',
+                            borderRadius: theme.spacing(4),
+                          })}
+                        />
+                        <Button
+                          color="inherit"
+                          endIcon={
+                            <ArrowForwardRounded
+                              sx={{ fontSize: '12px !important' }}
+                            />
+                          }
+                          sx={(theme) => ({
+                            padding: 0,
+                            textTransform: 'none',
+                            marginTop: theme.spacing(1),
+                            marginLeft: theme.spacing(2),
+                            fontSize: theme.typography.caption.fontSize,
+                            fontWeight: theme.typography.caption.fontWeight,
+                          })}
+                        >
+                          <b>Visit Profile</b>
+                        </Button>
+                      </Box>
+                      <Button style={{ padding: 0, borderRadius: 50 }}>
+                        <img
+                          alt="accept_02"
+                          src={Accept}
+                          style={{ width: '80px', height: '80px' }}
+                        />
+                      </Button>
+                    </Box>
+                    <Box
+                      sx={(theme) => ({
+                        width: '100%',
+                        display: 'flex',
+                        alignItems: 'start',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        marginLeft: theme.spacing(2),
+                      })}
+                    >
+                      <Box
+                        sx={(theme) => ({
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'end',
+                          marginBottom: theme.spacing(2),
+                        })}
+                      >
+                        <Avatar
+                          alt="avatar_example_02"
+                          src={AvatarExample02}
+                          sx={(theme) => ({
+                            width: '170px',
+                            height: 'auto',
+                            maxWidth: '100%',
+                            borderRadius: theme.spacing(4),
+                          })}
+                        />
+                        <Button
+                          color="inherit"
+                          endIcon={
+                            <ArrowForwardRounded
+                              sx={{ fontSize: '12px !important' }}
+                            />
+                          }
+                          sx={(theme) => ({
+                            padding: 0,
+                            textTransform: 'none',
+                            marginTop: theme.spacing(1),
+                            marginRight: theme.spacing(2),
+                            fontSize: theme.typography.caption.fontSize,
+                            fontWeight: theme.typography.caption.fontWeight,
+                          })}
+                        >
+                          <b>Visit Profile</b>
+                        </Button>
+                      </Box>
+                      <Button style={{ padding: 0, borderRadius: 50 }}>
+                        <img
+                          alt="reject_02"
+                          src={Reject}
+                          style={{ width: '80px', height: '80px' }}
+                        />
+                      </Button>
+                    </Box>
+                  </Box>
+                </CardContent>
+              </CardContainer>
+            </Grid>
+          </Grid>
+          <Badges />
         </Grid>
-      </Grid>
-      <Grid container spacing={3} sx={{ flex: 1 }}>
-        <Grid item>
-          <CardContainer
-            title="badges"
-            component={Button}
-            color="secondary"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              history.push('/badges');
-            }}
+        <Grid
+          item
+          lg={3}
+          md={2}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Box
             sx={(theme) => ({
               display: 'flex',
-              height: '100%',
-              maxHeight: 300,
-              flexDirection: 'column',
-              '&: hover': {
-                background: theme.palette.secondary.main,
-              },
+              alignItems: 'center',
+              width: 'auto',
+              height: '50px',
+              justifyContent: 'center',
+              padding: theme.spacing(1),
+              border: `solid 1px #ffffc8`,
+              borderRadius: theme.spacing(2),
+              marginBottom: theme.spacing(1),
+              backgroundColor: theme.palette.common.black,
             })}
           >
             <Typography
-              variant="subtitle1"
-              fontWeight="900"
-              sx={(theme) => ({
-                textAlign: 'center',
-                marginBottom: theme.spacing(-1),
-              })}
+              sx={{
+                fontSize: '0.7rem',
+                lineHeight: '27px',
+                letterSpacing: '-0.045em',
+                color: '#ffffc8',
+              }}
             >
-              BADGES
+              Powered by
             </Typography>
-            <CardContent
-              sx={(theme) => ({
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: theme.spacing(1, 0),
-              })}
-            >
-              <img
-                alt="badges"
-                src={MagicBook}
-                style={{
-                  height: '200px',
-                  width: 'auto',
-                }}
-              />
-            </CardContent>
-          </CardContainer>
-        </Grid>
-        <Grid item>
-          <CardContainer
-            color="warning"
-            sx={{ height: '100%', maxHeight: 300 }}
-          >
-            <CardHeader
-              icon={<WidgetsOutlined />}
-              title="Reputation"
-              actions={
-                <CardChip
-                  label="20%"
-                  icon={<ArrowUpwardRounded color="inherit" />}
-                />
-              }
+            <img
+              src={Jupiter}
+              alt="Jupiter"
+              style={{ objectFit: 'fill', width: 'auto', height: '42px' }}
             />
-            <CardContent
-              sx={(theme) => ({
-                padding: theme.spacing(1, 0),
-              })}
-            >
-              <Typography
-                variant="h3"
-                fontWeight="800"
-                style={{ lineHeight: 1 }}
-              >
-                9,500 rP
-              </Typography>
-              <Typography variant="caption">
-                <b>+3,456</b> From last month
-              </Typography>
-            </CardContent>
-            <CardActions
-              text=""
-              action={
-                <Button
-                  color="inherit"
-                  endIcon={
-                    <ArrowForwardRounded sx={{ fontSize: '12px !important' }} />
-                  }
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: 'inherit',
-                    padding: 0,
-                  }}
-                >
-                  <b>More</b>
-                </Button>
-              }
+          </Box>
+          <Button>
+            <img
+              alt="institutions"
+              src={MachineCloud}
+              style={{
+                height: 'auto',
+                width: '415px',
+                maxWidth: '100%',
+                minWidth: '300px',
+              }}
             />
-          </CardContainer>
-        </Grid>
-        <Grid item>
-          <CardContainer
-            color="primary"
-            sx={{ height: '100%', maxHeight: 300 }}
-          >
-            <CardHeader
-              icon={<WidgetsOutlined />}
-              title="Colab"
-              actions={
-                <CardChip
-                  label="25%"
-                  icon={<ArrowUpwardRounded color="inherit" />}
-                />
-              }
-            />
-            <CardContent sx={(theme) => ({ padding: theme.spacing(1, 0) })}>
-              <Typography
-                variant="h3"
-                fontWeight="800"
-                style={{ lineHeight: 1 }}
-              >
-                12,400 rP
-              </Typography>
-              <Typography variant="caption">
-                <b>+2,154</b> From last month
-              </Typography>
-            </CardContent>
-            <CardActions
-              text=""
-              action={
-                <Button
-                  color="inherit"
-                  endIcon={
-                    <ArrowForwardRounded sx={{ fontSize: '12px !important' }} />
-                  }
-                  sx={{
-                    textTransform: 'none',
-                    fontSize: 'inherit',
-                    padding: 0,
-                  }}
-                >
-                  <b>More</b>
-                </Button>
-              }
-            />
-          </CardContainer>
+          </Button>
         </Grid>
       </Grid>
+    </Box>
+  );
+};
+
+const RenderGraphExample = () => {
+  return (
+    <Box
+      sx={(theme) => ({
+        display: 'flex',
+        alignItems: 'center',
+        position: 'relative',
+        padding: theme.spacing(1, 3),
+        marginTop: '-10px',
+      })}
+    >
+      <img src={Graphic} style={{ width: '100%', height: '150px' }} />
+      <Columns01
+        style={{
+          position: 'absolute',
+          width: '130px',
+          left: '60px',
+          bottom: '20px',
+          zIndex: 3,
+        }}
+      />
+      <Columns02
+        style={{
+          position: 'absolute',
+          width: '130px',
+          left: 'calc(55px + 130px)',
+          bottom: '22px',
+          zIndex: 2,
+        }}
+      />
+      <Columns03
+        style={{
+          position: 'absolute',
+          width: '130px',
+          left: 'calc(52px + 125px * 2)',
+          bottom: '22px',
+          zIndex: 1,
+        }}
+      />
     </Box>
   );
 };

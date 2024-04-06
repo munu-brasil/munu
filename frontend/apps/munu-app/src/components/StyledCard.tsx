@@ -4,9 +4,11 @@ import {
   Card,
   Chip,
   Avatar,
+  BoxProps,
   CardProps,
   ChipProps,
   Typography,
+  AvatarProps,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Theme } from '@/themes/mui/mui.theme';
@@ -45,6 +47,8 @@ const useStyles = (theme: Theme, color: Color) => {
     root: {
       minWidth: 250,
       position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
       padding: theme.spacing(),
       border: 'solid 2px black',
       borderRadius: theme.spacing(4),
@@ -76,16 +80,19 @@ export const CardContainer = (props: CardContainerProps) => {
 };
 
 export type CardHeaderProps = {
-  title: string;
+  title: React.ReactNode;
   icon?: React.ReactNode;
   actions?: React.ReactNode;
+  containerProps?: Omit<BoxProps, 'sx' | 'children'>;
+  avatarProps?: Omit<AvatarProps, 'sx' | 'children'>;
 };
 
 export const CardHeader = (props: CardHeaderProps) => {
-  const { icon, title, actions } = props;
+  const { icon, title, actions, containerProps, avatarProps } = props;
 
   return (
     <Box
+      {...containerProps}
       sx={(theme) => ({
         display: 'flex',
         alignItems: 'center',
@@ -99,34 +106,23 @@ export const CardHeader = (props: CardHeaderProps) => {
           alignItems: 'center',
           textAlign: 'center',
           marginRight: theme.spacing(-1),
-          '& > *': {
-            marginRight: theme.spacing(),
-          },
         })}
       >
-        {icon ? (
+        {icon || avatarProps ? (
           <Avatar
             variant="rounded"
             sx={(theme) => ({
               width: 35,
               height: 35,
-              padding: theme.spacing(),
-              borderRadius: theme.spacing(1.5),
               color: theme.palette.common.black,
-              background: theme.palette.common.white,
-              border: `solid 1px ${theme.palette.common.black}`,
+              background: 'transparent',
             })}
+            {...avatarProps}
           >
             {icon}
           </Avatar>
         ) : null}
-        <Typography
-          variant="subtitle1"
-          fontWeight="900"
-          sx={(theme) => ({
-            marginBottom: theme.spacing(-1),
-          })}
-        >
+        <Typography variant="subtitle1" fontWeight="900">
           {title}
         </Typography>
       </Box>

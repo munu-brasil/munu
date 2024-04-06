@@ -1,19 +1,27 @@
 import React from 'react';
-import { getUnixTime } from 'date-fns';
-import { useSessionStore } from '@munu/core-lib/repo/session';
-import { LoginPage } from './Auth/LoginPage';
+import { useWallet } from '@solana/wallet-adapter-react';
+import { useHistory } from 'react-router-dom';
+import Start from '@/containers/Auth/Start';
 
 export interface SecureContainerProps {
   onLogin?: (r: any) => any;
   children: React.ReactNode;
+  ignoreRoutes?: string[];
 }
 
-const SecureContainer = ({ children }: SecureContainerProps) => {
-  const { payload } = useSessionStore();
-  if (getUnixTime(new Date()) < (payload?.exp ?? 0)) {
+const SecureContainer = ({
+  children,
+  ignoreRoutes = [],
+}: SecureContainerProps) => {
+  const { connected } = useWallet();
+  const history = useHistory();
+  const { pathname } = history.location;
+  const ignore = ignoreRoutes.indexOf(pathname) !== -1;
+
+  if (connected || ignore) {
     return children as any;
   }
-  return <LoginPage />;
+  return <Start />;
 };
 
 export default SecureContainer;

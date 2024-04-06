@@ -1,56 +1,65 @@
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useState } from 'react';
 import {
   Grid,
   Menu,
-  MenuItem,
   Button,
+  Avatar,
+  MenuItem,
   ListItemText,
   ListItemIcon,
-  Avatar,
+  CircularProgress,
 } from '@mui/material';
-import { ExitToApp } from '@mui/icons-material';
-import { init, useConnectWallet } from '@web3-onboard/react';
-import phantomModule from '@web3-onboard/phantom';
-import Logo from '@/lib/internal/images/logo.png';
+import { ExitToApp, FileCopyRounded } from '@mui/icons-material';
 import { Button3D } from '@/components/Button/Button3D';
-
-const phantom = phantomModule();
-
-init({
-  wallets: [phantom],
-  chains: [
-    {
-      id: '0x1',
-      token: 'ETH',
-      label: 'Ethereum Mainnet',
-      rpcUrl: 'https://eth-mainnet.g.alchemy.com/v2/YOUR_API_KEY',
-    },
-  ],
-  appMetadata: {
-    name: 'Phantom Web3-Onboard Demo',
-    icon: Logo,
-    description: 'My phantom wallet dapp using Onboard',
-  },
-});
+import { useWallet } from '@solana/wallet-adapter-react';
+import { notify } from '@munu/core-lib/repo/notification';
+import { createModal } from '@munu/core-lib/components/PromiseDialog';
+import { WalletOnboardDialog } from '@/containers/WalletOnboardDialog';
 
 function formatWalletAddress(address: string) {
   return `${address.slice(0, 6)}...${address.slice(-4)}`;
 }
 
+const [rendererOnboardDialog, promiseOnboardDialog] =
+  createModal(WalletOnboardDialog);
 export const WalletOnboard = () => {
-  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
+  const { connect, connected, connecting, disconnecting, disconnect, wallet } =
+    useWallet();
   const [anchorEl, setAnchorEl] = useState(
     null as (EventTarget & HTMLDivElement) | null
+  );
+  const account = (wallet?.adapter as any)?.wallet?.accounts?.[0] as {
+    address?: string;
+    chains?: string[];
+    features?: string[];
+    icon?: string;
+    label?: string;
+    publicKey?: string;
+  };
+
+  const onCopyAddress = useCallback(
+    (e: React.MouseEvent<HTMLLIElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (account?.address) {
+        navigator.clipboard.writeText(account.address);
+      }
+    },
+    [account]
   );
 
   const onDisconnect = useCallback(
     (e: React.MouseEvent<HTMLLIElement>) => {
       e.preventDefault();
       e.stopPropagation();
-      if (wallet) {
-        disconnect(wallet);
-        setAnchorEl(null);
-      }
+      disconnect().catch(() => {
+        notify({
+          message: 'Falha ao desconectar',
+          type: 'error',
+          temporary: true,
+        });
+      });
+      setAnchorEl(null);
     },
     [wallet, disconnect]
   );
@@ -59,15 +68,20 @@ export const WalletOnboard = () => {
     (e: React.MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       e.stopPropagation();
+      if (!wallet) {
+        promiseOnboardDialog();
+        return;
+      }
       connect();
     },
-    [connect]
+    [wallet]
   );
 
   return (
     <Grid item>
-      {wallet ? (
+      {connected ? (
         <Button
+          key={account?.address ?? ''}
           disabled={connecting}
           sx={(theme) => ({
             textTransform: 'none',
@@ -80,23 +94,24 @@ export const WalletOnboard = () => {
           }}
           endIcon={
             <Avatar
-              alt={wallet?.label}
-              sx={(theme) => ({
-                background: theme.palette.primary.main,
-                '& svg': {
-                  width: 25,
-                  height: 25,
-                },
-              })}
+              alt={wallet?.adapter.name}
+              src={disconnecting ? '' : wallet?.adapter.icon}
+              sx={(theme) => ({ background: theme.palette.primary.main })}
             >
-              <RenderSVG
-                template={wallet?.icon}
-                style={{ width: 25, height: 25 }}
-              />
+              {disconnecting ? (
+                <CircularProgress
+                  size={20}
+                  sx={(theme) => ({ color: theme.palette.common.white })}
+                />
+              ) : null}
             </Avatar>
           }
         >
-          <b>{formatWalletAddress(wallet?.accounts?.[0]?.address)}</b>
+          <b>
+            {account?.address
+              ? formatWalletAddress(account?.address ?? '')
+              : wallet?.adapter.name}
+          </b>
         </Button>
       ) : (
         <Button3D disabled={connecting} onClick={onConnect}>
@@ -118,38 +133,21 @@ export const WalletOnboard = () => {
           horizontal: 'right',
         }}
       >
-        <MenuItem disabled>{wallet?.label}</MenuItem>
-        <MenuItem onClick={onDisconnect}>
+        <MenuItem disabled>{wallet?.adapter.name}</MenuItem>
+        <MenuItem disabled={disconnecting} onClick={onCopyAddress}>
+          <ListItemText primary="Copy address" />
+          <ListItemIcon style={{ minWidth: 24 }}>
+            <FileCopyRounded style={{ width: 24, height: 24 }} />
+          </ListItemIcon>
+        </MenuItem>
+        <MenuItem disabled={disconnecting} onClick={onDisconnect}>
           <ListItemText primary="Disconnect" />
           <ListItemIcon style={{ minWidth: 24 }}>
             <ExitToApp style={{ width: 24, height: 24 }} />
           </ListItemIcon>
         </MenuItem>
       </Menu>
+      {rendererOnboardDialog}
     </Grid>
   );
-};
-
-const RenderSVG = ({
-  template,
-  ...others
-}: { template?: string } & React.HTMLProps<HTMLDivElement>) => {
-  const [svgContent, setSvgContent] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (template) {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(template, 'image/svg+xml');
-      const svgString = new XMLSerializer().serializeToString(
-        doc.documentElement
-      );
-      setSvgContent(svgString);
-    }
-  }, [template]);
-
-  if (!svgContent) {
-    return null;
-  }
-
-  return <div {...others} dangerouslySetInnerHTML={{ __html: svgContent }} />;
 };

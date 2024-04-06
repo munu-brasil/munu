@@ -1,7 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Button3D } from '@/components/Button/Button3D';
-import { useConnectWallet } from '@web3-onboard/react';
-import CertificateImg from '@/lib/internal/images/certificate_02.jpg';
+import { useWallet } from '@solana/wallet-adapter-react';
 import {
   Zoom,
   Grid,
@@ -11,36 +9,58 @@ import {
   Typography,
   CircularProgress,
 } from '@mui/material';
-import {
-  SearchRounded,
-  ArrowDownwardRounded,
-  CheckCircleOutlineRounded,
-} from '@mui/icons-material';
 import { notify } from '@munu/core-lib/repo/notification';
+import {
+  CandyMachineDisplay,
+  getCandyMachines,
+} from '@munu/core-lib/solana/candymachine';
 import Icons from '@munu/core-lib/components/Icons';
-
-function generateItems(length: number) {
-  return Array.from({ length }, (_, index) => `card_example_${index}`);
-}
+import { useUmi } from '@munu/core-lib/solana/utils/useUmi';
+import type { CandyMachineItem } from '@munu/core-lib/solana/candymachine';
+import { CandyMachine } from './CandyMachine';
 
 export type InstitutionsProps = {};
 const Institutions = () => {
   const [walletAddress, setWalletAddress] = useState<string>();
-  const [cards, setCards] = useState<string[]>([]);
+  const [cards, setCards] = useState<CandyMachineItem[]>();
   const [loading, setLoading] = useState(false);
-  const [{ wallet }] = useConnectWallet();
+  const { wallet } = useWallet();
+  const umi = useUmi();
+
+  const account = (wallet?.adapter as any)?.wallet?.accounts?.[0] as {
+    address?: string;
+    chains?: string[];
+    features?: string[];
+    icon?: string;
+    label?: string;
+    publicKey?: string;
+  };
 
   const getCards = useCallback((wallet: string) => {
     return new Promise<void>((resolve, reject) => {
-      setTimeout(() => {
-        if (wallet === 'falha') {
-          reject('Falha ao carregar cards');
-          return;
-        }
-        const listNumber = Math.floor(Math.random() * 10) + 1;
-        setCards(generateItems(listNumber));
-        resolve();
-      }, 2000);
+      fetch('https://ga.notproduction.space/candymachines.json')
+        .then((r) => r.json())
+        .then((r: CandyMachineDisplay[]) => {
+          const cms = r
+            .filter((c) => {
+              return JSON.stringify(c.allowList).includes(wallet);
+            })
+            .map((c) => ({
+              ...c,
+              allowList: new Map<string, Array<string>>([c.allowList as any]),
+            }));
+          getCandyMachines(
+            umi,
+            cms.filter((_, i) => i < 5 && i > 0)
+          )
+            .then(async (r) => {
+              await timeout(500 + Math.random() * 50);
+              resolve();
+              setCards(r);
+            })
+            .catch(reject);
+        })
+        .catch(reject);
     });
   }, []);
 
@@ -50,7 +70,7 @@ const Institutions = () => {
       getCards(walletAddress)
         .catch((e) => {
           notify({
-            message: e,
+            message: e?.message,
             type: 'error',
             temporary: true,
           });
@@ -61,13 +81,13 @@ const Institutions = () => {
 
   useEffect(() => {
     if (wallet) {
-      const address = wallet?.accounts?.[0]?.address ?? '';
+      const address = account?.address ?? '';
       setWalletAddress(address);
       setLoading(true);
       getCards(address)
         .catch((e) => {
           notify({
-            message: e,
+            message: e?.message,
             type: 'error',
             temporary: true,
           });
@@ -76,7 +96,7 @@ const Institutions = () => {
     } else {
       setWalletAddress('');
     }
-  }, [wallet, getCards]);
+  }, [account, getCards]);
 
   return (
     <Box
@@ -86,7 +106,7 @@ const Institutions = () => {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        justifyContent: 'center',
+        marginTop: '20vh',
       }}
     >
       <Typography variant="h5">
@@ -118,7 +138,7 @@ const Institutions = () => {
             },
           })}
         >
-          <SearchRounded />
+          <Icons.Zoom8Bit style={{ height: '25px', width: '25px' }} />
           <InputBase
             fullWidth
             disabled={loading}
@@ -134,118 +154,81 @@ const Institutions = () => {
               },
             }}
           />
-          <IconButton type="submit" disabled={loading}>
+          <IconButton
+            type="submit"
+            disabled={loading}
+            sx={(theme) => ({
+              color: theme.palette.common.black,
+            })}
+          >
             {loading ? (
               <CircularProgress
                 size={20}
                 sx={(theme) => ({
+                  height: '25px',
+                  width: '25px',
                   color: theme.palette.common.black,
                 })}
               />
             ) : (
-              <ArrowDownwardRounded />
+              <Icons.ArrowDown8Bit />
             )}
           </IconButton>
         </Box>
       </Box>
-      <Typography variant="h5">
-        <b>WELL DONE,YOU ARE ELIGIBLE</b>
-      </Typography>
-      <Box sx={(theme) => ({ marginTop: theme.spacing(4) })}>
-        <Zoom
-          in={cards.length > 0}
-          style={{ transformOrigin: '0 0 0' }}
-          {...(cards.length > 0 ? { timeout: 1000 } : {})}
+      {loading ? (
+        <Typography
+          variant="h3"
+          sx={(theme) => ({
+            fontFamily: 'VT323',
+            color: theme.palette.common.black,
+            padding: theme.spacing(2),
+          })}
         >
-          <Grid container spacing={4}>
-            {cards.map((key) => (
-              <Grid key={key} item>
-                <Certificate />
-              </Grid>
-            ))}
-          </Grid>
-        </Zoom>
-      </Box>
-    </Box>
-  );
-};
-
-type CertificateProps = {};
-const Certificate = (props: CertificateProps) => {
-  const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const onclick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setLoading(true);
-    setTimeout(() => {
-      setSuccess(true);
-      setLoading(false);
-    }, 1000);
-  }, []);
-
-  return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-      }}
-    >
-      <Box
-        sx={(theme) => ({
-          marginBottom: theme.spacing(2),
-        })}
-      >
-        <img
-          src={CertificateImg}
-          style={{
-            width: 200,
-            height: 200,
-          }}
-        />
-      </Box>
-      <Box
-        sx={{
-          width: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Button3D
-          style={{ minWidth: 150 }}
-          disabled={success || loading}
-          onClick={onclick}
-          sx={
-            success
-              ? (theme) => ({
-                  '&: disabled': {
-                    color: theme.palette.common.white,
-                    background: `${theme.palette.success.main} !important`,
-                    border: `solid 1px ${theme.palette.success.light} !important`,
-                    boxShadow: `0px 10px 0px ${theme.palette.success.dark} !important`,
-                    MozBoxShadow: `0px 10px 0px ${theme.palette.success.dark} !important`,
-                    WebkitBoxShadow: `0px 10px 0px ${theme.palette.success.dark} !important`,
-                  },
-                })
-              : {}
-          }
-        >
-          {!success && !loading ? <b>CLAIM</b> : null}
-          {success ? <Icons.CheckCircle8Bit style={{ width: 25 }} /> : null}
-          {loading ? (
-            <CircularProgress
-              size={20}
-              sx={(theme) => ({
-                color: theme.palette.common.white,
-              })}
-            />
-          ) : null}
-        </Button3D>
-      </Box>
+          Loading ...
+        </Typography>
+      ) : null}
+      {(cards ?? []).length > 0 && !loading ? (
+        <>
+          <Typography variant="h5">
+            <b>WELL DONE,YOU ARE ELIGIBLE</b>
+          </Typography>
+          <Box sx={(theme) => ({ marginTop: theme.spacing(4) })}>
+            <Grid container spacing={4}>
+              {(cards ?? []).map((card, i) => (
+                <Zoom
+                  key={card?.candyMachine?.data?.symbol + '-' + i}
+                  in
+                  style={{ transitionDelay: `${25 * i}ms` }}
+                >
+                  <Grid
+                    item
+                    sx={(theme) => ({
+                      [theme.breakpoints.down('sm')]: {
+                        width: '100%',
+                      },
+                    })}
+                  >
+                    <CandyMachine item={card} />
+                  </Grid>
+                </Zoom>
+              ))}
+            </Grid>
+          </Box>
+        </>
+      ) : null}
+      {!loading && Array.isArray(cards) && cards.length === 0 ? (
+        <Typography variant="h5">
+          <b>There nothing here yet </b>
+        </Typography>
+      ) : null}
     </Box>
   );
 };
 
 export default Institutions;
+
+const timeout = (ms: number) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });

@@ -10,6 +10,8 @@
     "noEmit": false,
     "incremental": true,
     "paths": {
+      "@munu/ui-lib/*": ["../../../packages/ui-lib/src/*"],
+      "@munu/ui-lib": ["../../../packages/ui-lib/src/index"],
       "@munu/ts-utils": ["../../../packages/ts-utils/src/index"],
       "@/*":["./*"]
     }

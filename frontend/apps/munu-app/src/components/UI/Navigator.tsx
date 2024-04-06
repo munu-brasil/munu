@@ -12,16 +12,12 @@ import {
   ListItemButton,
   ListItemSecondaryAction,
 } from '@mui/material';
-import {
-  Settings,
-  ExpandMore,
-  ChevronRight,
-  ArrowBackRounded,
-} from '@mui/icons-material';
+import { Settings, ExpandMore, ChevronRight } from '@mui/icons-material';
 import Drawer, { DrawerProps } from '@mui/material/Drawer';
 import { NavLink, useHistory } from 'react-router-dom';
 import { MenuView } from '@/lib/internal/constants';
 import { Theme } from '@/themes/mui/mui.theme';
+import Icons from '@munu/core-lib/components/Icons';
 
 const useStyles = (theme: Theme, drawerWidth: number) =>
   ({
@@ -85,6 +81,7 @@ const useStyles = (theme: Theme, drawerWidth: number) =>
       overflowX: 'hidden',
       [theme.breakpoints.up('sm')]: {
         width: 0,
+        visibility: 'hidden',
       },
     },
     scrollBar: {
@@ -207,13 +204,15 @@ function Navigator(props: NavigatorProps) {
                       }
                     : {})}
                 >
-                  <ListItemIcon
-                    classes={{
-                      root: css(classes.itemIcon),
-                    }}
-                  >
-                    {getIcon(parentIcon as string)}
-                  </ListItemIcon>
+                  {parentIcon ? (
+                    <ListItemIcon
+                      classes={{
+                        root: css(classes.itemIcon),
+                      }}
+                    >
+                      {getIcon(parentIcon as string)}
+                    </ListItemIcon>
+                  ) : null}
                   <ListItemText>{title}</ListItemText>
                   {open && children.length > 0 ? (
                     <ListItemSecondaryAction css={classes.itemAction}>
@@ -287,6 +286,9 @@ function Navigator(props: NavigatorProps) {
               color: theme.palette.common.white,
               background: theme.palette.common.black,
             },
+            [theme.breakpoints.down('sm')]: {
+              display: 'none',
+            },
           })}
           onClick={(e) => {
             e.preventDefault();
@@ -294,7 +296,7 @@ function Navigator(props: NavigatorProps) {
             onClose?.();
           }}
         >
-          <ArrowBackRounded />
+          <Icons.ArrowLeft8Bit />
         </IconButton>
       </Grow>
     </>
@@ -307,7 +309,7 @@ const ActiveLinkNoAction = (props: {
   url: string;
   activeClassName: string;
   className?: string;
-  children?: React.ReactNodeArray | React.ReactNode;
+  children?: React.ReactNode[] | React.ReactNode;
 }) => {
   const { url, activeClassName, className, children } = props;
   return (

@@ -1,18 +1,24 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useCallback } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router';
 import { Box } from '@mui/material';
 import BadgesPage from '@/containers/Badges';
 import {
   DefaultPaperStyle,
   PaperbaseContext,
-  HeaderIconTitle,
-  HeaderTitle,
+  PageHeader,
 } from '@/components/UI/UIContext';
 import BackgroundImage from '@/lib/internal/images/background_03.jpg';
+import Header from '@/components/UI/Header';
+import { WalletOnboard } from '@/containers/WalletOnboard';
 
 export const Badges = () => {
   const { url } = useRouteMatch();
-  const { setPaperStyle } = useContext(PaperbaseContext);
+  const { openNavigationDrawer, setOpenNavigationDrawer, setPaperStyle } =
+    useContext(PaperbaseContext);
+
+  const handleDrawerToggle = useCallback(() => {
+    setOpenNavigationDrawer?.(!openNavigationDrawer);
+  }, [openNavigationDrawer, setOpenNavigationDrawer]);
 
   useEffect(() => {
     setPaperStyle?.({
@@ -28,9 +34,26 @@ export const Badges = () => {
 
   return (
     <>
-      <HeaderTitle>
-        <HeaderIconTitle title="" />
-      </HeaderTitle>
+      <PageHeader>
+        <Header
+          className="no-print"
+          onDrawerToggle={handleDrawerToggle}
+          rightItems={
+            <>
+              <Box
+                sx={(theme) => ({
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-end',
+                  marginRight: theme.spacing(2),
+                })}
+              >
+                <WalletOnboard />
+              </Box>
+            </>
+          }
+        />
+      </PageHeader>
       <Box
         sx={(theme) => ({
           flexGrow: 1,

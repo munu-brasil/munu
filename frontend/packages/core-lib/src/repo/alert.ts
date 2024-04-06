@@ -2,7 +2,7 @@ import { createStore } from 'zustand/vanilla';
 import { useStore } from 'zustand';
 import produce from 'immer';
 import type { ButtonProps } from '@mui/material';
-import type { Alert as PopupAlert } from '@munu/ui-lib/src/ux/popupAlert/types';
+import type { Alert as PopupAlert } from '@munu/ui-lib/ux/popupAlert/types';
 
 export type Action = {
     label: string;

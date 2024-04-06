@@ -13,7 +13,6 @@ const styles = (theme: Theme) =>
       background: 'none',
     },
     appBar: {
-      zIndex: theme.zIndex.drawer + 1,
       transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -65,7 +64,12 @@ function Header(props: HeaderProps) {
       classes={{ root: css(classes.root) }}
     >
       <Toolbar css={classes.toolbar} disableGutters>
-        <Grid container spacing={0} alignItems="center">
+        <Grid
+          container
+          spacing={0}
+          alignItems="center"
+          justifyContent="space-between"
+        >
           <Grid item>
             <IconButton
               color="primary"
