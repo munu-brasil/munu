@@ -9,7 +9,11 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gorilla/sessions"
 	"github.com/jmoiron/sqlx"
+	"github.com/markbates/goth"
+	"github.com/markbates/goth/gothic"
+	"github.com/markbates/goth/providers/google"
 	"github.com/munu-brasil/munu/backend/api/httpserver"
 	"github.com/munu-brasil/munu/backend/mailmaid"
 	"github.com/munu-brasil/munu/backend/postgres"
@@ -26,7 +30,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/labstack/echo/v4"
-	_ "github.com/lib/pq"
 	"golang.org/x/crypto/acme/autocert"
 )
 
@@ -49,6 +52,11 @@ type Config struct {
 	MailSMTPPort            int    `flag:"mail_smtp_port"`
 	JWTSecret               string `flag:"jwt_secret"`
 	CORSOrigins             string `flag:"cors_origins"`
+	OauthSessionSecret      string `flag:"oauth_session_secret"`
+	OauthGoogleKey          string `flag:"oauth_google_key"`
+	OauthGoogleSecret       string `flag:"oauth_google_secret"`
+	OauthGoogleCallbackURL  string `flag:"oauth_google_callback_url"`
+	OauthRedirectURL        string `flag:"oauth_redirect_url"`
 	PostbackVerification    string `flag:"postback-verification"`
 	FileDirectoryTempImages string `flag:"file-directory-temp-images"`
 }
@@ -94,13 +102,14 @@ func ServePublic(conf Config) error {
 	}
 
 	mmailer := mailmaid.NewMailer(mailmaid.MailerConf{
-		User:          conf.MailUsername,
-		Password:      conf.MailPassword,
-		From:          conf.MailFrom,
-		TemplatePath:  p,
-		Host:          conf.MailSMTPHost,
-		Port:          conf.MailSMTPPort,
-		PublicAddress: conf.PublicAddress,
+		User:              conf.MailUsername,
+		Password:          conf.MailPassword,
+		From:              conf.MailFrom,
+		TemplatePath:      p,
+		Host:              conf.MailSMTPHost,
+		Port:              conf.MailSMTPPort,
+		ImagesTemplateURL: conf.FileDirectoryTempImages,
+		PublicAddress:     conf.PublicAddress,
 	})
 
 	dispatcher := service.NewDispatcher()
@@ -118,6 +127,14 @@ func ServePublic(conf Config) error {
 		panic(err)
 	}
 
+	// configure goth oauth
+	cookieStore := sessions.NewCookieStore([]byte(conf.OauthSessionSecret))
+	cookieStore.Options.HttpOnly = true
+	gothic.Store = cookieStore
+	goth.UseProviders(
+		google.New(conf.OauthGoogleKey, conf.OauthGoogleSecret, conf.OauthGoogleCallbackURL, "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile", "openid"),
+	)
+
 	// register api routes
 	serv := httpserver.HTTPServer{
 		DB: db,
@@ -131,6 +148,7 @@ func ServePublic(conf Config) error {
 			AppAddress:              conf.PublicAddress,
 			VersionString:           "Munu 1.0",
 			AllowedOrigins:          strings.Split(conf.CORSOrigins, ","),
+			OauthRedirectURL:        conf.OauthRedirectURL,
 			PostbackVerification:    conf.PostbackVerification,
 			FileDirectoryTempImages: conf.FileDirectoryTempImages,
 		},

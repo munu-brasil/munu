@@ -2,15 +2,20 @@ package httpserver
 
 import (
 	"encoding/json"
+	"log"
 	"net/http"
+	"os"
+	"time"
 
 	jwt "github.com/golang-jwt/jwt/v5"
 	"github.com/jmoiron/sqlx"
 	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
+	"github.com/markbates/goth/gothic"
 	"github.com/munu-brasil/munu/backend/api/httpserver/middleware"
 	"github.com/munu-brasil/munu/backend/lib"
 	"github.com/munu-brasil/munu/backend/mailmaid"
+	"github.com/munu-brasil/munu/backend/postgres"
 	"github.com/munu-brasil/munu/backend/service"
 	"github.com/pindamonhangaba/apiculi/endpoint"
 	"github.com/pkg/errors"
@@ -42,6 +47,7 @@ type ServerConf struct {
 	AllowedOrigins          []string
 	PostbackVerification    string
 	FileDirectoryTempImages string
+	OauthRedirectURL        string
 }
 
 // HTTPServer create a service to echo server
@@ -100,6 +106,11 @@ func (h *HTTPServer) Register(e *echo.Echo) (*endpoint.OpenAPI, error) {
 		ContextKey:    h.JWTConfig.ClaimsCtxKey,
 		SigningMethod: jwt.SigningMethodHS256.Name,
 	}
+	jwtServiceConfig := postgres.JWTConfig{
+		Secret:          h.JWTConfig.Secret,
+		HoursTillExpire: time.Minute * 5,
+		SigningMethod:   jwt.SigningMethodHS256,
+	}
 
 	gJWT.Use(echojwt.WithConfig(jwtConfig))
 	ratedAPI := gJWT.Group("")
@@ -137,10 +148,115 @@ func (h *HTTPServer) Register(e *echo.Echo) (*endpoint.OpenAPI, error) {
 	/*
 	 * public routes
 	 */
-	ah := &AuthHandler{
-		oapi: &oapi,
+
+	// pagarme services
+
+	pv := postgres.PwdRecoverer{
+		DB:     h.DB,
+		Mailer: h.Mailer,
+		Config: struct{ AuthURL func(applID string) string }{
+			AuthURL: func(applID string) string {
+				baseURL := ""
+				switch applID {
+				case service.ApplicationMunu:
+					baseURL = h.ServerConf.AppAddress
+				}
+				return baseURL + "/auth/password-reset"
+			},
+		},
 	}
-	e.Add(ah.Login())
+
+	pr := postgres.PwdReseter{
+		DB:     h.DB,
+		Mailer: h.Mailer,
+	}
+	gpr := postgres.GetActionVerification{DB: h.DB}
+	eta := postgres.EmailTokenAuth{
+		DB:     h.DB,
+		Mailer: h.Mailer,
+	}
+
+	ett := postgres.EmailTokenAuthenticator{
+		DB:        h.DB,
+		Mailer:    h.Mailer,
+		JWTConfig: jwtServiceConfig,
+	}
+
+	a := &postgres.Authenticator{
+		DB:        h.DB,
+		Logger:    log.New(os.Stdout, "Auth: ", log.LstdFlags),
+		JWTConfig: jwtServiceConfig,
+		Mailer:    h.Mailer,
+	}
+
+	ve := &postgres.ValidateEmailService{DB: h.DB}
+
+	ah := &AuthHandler{
+		oapi:                  &oapi,
+		signin:                a.EmailLogin,
+		refreshToken:          a.RefreshToken,
+		oneTimeLogin:          a.OneTimeLogin,
+		emailTokenSignin:      ett.Run,
+		getActionVerification: gpr.Run,
+		emailTokenAuth:        eta.Run,
+		pwdReset:              pr.Run,
+		pwdRecover:            pv.Run,
+		validateEmail:         ve.Run,
+	}
+	gauth.Add(ah.EmailLogin())
+	gauth.Add(ah.PasswordRecover())
+	gauth.Add(ah.PasswordReset())
+	gauth.Add(ah.GetActionVerification())
+	gauth.Add(ah.OneTimeLogin())
+	gauth.Add(ah.EmailTokenAuth())
+	gauth.Add(ah.EmailTokenSignin())
+	gauth.Add(ah.RefreshJWT())
+	gauth.Add(ah.Logout())
+	e.Add(ah.ValidateEmail())
+
+	trdp := postgres.ThirdPartyOnboarder{
+		DB:         h.DB,
+		JWTConfig:  jwtServiceConfig,
+		Logger:     log.New(os.Stdout, "3rd Party Oauth: ", log.LstdFlags),
+		Mailer:     h.Mailer,
+		Dispatcher: h.Dispatcher,
+	}
+
+	tpoa := ThirdPartyOauthHandler{
+		oapi:                  &oapi,
+		completeUserAuth:      gothic.CompleteUserAuth,
+		beginAuth:             gothic.BeginAuthHandler,
+		onboardThirdPartyUser: trdp.Run,
+		oauthRedirectURL:      h.ServerConf.OauthRedirectURL,
+	}
+
+	gauth.Add(tpoa.OauthProviderFlow())
+	gauth.Add(tpoa.OauthProviderCallback())
+
+	oc := &postgres.OnboardingCreator{
+		DB:         h.DB,
+		Dispatcher: h.Dispatcher,
+	}
+	oh := &OnboardingHandler{
+		oapi:                   &oapi,
+		createUser:             oc.Run,
+		authenticateEmailLogin: a.EmailLogin,
+	}
+	gauth.Add(oh.CreateAccount())
+
+	ugs := postgres.UserGetter{DB: h.DB}
+	ups := postgres.UserPatch{DB: h.DB}
+	umgs := postgres.UserMeGetter{DB: h.DB}
+	uh := UserHandler{
+		oapi:          &oapi,
+		getUserByID:   ugs.Run,
+		patchUserByID: ups.Run,
+		getUserMe:     umgs.Run,
+	}
+
+	ratedAPI.Add(uh.GetUserByID())
+	ratedAPI.Add(uh.PatchUserByID())
+	ratedAPI.Add(uh.GetUserMe())
 
 	swagapijson, err := oapi.T().MarshalJSON()
 	if err != nil {

@@ -16,7 +16,7 @@ require (
 	github.com/labstack/echo-contrib v0.15.0
 	github.com/labstack/echo-jwt/v4 v4.2.0
 	github.com/labstack/echo/v4 v4.11.1
-	github.com/lib/pq v1.10.9 // indirect
+	github.com/lib/pq v1.10.9
 	github.com/microcosm-cc/bluemonday v1.0.25
 	github.com/ory/mail/v3 v3.0.0
 	github.com/pindamonhangaba/apiculi v0.0.0-20230929200000-b525ce15392a
@@ -27,15 +27,24 @@ require (
 	github.com/spf13/cobra v1.7.0
 	github.com/stretchr/testify v1.8.4
 	go.uber.org/zap v1.26.0
-	golang.org/x/crypto v0.13.0
+	golang.org/x/crypto v0.19.0
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.3.0
 	gopkg.in/guregu/null.v3 v3.5.0
 )
 
-require github.com/shurcooL/graphql v0.0.0-20230722043721-ed46e5a46466 // indirect
+require (
+	cloud.google.com/go/compute v1.23.0 // indirect
+	cloud.google.com/go/compute/metadata v0.2.3 // indirect
+	github.com/shurcooL/graphql v0.0.0-20230722043721-ed46e5a46466 // indirect
+)
 
-require github.com/shurcooL/githubv4 v0.0.0-20240120211514-18a1ae0e79dc
+require (
+	github.com/GerardSoleCa/wordpress-hash-go v0.0.0-20161116172340-2bdd71ec2eb6
+	github.com/markbates/goth v1.79.0
+	github.com/rs/xid v1.5.0
+	github.com/shurcooL/githubv4 v0.0.0-20240120211514-18a1ae0e79dc
+)
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.1 // indirect
@@ -89,7 +98,7 @@ require (
 	github.com/perimeterx/marshmallow v1.1.5 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
-	github.com/rogpeppe/go-internal v1.11.0 // indirect
+	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/saintfish/chardet v0.0.0-20230101081208-5e3ef4b5456d // indirect
 	github.com/sergi/go-diff v1.3.1
 	github.com/sirupsen/logrus v1.9.3 // indirect
@@ -106,16 +115,16 @@ require (
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/net v0.15.0 // indirect
-	golang.org/x/oauth2 v0.12.0
+	golang.org/x/net v0.21.0 // indirect
+	golang.org/x/oauth2 v0.17.0
 	golang.org/x/sync v0.3.0 // indirect
-	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/sys v0.17.0 // indirect
 	google.golang.org/appengine v1.6.8 // indirect
 	google.golang.org/genproto v0.0.0-20230920204549-e6e6cdab5c13 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20230920204549-e6e6cdab5c13 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230920204549-e6e6cdab5c13 // indirect
 	google.golang.org/grpc v1.58.2 // indirect
-	google.golang.org/protobuf v1.31.0 // indirect
+	google.golang.org/protobuf v1.32.0 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

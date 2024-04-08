@@ -1,18 +1,23 @@
 package service
 
 import (
+	"database/sql/driver"
+	"encoding/json"
 	"fmt"
 	"strings"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/munu-brasil/munu/backend/lib/array"
 	"github.com/pkg/errors"
 )
 
-type adminPermission string
-type AdminPermissions []adminPermission
+type userRoles string
+type userPermissions string
+type UserRoles []userRoles
+type UserPermissions []userPermissions
 
 // Can checks if all permissions are given
-func (p AdminPermissions) Can(perm ...adminPermission) bool {
+func (p UserPermissions) Can(perm ...userPermissions) bool {
 	found := 0
 	for _, e := range p {
 		for _, o := range perm {
@@ -25,7 +30,7 @@ func (p AdminPermissions) Can(perm ...adminPermission) bool {
 }
 
 // CanAny checks if any selected permissions are given
-func (p AdminPermissions) CanAny(perm ...adminPermission) bool {
+func (p UserPermissions) CanAny(perm ...userPermissions) bool {
 	found := 0
 	for _, e := range p {
 		for _, o := range perm {
@@ -37,7 +42,7 @@ func (p AdminPermissions) CanAny(perm ...adminPermission) bool {
 	return (found) > 0
 }
 
-func (p AdminPermissions) StringArray() []string {
+func (p UserPermissions) StringArray() []string {
 	results := make([]string, 0, len(p))
 	for _, resource := range p {
 		results = append(results, string(resource))
@@ -45,11 +50,34 @@ func (p AdminPermissions) StringArray() []string {
 	return results
 }
 
+func (p UserRoles) StringArray() []string {
+	results := make([]string, 0, len(p))
+	for _, resource := range p {
+		results = append(results, string(resource))
+	}
+	return results
+}
+
+func GetRoleByPermissions(perms UserPermissions) UserRoles {
+	roles := UserRoles{}
+	mapRoles := map[userRoles]UserPermissions{}
+	for role, permissions := range mapRoles {
+		ok := array.Contains(perms, permissions, func(a, b userPermissions) bool {
+			return a == b
+		})
+		if ok {
+			roles = append(roles, role)
+		}
+	}
+
+	return roles
+}
+
 // Claims is the claims for a JWT
 type Claims struct {
-	UserID      string           `json:"userID"`
-	Permissions AdminPermissions `json:"permissions"`
-	ApplID      string           `json:"applID"`
+	UserID      string          `json:"userID"`
+	Permissions UserPermissions `json:"permissions"`
+	ApplID      string          `json:"applID"`
 	jwt.RegisteredClaims
 }
 
@@ -76,8 +104,8 @@ func Extract(i interface{}) (c *Claims, err error) {
 }
 
 // ExtractPermissions builds a Permission array from context
-func ExtractPermissions(i interface{}) (c AdminPermissions, err error) {
-	perms, ok := i.(AdminPermissions)
+func ExtractPermissions(i interface{}) (c UserPermissions, err error) {
+	perms, ok := i.(UserPermissions)
 	if !ok {
 		return c, errors.New("No permissions")
 	}
@@ -106,7 +134,7 @@ func FromUnknown(i interface{}) (c Claims, err error) {
 
 	if perm, ok := claimsMap["permissions"].([]interface{}); ok {
 		for i := range perm {
-			if str, k := perm[i].(adminPermission); k {
+			if str, k := perm[i].(userPermissions); k {
 				c.Permissions = append(c.Permissions, str)
 			} else {
 				err = errors.New("Couldn't parse permission value")
@@ -143,4 +171,25 @@ func parseToken(secret, tokenString string) (*jwt.Token, error) {
 		return []byte(secret), nil
 	})
 	return token, err
+}
+
+// Value implements the driver Valuer interface.
+func (i UserPermissions) Value() (driver.Value, error) {
+	b, err := json.Marshal(i)
+	return driver.Value(b), err
+}
+
+// Scan implements the Scanner interface.
+func (i *UserPermissions) Scan(src interface{}) error {
+	var source []byte
+
+	switch v := src.(type) {
+	case string:
+		source = []byte(v)
+	case []byte:
+		source = src.([]byte)
+	default:
+		return errors.New("incompatible type for adminPermission")
+	}
+	return json.Unmarshal(source, i)
 }
